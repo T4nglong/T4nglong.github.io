@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本章主要介绍 NTLM 基础与滥用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NTLM 基础与滥用（笔记）">
+<meta property="og:url" content="http://example.com/2020/09/28/NTLM%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/index.html">
+<meta property="og:site_name" content="T4nglong&#39;s Blog">
+<meta property="og:description" content="本章主要介绍 NTLM 基础与滥用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-28T11:10:24.453Z">
+<meta property="article:author" content="T4nglong">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/28/NTLM%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>NTLM 基础与滥用（笔记） | T4nglong's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">T4nglong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/28/NTLM%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="T4nglong">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="T4nglong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          NTLM 基础与滥用（笔记）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-28 00:00:00 / 修改时间：19:10:24" itemprop="dateCreated datePublished" datetime="2020-09-28T00:00:00+08:00">2020-09-28</time>
+            </span>
+
+          
+            <div class="post-description">本章主要介绍 NTLM 基础与滥用</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="NTLM-认证"><a href="#NTLM-认证" class="headerlink" title="NTLM 认证"></a>NTLM 认证</h2><p>NTLM 是 NT LAN Manager 的缩写，是一种采用 质询/响应 身份验证机制 的协议</p>
+<p>NTLM 协议不能作为独立的应用层协议，而是嵌入上层协议（如：SMB、LDAP 等）中进行传输</p>
+<h3 id="NTLM-Hash"><a href="#NTLM-Hash" class="headerlink" title="NTLM Hash"></a>NTLM Hash</h3><p>NTLM Hash 是指 Windows 系统中本地存储的用户密码 Hash</p>
+<p><em>备注：在 Windows 系统中是不保存明文密码的</em></p>
+<p><strong>存储位置</strong></p>
+<p>本机账户的密码 Hash 存储在本地 SAM 文件中（C:\Windows\System32\config）</p>
+<p>域账户的密码 Hash 存储在域控制器的 NTDS.dit 文件中（…\windows\ntds\ntds.dit）</p>
+<p><strong>LM Hash、NTLM Hash</strong></p>
+<p>LM Hash 是 Windows 系统中将账户的密码通过 DES 加密方式生成的一段 Hash</p>
+<p>在 Windows 2000、XP 、2003 默认使用 LM 加密方式</p>
+<p>NTLM Hash 是 Windows 系统中将账户的密码通过 MD4 加密方式生成的一段 Hash</p>
+<p>在 Windows Vista、7、2008、8、2012、10 及以后默认使用 NTLM 加密方式（默认只存储 NTLM Hash）</p>
+<p><strong>导出的 Hash 格式</strong></p>
+<p>Username:RID:LM Hash:NTLM Hash:::</p>
+<p>在空密码或不存储 LM Hash 的情况下，抓取到的 LM Hash 为 AAD3B435B51404EEAAD3B435B51404EE</p>
+<h3 id="NTLM-认证流程"><a href="#NTLM-认证流程" class="headerlink" title="NTLM 认证流程"></a>NTLM 认证流程</h3><p>首先，用户输入 Windows 账号、密码登录客户端主机</p>
+<p><strong>NEGOTIATE：</strong>客户端向服务器发送 用户名，请求 NTLM 身份验证。</p>
+<p><strong>CHALLENGE：</strong>服务器生成一个16位的随机数（Challenge），发送给客户端。</p>
+<p><strong>AUTHENTICATE：</strong>客户端使用自身用户的密码 hash 对 challenge 加密生成 response（Net-NTLM Hash），发送给服务器。</p>
+<p>在域环境中，域控制器中存储所有账户的密码 Hash，而服务器中并没有用户的密码 Hash</p>
+<p><strong>NETLOGON：</strong>服务器将 用户名、challenge、response 发送给域控制器，让域控进行验证</p>
+<p><strong>返回验证结果：</strong>域控在 ntds.dit 中查找到用户名对应的密码 hash，使用该 hash 加密 challenge，并将结果与接收的 response 对比。</p>
+<h3 id="Net-NTLM-Hash（Response）"><a href="#Net-NTLM-Hash（Response）" class="headerlink" title="Net-NTLM Hash（Response）"></a>Net-NTLM Hash（Response）</h3><p>Net-NTLM Hash 是用于在各种网络中进行身份验证所使用的一段 Hash</p>
+<p>根据身份验证协议的版本，如在 NTLMv1 、NTLMv2协议中，将分别使用8位数、16位数的 Challenge，根据不同的加密算法，生成 Net-NTLMv1 Hash、Net-NTLMv2 Hash</p>
+<p>Net-NTLMv1 Hash 格式：username::hostname:LM response:NTLM response:challenge</p>
+<p>Net-NTLMv2 Hash 格式：username::domain:challenge:HMAC-MD5:blob</p>
+<h2 id="破解-NTLM-hash、Net-NTLM-hash"><a href="#破解-NTLM-hash、Net-NTLM-hash" class="headerlink" title="破解 NTLM hash、Net-NTLM hash"></a>破解 NTLM hash、Net-NTLM hash</h2><p>在通过各种途径获得用户的 NTLM Hash、Net-NTLM hash 后，可以使用 Hashcat尝试破解出密码明文。</p>
+<h2 id="Pass-The-Hash（NTLM-hash）"><a href="#Pass-The-Hash（NTLM-hash）" class="headerlink" title="Pass The Hash（NTLM hash）"></a>Pass The Hash（NTLM hash）</h2><p>在通过各种途径获得用户的密码 Hash（NTLM Hash）后，我们可以尝试登录其他主机，或者在内网中尝试批量登录</p>
+<p><strong>原理</strong>：客户端是使用用户的密码 Hash 对 Challenge 进行加密生成 Response，所以我们在获得某个用户的密码 Hash（NTLM Hash）的情况下，我们可以使用该用户的密码 Hash 进行 NTLM 认证。</p>
+<p><strong>KB2871997</strong></p>
+<p>该补丁禁止本地管理员登录远程计算机（系统内置本地管理员、本地管理员组的域用户除外），也就是说，RID 500 的本地管理员与本地管理员组的域用户仍然可以通过 PTH 进行横向移动，而 RID 非 500 的管理员无法通过 PTH 进行横向移动。</p>
+<p>备注：windows server 2008 之后的系统默认不允许本地管理员用户进行远程连接（RID:500 除外）</p>
+<h2 id="NTLM-重放（Net-NTLM-hash）"><a href="#NTLM-重放（Net-NTLM-hash）" class="headerlink" title="NTLM 重放（Net-NTLM hash）"></a>NTLM 重放（Net-NTLM hash）</h2><p>NTLM 重放是一种在内网中进行横向移动/本地权限提升的方式</p>
+<p><strong>原理</strong>：NTLM 重放就是将获取到的用户 NTLM 认证信息（Net-NTLM Hash）重放到发起主机自身或其他服务器进行认证</p>
+<h3 id="NTLM-重放基础"><a href="#NTLM-重放基础" class="headerlink" title="NTLM 重放基础"></a>NTLM 重放基础</h3><p><strong>域环境中的 NTLM 重放攻击流程：</strong></p>
+<p>1）我们先将客户端发来的 negotiate 消息转发给目标服务器；</p>
+<p>2）然后将服务器返回的 challenge 消息转发给客户端；</p>
+<p>3）最后将客户端生成的 authenticate 消息转发到目标服务器；</p>
+<p>4）由于服务器没有客户端用户密码 hash，无法校验，所以将 用户名、challenge、response 发送给域控制器进行验证；</p>
+<p>5）域控会在验证之后将结果返回给服务器。</p>
+<p><strong>NTLM 重放攻击主要分为两个部分：</strong></p>
+<p>第一部分，攻击者通过各种方式获取到用户的 Net-NTLM hash；</p>
+<p>第二部分，攻击者将获取到的 Net-NTLM hash 重放到发起主机或其他服务器进行认证。</p>
+<h3 id="针对-NTLM-重放的防御措施"><a href="#针对-NTLM-重放的防御措施" class="headerlink" title="针对 NTLM 重放的防御措施"></a>针对 NTLM 重放的防御措施</h3><p>针对 NTLM 重放的防御措施主要有对认证信息进行的加密与签名， 以及完整性校验</p>
+<h4 id="加密与签名"><a href="#加密与签名" class="headerlink" title="加密与签名"></a>加密与签名</h4><p>NTLM 认证可以通过客户端与服务器之间交换 session Key 来实现签名，也就是对认证信息进行加密</p>
+<p><strong>如何判断是否进行签名？</strong></p>
+<p>客户端与服务器通过交换信息中的某些标志来判断是否要进行加密与签名</p>
+<p><strong>加密与签名过程涉及到 3 个 Key</strong></p>
+<p>1）export_session_key（简称 key1）：该 key 是由客户端生成的一个随机数。在开启签名的情况下，客户端与认证服务器使用该 key 进行数据的加解密。</p>
+<p>2）key_exchange_key（简称 key2）：该 key 通过用户的密码 Hash 和 Challenge 运算生成。</p>
+<p>3）encryted_random_session_key（session key）：该 key 是使用 key2 通过 RC4 加密 key1 生成。由于用于加解密的 key1 是在客户端生成，服务器无法获得，所以该 key 在流量中作为 session key 传输到服务器</p>
+<p><strong>在域环境中对数据进行加解密的过程</strong></p>
+<p>在域环境中，客户端与域控制器都有用户的密码 Hash，因此都能生成 key2</p>
+<p>1）客户端生成随机数 key1，用于加密交换的数据；然后使用 Key2 通过 RC4 加密 key1 生成 session key；</p>
+<p>2）客户端在交换的信息中，将生成的 session key 发给服务器；</p>
+<p>3）服务器向域控制器索要 key2，并使用获得的 key2 解密 session key，获得 key1，再使用 key1 解密数据。</p>
+<p><strong>加密与签名是如何缓解 NTLM 重放攻击的？</strong></p>
+<p>在域中，中间层的服务器没有用户的密码 Hash，因此无法获得 key2。即使有攻击者作为中间人截获 session key，也无法解密 session key 获得 key1，没有 key1 自然无法对交换的数据进行加解密（无法获得 Net-NTLM Hash），因此能够缓解 NTLM 重放攻击。</p>
+<p><strong>域环境的中间层服务器是如何解密数据？</strong></p>
+<p>域中的服务器是没有客户端用户的密码 Hash 的，无法计算出 key2；所以需要签名的情况下，由域控制器计算出 key2 返回给服务器</p>
+<p><strong>SMB 服务与 LDAP 服务</strong></p>
+<p>1）关于 SMB 服务：域控制器默认开启 SMB 签名，域成员主机默认不开启 SMB 签名。</p>
+<p>2）关于 LDAP 服务：客户端域服务器协商是否签名，也就是说如果客户端要求签名，那么 LDAP 服务器将忽略所有未签名的消息。另外，在 2020 年 1 月发布的安全更新中，将强制开启所有域控制器的 LDAP 签名功能。</p>
+<h4 id="完整性校验（MIC）"><a href="#完整性校验（MIC）" class="headerlink" title="完整性校验（MIC）"></a>完整性校验（MIC）</h4><p>全称：Message Integrity Code（消息完整性代码）</p>
+<p><strong>MIC 的作用</strong>：微软在 NTLM 协议中引入 MIC，通过配置可以让 NTLM 认证启用完整性校验，以防止交换的消息被篡改。</p>
+<p><strong>原理</strong>：客户端会将 MIC 字段包含在 authenticate 消息中发送给服务器；MIC 使用 key2 通过 HMAC-MD5 加密来保护三个报文（NEGOTIATE \ CHALLENGE \ AUTHENTICATE）的完整性，三个消息中的任何一个被篡改，认证都会失败。</p>
+<p><strong>MIC 计算公式：</strong>MIC = HMAC_MD5(key2,ConcatenationOf(NTLM_NEGOTIATE,NTLM_CHALLENGE,HTLM_AUTHENTICATE)</p>
+<h3 id="NTLM-重放到本地（土豆系列）"><a href="#NTLM-重放到本地（土豆系列）" class="headerlink" title="NTLM 重放到本地（土豆系列）"></a>NTLM 重放到本地（土豆系列）</h3><h4 id="MS08-068"><a href="#MS08-068" class="headerlink" title="MS08-068"></a>MS08-068</h4><p><strong>官方文档：</strong><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/security-updates/securitybulletins/2008/ms08-068">https://docs.microsoft.com/en-us/security-updates/securitybulletins/2008/ms08-068</a></p>
+<p><strong>实现过程：</strong></p>
+<p>1）主机A 访问主机B 上的 SMB 服务，发起请求时，主机A 将 pszTargetName 设置为 cifs/B</p>
+<p>2）主机A 接收 challenge 后在 LSASS 中缓存 challenge,cifs/B</p>
+<p>3）主机B 接收 response 后在 LSASS 中查找是否存在 challenge,cifs/B</p>
+<p>4）如果主机B 的 LSASS 缓存中存在，说明主机A 与主机B 为同一主机，认证失败</p>
+<p><strong>作用：</strong>主要防止了攻击者将 SMB 协议中的 NTLM 认证信息重放至发起主机自身的 SMB 服务</p>
+<h4 id="Hot-Potato（MS16-075）"><a href="#Hot-Potato（MS16-075）" class="headerlink" title="Hot Potato（MS16-075）"></a>Hot Potato（MS16-075）</h4><p><a target="_blank" rel="noopener" href="https://github.com/foxglovesec/Potato">https://github.com/foxglovesec/Potato</a></p>
+<p><strong>原理简述（HTTP -&gt; SMB）：</strong></p>
+<p>1）攻击者通过 LLMNR/NBNS 欺骗结合 WPAD 劫持，获得 HTTP 协议中的 NTLM 认证信息；</p>
+<p>2）攻击者将 HTTP 协议中的 NTLM 认证信息重放到自身的 SMB 服务。</p>
+<p><strong>实现过程：</strong></p>
+<p>1）强制所有的 DNS 查询失败（例如：DNS exhaust）</p>
+<p>2）客户端将通过 LLMNR/NBNS 查询 WPAD 主机的 IP</p>
+<p>3）攻击者以 127.0.0.1 作为响应，并在本地运行 HTTP 服务器</p>
+<p>4）客户端的所有 HTTP 流量都将通过攻击者进行代理转发</p>
+<p>5）攻击者将所有 HTTP 流量重定向到指定 URL，并要求其进行 NTLM 身份验证</p>
+<p>6）攻击者将获得的 NTLM 认证信息重放至本地 SMB 监听处，并创建一个新的系统服务来运行用户定义的命令。</p>
+<p>7）如果发起用户具备高权限（如：Windows Update 服务），则命令将以 “NT AUTHORITY\SYSTEM” 特权运行</p>
+<h4 id="Ghost-Potato（CVE-2019-1384）"><a href="#Ghost-Potato（CVE-2019-1384）" class="headerlink" title="Ghost Potato（CVE-2019-1384）"></a>Ghost Potato（CVE-2019-1384）</h4><p><a target="_blank" rel="noopener" href="https://shenaniganslabs.io/files/impacket-ghostpotato.zip">https://shenaniganslabs.io/files/impacket-ghostpotato.zip</a></p>
+<p><strong>原理简述（HTTP -&gt; SMB）：</strong></p>
+<p>1）攻击者通过各种途径使客户端访问伪造的 HTTP 服务（发起 NTLM 认证）</p>
+<p>2）攻击者在接收 authenticate 消息后，等待 300 秒以上的时间，使用获得的 NTLM 认证信息向发起者重新进行 NTLM 认证</p>
+<p><strong>漏洞成因：</strong>在 MS08-068（补丁 KB957097）中，缓存的有效时间为 300 秒，过时缓存将清空</p>
+<h4 id="Rotten-Juicy-Potato"><a href="#Rotten-Juicy-Potato" class="headerlink" title="Rotten/Juicy Potato"></a>Rotten/Juicy Potato</h4><p><strong>前提条件：</strong>需要具备 SeImpersonate 或者 SeAssignPrimaryToken 权限来调用 ImpersonateSecurityContext API。</p>
+<p><strong>Rotten Potato 原理简述（BITS 服务 - RPC）：</strong></p>
+<p>1）在本地 6666 端口加载 COM 对象 BITS 服务，交换 6666 端口与 135 端口之间的数据包，使其 BITS 发起 NTLM 身份验证</p>
+<p>2）将 COM 发送的 negotiate 消息 转发给 RPC ，然后将 RPC 返回的 challenge 消息 进行处理后发送给 COM，使其在内存中认证</p>
+<p>3）使用获得的高权限模拟令牌，以该令牌的身份开启一个进程</p>
+<p><strong>Rotten Potato 实现过程：</strong></p>
+<p>1）调用 API “CoGetInstanceFromIStorage” 在本地 6666 端口加载 COM 对象“BITS 服务”（通过指定 CLSID），然后通过将端口 6666 与 135（RPC）之间交换数据包，使得（以 SYSTEM 身份运行）BITS 服务向 135 端口进行 NTLM 身份验证</p>
+<p>备注：CoGetInstanceFromIStorage 会尝试从 “指定的 host:port” 加载 “指定对象“ 的实例（通过 CLSID 指定对象），BITS 的 CLSID 为 {4991d34b-80a1-4291-83b6-3328366b9097}。</p>
+<p>2）我们将 COM 发送的 Negotiate 消息中的 NTLM 部分提取出来，将其转发至 135 端口（RPC）；然后将 RPC 返回的 Challenge 进行一些处理（替换 NTLM Server Challenge 字段 与 Reserved 字段）后发送给 COM；当 COM 收到处理后的 Challenge 消息后，它将在内存中进行后台身份验证，使用上面调用的结果调用 ImpersonateSecurityContext，以获取模拟令牌</p>
+<p>备注：我们是调用 AcceptSecurityContext 函数 来接收 Negotiate 消息，并发送 Challenge 消息；并将 Authentiate 消息 传递给 该函数，已完成身份验证；最后，调用 调用 ImpersonateSecurityContext 函数 获得访问令牌。</p>
+<p>3）最后调用 CreateProcessWithTokenW 或 CreateProcessAsUserW，以令牌拥有的权限开启进程</p>
+<p><strong>Juicy Potato（指定服务 - RPC）</strong></p>
+<p>Juicy Potato 和 Rotten Potato 原理相似，在其基础上进行上改进，可以选择加载其他的服务（通过指定 CLSID），自定义 COM 监听端口，绑定到任意 IP，以及创建进程的方式等等。</p>
+<h4 id="PrintSpoofer（PipePotato）"><a href="#PrintSpoofer（PipePotato）" class="headerlink" title="PrintSpoofer（PipePotato）"></a>PrintSpoofer（PipePotato）</h4><p><strong>前提条件：</strong>需要具备 SeImpersonate 或者 SeAssignPrimaryToken 权限来调用 ImpersonateNamedPipeClient API。</p>
+<p><strong>原理简述（打印机漏洞 - 命名管道）：</strong></p>
+<p>1）我们注册一个恶意命名管道；然后利用了“打印机路径检查漏洞”，使 SYSTEM 账户访问我们创建的恶意命名管道</p>
+<p>2）通过调用 Windows 命名管道中的一个API - ImpersonateNamedPipeClient 来模拟高权限客户端的令牌</p>
+<p><strong>实现过程：</strong></p>
+<p>1）我们调用打印服务上的 RpcRemoteFindFirstPrinterChangeNotificationEx 函数，在该函数中的 pszLocalMachine 参数传入 UNC 路径：</p>
+<ul>
+<li><p>当传递\\127.0.0.1 时，服务器会访问\\127.0.0.1\pipe\spoolss，但这个管道已经被系统注册了；</p>
+</li>
+<li><p>当传递\\127.0.0.1\pipe 时，会因为路径检查而报错；</p>
+</li>
+<li><p>当传递\\127.0.0.1/pipe/foo 时，路径校验时，会将 127.0.0.1/pipe/foo 当作是目标主机名；</p>
+<ul>
+<li>在连接命名管道时，会对参数做标准化处理，将 / 转化为 \ ，于是就会连接\\127.0.0.1\pipe\foo\pipe\spoolss，</li>
+<li>我们就可以通过创建这个命名管道，从而获取发起用户的令牌</li>
+</ul>
+</li>
+</ul>
+<p>2）我们通过调用 ImpersonateNamedPipeClient 来模拟用户的令牌</p>
+<p>3）最后，我们调用 CreateProcessAsUserW 使用获得的令牌开启一个进程</p>
+<h4 id="针对-juicy-rotten-Potato-的防御措施及绕过方式"><a href="#针对-juicy-rotten-Potato-的防御措施及绕过方式" class="headerlink" title="针对 juicy/rotten Potato 的防御措施及绕过方式"></a>针对 juicy/rotten Potato 的防御措施及绕过方式</h4><p>从 Windows Server 2019 和 Windows 10 1809 开始，微软进行了安全更新，在调用 OXID 解析器解析实例之前，进行了一些检查，禁止在 OBJREF 中指定端口，只能指定主机，因此我们无法在指定的端口加载指定的服务，也就无法作为中间人监听并转发用户的认证信息。</p>
+<p>备注：原本是 OXID 解析器 解析 “序列化的 Istorage 对象”，获得 OBJREF 中的主机、端口信息。</p>
+<h4 id="SweetPotato（RogueWinRM）"><a href="#SweetPotato（RogueWinRM）" class="headerlink" title="SweetPotato（RogueWinRM）"></a>SweetPotato（RogueWinRM）</h4><p><strong>原理简述（BITS - WinRM）：</strong></p>
+<p>1）我们在 5985 端口伪造一个 WinRM 并监听；</p>
+<p>2）启动 BITS 服务，它会向 WinRM 发起认证；</p>
+<p>3）我们在获得模拟令牌后，使用该令牌开启一个进程</p>
+<p>备注：在 Windows 10 中远程管理（WinRM）默认是禁用的</p>
+<p><strong>实现过程：</strong></p>
+<p>1）我们在 5985 端口伪造 WinRM，并在该端口开启监听</p>
+<p>2）启用 BITS 服务，BITS 会向 WinRM 发送经过 base 64 编码的 Negotiate 消息</p>
+<p>3）我们调用 AcceptSecurityContext 函数接收 Negotiate 消息，并生成 challenge 消息发送给 BITS</p>
+<p>在这一步中我们需要提取 NTLMSSP 数据包、 SPNEGO 报头，并调用 InitTokenContextBuffer 以便调用 AcceptSecurityContext 函数生成 challenge，将生成的 challenge 添加到 SPNEGO 报头，并对数据包进行 base64 编码，以 ”401 Unauthorized “ 进行响应。</p>
+<p>4）BITS 将 response 消息发送给我们伪造的 WinRM，我们对该消息的 NTLMSSP 数据包进行解码，并将其发送给 AcceptSecurityContext 调用，然后调用 QuerySecurityContextToken 函数获取客户端安全上下的访问令牌并直接使用它。</p>
+<p>5）调用 CreateProcessWithTokenW 或 CreateProcessAsUser 函数使用获取的访问令牌创建进程。</p>
+<h4 id="RoguePotato"><a href="#RoguePotato" class="headerlink" title="RoguePotato"></a><strong>RoguePotato</strong></h4><p>（待补充）</p>
+<h4 id="土豆系列总结"><a href="#土豆系列总结" class="headerlink" title="土豆系列总结"></a>土豆系列总结</h4><p>1）由于打印机服务在所有 Windows 版本上都是默认启用的，所以利用 “PrinterSpoofer” 来进行本地提权比较通用</p>
+<p>2）在没有启用 WinRM 的 Windows 10/server 中，可以伪造的 WinRM 监听并捕获 SYSTEM 令牌（SweetPotato）</p>
+<p>3）在 Windows server 2016、Windows 10 1803 及之前的版本中，可以使用 Rotten/Juicy Potato</p>
+<h3 id="NTLM-重放到其他服务器"><a href="#NTLM-重放到其他服务器" class="headerlink" title="NTLM 重放到其他服务器"></a>NTLM 重放到其他服务器</h3><h4 id="NTLM-重放到不同类型的服务器"><a href="#NTLM-重放到不同类型的服务器" class="headerlink" title="NTLM 重放到不同类型的服务器"></a>NTLM 重放到不同类型的服务器</h4><p>1）将 Net-NTLM hash 重放到 SMB 服务</p>
+<p>可直接控制该机器，远程执行命令，上传 payload 并执行，提取系统的用户密码 Hash</p>
+<p>2）将 Net-NTLM hash 重放到 LDAP 服务</p>
+<p>如果发起用户是域管理员组（或类似权限），我们可以将任意用户加入以下域管理员组；</p>
+<p>如果发起用户在域内具备 Write ACL 权限，我们可以为任意用户添加 ACE，使其具备执行 DCSync 权限；</p>
+<p>如果发起用户是普通权限用户，在 Windows server 2012 R2 及之后的版本中，可以通过设置基于资源的受限委派，在发起用户 msDS-AllowedToActOnBehalfOfOtherIdentity 属性中添加允许访问自身的用户，使我们能够控制发起用户。</p>
+<h4 id="CVE-2015-0005"><a href="#CVE-2015-0005" class="headerlink" title="CVE-2015-0005"></a>CVE-2015-0005</h4><p><strong>回顾域环境中的加密与签名</strong></p>
+<p>通过之前提到的 “加密与签名” 可以知道，在域环境中，如果服务器要求进行签名，那么服务器会先通过 netlogon 协议将将 用户名、Challenge、Response 发送给域控制器来验证，然后由于服务器没有存储客户端用户的密码 hash，所以无法计算出 key2 来，因此需要先域控制器索要 key2 来解密 session key，获得可以对数据进行解密的 key1。</p>
+<p><strong>漏洞成因：</strong></p>
+<p>域控制器没有校验通过 netlogon 协议发送来的 “计算机名” 是否为合法服务器，也就是没有对 computer name 域 NetBIOS 名称进行一致性校验，导致我们可以修改 computer name 为自身主机名，并与域控进行 netlogon 安全会话，索要 key2 来解密 session key，从而获得 key1 来解密数据，获得其中的 Net-NTLM Hash。</p>
+<p><strong>原理简述：</strong></p>
+<p>1）客户端用户向服务器发起 NTLM 请求</p>
+<p>2）我们将客户端用户的 Net-NTLM Hash 重放至服务器，</p>
+<ul>
+<li>服务器要求进行签名的情况下，攻击者向域控制器索要 key2，解密出用户的 Net-NTLM Hash 重放</li>
+</ul>
+<h4 id="MS15-027"><a href="#MS15-027" class="headerlink" title="MS15-027"></a>MS15-027</h4><p>该安全更新对 netlogon 协议中 NetLogonSamLogonWithFlags 函数的 computer name 字段和 netbios 名称进行完整性校验（MIC），并且对该信息认证块进行了签名校验，导致通过修改 computer name 来获取 key2 的方法失效。</p>
+<h4 id="CVE-2018-8581（SSRF-NTLM-Relay）"><a href="#CVE-2018-8581（SSRF-NTLM-Relay）" class="headerlink" title="CVE-2018-8581（SSRF + NTLM Relay）"></a>CVE-2018-8581（SSRF + NTLM Relay）</h4><p><strong>SSRF：</strong>Exchange 服务器允许用户通过指定 URL，来订阅推送消息。Exchange 计算机账户将使用 CredentialCache.DefaultCredentials（应用程序的系统凭据，如：NTLM、Kerberos）通过 HTTP 发起连接请求。</p>
+<p><strong>NTLM 重放：</strong>我们将获得的 Net-NTLM Hash 重放至 Exchange 服务器自身的 EWS 接口，通过构造  SOAP 请求头获得任意用户的邮件。或者，我们可以将 Net-NTLM Hash 重放至 LDAP 服务器，为任意用户添加 ACL，使其具备执行 DCSync 的权限。</p>
+<p><strong>备注：</strong>Exchange Web 服务（EWS）提供了许多可让我们访问 Exchange 存储中的信息的操作。 Exchange 系统账户 属于 Exchange Trusted Subsystem 组，而该组在域内具备 Write ACL 权限。另外，LDAP 服务器与客户端默认策略是协商签名，即客户端决定是否签名，由于客户端向服务器发起的是 HTTP 请求，而 HTTP 协议默认是不要求签名，即不需要进行签名。</p>
+<h4 id="CVE-2019-1019"><a href="#CVE-2019-1019" class="headerlink" title="CVE-2019-1019"></a>CVE-2019-1019</h4><p>1）我们将客户端发来的 negotiate 消息转发到目标服务器；</p>
+<p>2）我们将服务器返回的 challenge 中的 computer name 字段删除，然后发给客户端；</p>
+<p>3）客户端基于接收的 challenge 生成 authenticate 消息，发送给我们；</p>
+<p>4）我们向域控制器发起 netlogon 会话请求；</p>
+<ul>
+<li>域控制器发现缺失 computer name 字段，于是不进行 MIC 完整性校验，并认可认证消息，返回 key2。</li>
+</ul>
+<p>5）我们接收到 key2 后，重新运算得出 MIC，将新的 authenticate 消息发送给目标服务器；</p>
+<ul>
+<li>MIC 是基于 key2 的 HMAC_MD5 加密算法生成。</li>
+</ul>
+<p>6）服务器接收 authenticate 消息，校验 MIC，并向域控发起 netlogon 会话请求；</p>
+<p>7）域控制器返回验证结果（包含 key2）。</p>
+<p><strong>漏洞成因：</strong></p>
+<p>在 MS15-027 中由于对 computer name 字段和 netbios 名称进行完整性校验，导致攻击者无法从域控制器获得 key2，但是 CVE-2019-1019  中，攻击者通过删除 Challenge 中的 computer name 字段，导致域控制器在缺失 computer name 字段时不进行完整性校验，因此获得 key2，通过该 key 我们可以重新计算出合法的 MIC，并生成新的 authenticate 消息发送给目标。</p>
+<h4 id="CVE-2019-1040"><a href="#CVE-2019-1040" class="headerlink" title="CVE-2019-1040"></a>CVE-2019-1040</h4><p><strong>绕过签名限制</strong></p>
+<p>由于该漏洞是通过打印机漏洞发起的 NTLM 请求，所用的协议是 SMB，默认是要求签名的，但是我们可以将 negotiate 消息中的 Ntlmssp_Negotiate_Always_Sign 和 Ntlmssp_Negotiate_Sign 字段设置为 0 ，让其不要求签名；但是修改 negotiate 消息中的内容会引起 MIC 校验失败，所以我们还需要绕过 MIC 校验。</p>
+<p><strong>绕过 MIC 校验</strong></p>
+<p>这里，我们需要将 Authenticate 消息中的 Negotiate_Key_Exchange 和 Negotiate_Version 字段设置为 0，让其不再校验 MIC；另外，我们也需要将 Authenticate 消息中的 Ntlmssp_Negotiate_Always_Sign 和 Ntlmssp_Negotiate_Sign 字段也设置为 0。</p>
+<p><strong>利用方式一：</strong></p>
+<p>1）在已控机器上开启监听，然后通过打印机漏洞使 Exchange 服务的计算机账户向我们发起 NTLM 请求（SMB 协议）</p>
+<ul>
+<li>由于 Exchange 服务的计算机账户属于 Exchange Trusted Subsystem 组成员，所以该账户具备 Write ACL 权限</li>
+</ul>
+<p>2）我们将计算机账户的 NTLM 认证信息重放到 LDAP 服务器上，修改指定用户的 ACL， 使其具备 DCSync 权限。</p>
+<p>3）最后，我们可通过 DCSync 滥用目录数据同步服务（DRS）获取域控上的用户密码 hash。</p>
+<p><strong>利用方式二：</strong></p>
+<p>1）在已控机器上开启监听，然后通过打印机漏洞使域控制器的计算机账户向我们发起 NTLM 请求（SMB 协议）</p>
+<ul>
+<li>域控制器的计算机账户不具备 Write ACL 权限</li>
+</ul>
+<p>2）我们将计算机账户的 NTLM 认证信息重放到域控上，创建一个新的计算机账户，将我们指定的账户添加到 创建的计算机对象 msds-allowedtoactonbehalfofotheridentity 属性的 账户列表中，使我们的账户能够访问域控</p>
+<p>3）使用我们指定的账户 执行 S4U，代表一个高权限用户请求访问域控的 TGS</p>
+<p>4）通过 pass the ticket 的方式将票据导入当前会话</p>
+<p>5）最后，可通过 DCSync 导出域控上的用户密码 hash</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="http://www.harmj0y.net/blog/penetesting/pass-the-hash-is-dead-long-live-pass-the-hash/">http://www.harmj0y.net/blog/penetesting/pass-the-hash-is-dead-long-live-pass-the-hash/</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.harmj0y.net/blog/redteaming/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy/">http://www.harmj0y.net/blog/redteaming/pass-the-hash-is-dead-long-live-localaccounttokenfilterpolicy/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/subject/id/193604">https://www.anquanke.com/subject/id/193604</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.secpulse.com/archives/107721.html">https://www.secpulse.com/archives/107721.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://byt3bl33d3r.github.io/practical-guide-to-ntlm-relaying-in-2017-aka-getting-a-foothold-in-under-5-minutes.html">https://byt3bl33d3r.github.io/practical-guide-to-ntlm-relaying-in-2017-aka-getting-a-foothold-in-under-5-minutes.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.vuln.cn/6813">http://www.vuln.cn/6813</a></p>
+<p><a target="_blank" rel="noopener" href="https://3gstudent.github.io/Windows%E4%B8%8B%E7%9A%84%E5%AF%86%E7%A0%81hash-NTLM-hash%E5%92%8CNet-NTLM-hash%E4%BB%8B%E7%BB%8D/">https://3gstudent.github.io/Windows%E4%B8%8B%E7%9A%84%E5%AF%86%E7%A0%81hash-NTLM-hash%E5%92%8CNet-NTLM-hash%E4%BB%8B%E7%BB%8D/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/207399.html">https://www.freebuf.com/vuls/207399.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7776">https://xz.aliyun.com/t/7776</a></p>
+<p><a target="_blank" rel="noopener" href="https://3gstudent.github.io/3gstudent.github.io/%E5%9F%9F%E6%B8%97%E9%80%8F-Pass-The-Hash%E7%9A%84%E5%AE%9E%E7%8E%B0/">https://3gstudent.github.io/3gstudent.github.io/%E5%9F%9F%E6%B8%97%E9%80%8F-Pass-The-Hash%E7%9A%84%E5%AE%9E%E7%8E%B0/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.netspi.com/executing-smb-relay-attacks-via-sql-server-using-metasploit/">https://blog.netspi.com/executing-smb-relay-attacks-via-sql-server-using-metasploit/</a></p>
+<p><a target="_blank" rel="noopener" href="https://labs.asteriskinfosec.com.au/ntlm-relay-backflips/">https://labs.asteriskinfosec.com.au/ntlm-relay-backflips/</a></p>
+<p>土豆</p>
+<p><a target="_blank" rel="noopener" href="https://foxglovesecurity.com/2016/01/16/hot-potato/">https://foxglovesecurity.com/2016/01/16/hot-potato/</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/7087#toc-3">https://xz.aliyun.com/t/7087#toc-3</a></p>
+<p><a target="_blank" rel="noopener" href="https://shenaniganslabs.io/2019/11/12/Ghost-Potato.html">https://shenaniganslabs.io/2019/11/12/Ghost-Potato.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://ohpe.it/juicy-potato/">https://ohpe.it/juicy-potato/</a></p>
+<p><a target="_blank" rel="noopener" href="https://3gstudent.github.io/3gstudent.github.io/Windows%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83%E5%B7%A5%E5%85%B7Juicy-Potato%E6%B5%8B%E8%AF%95%E5%88%86%E6%9E%90/">https://3gstudent.github.io/3gstudent.github.io/Windows%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83%E5%B7%A5%E5%85%B7Juicy-Potato%E6%B5%8B%E8%AF%95%E5%88%86%E6%9E%90/</a></p>
+<p><a target="_blank" rel="noopener" href="https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/">https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/</a></p>
+<p><a target="_blank" rel="noopener" href="https://decoder.cloud/2018/10/29/no-more-rotten-juicy-potato/">https://decoder.cloud/2018/10/29/no-more-rotten-juicy-potato/</a></p>
+<p><a target="_blank" rel="noopener" href="https://decoder.cloud/2019/12/06/we-thought-they-were-potatoes-but-they-were-beans/">https://decoder.cloud/2019/12/06/we-thought-they-were-potatoes-but-they-were-beans/</a></p>
+<p><a target="_blank" rel="noopener" href="https://decoder.cloud/2020/05/11/no-more-juicypotato-old-story-welcome-roguepotato/">https://decoder.cloud/2020/05/11/no-more-juicypotato-old-story-welcome-roguepotato/</a></p>
+<p><a target="_blank" rel="noopener" href="https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/">https://itm4n.github.io/printspoofer-abusing-impersonate-privileges/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/204510">https://www.anquanke.com/post/id/204510</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/87292">https://www.anquanke.com/post/id/87292</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/28/%E5%A7%94%E6%B4%BE%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/" rel="prev" title="委派基础与滥用（笔记）">
+      <i class="fa fa-chevron-left"></i> 委派基础与滥用（笔记）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/28/Kerberos%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/" rel="next" title="Kerberos 基础与滥用（笔记）">
+      Kerberos 基础与滥用（笔记） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NTLM-%E8%AE%A4%E8%AF%81"><span class="nav-number">1.</span> <span class="nav-text">NTLM 认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-Hash"><span class="nav-number">1.1.</span> <span class="nav-text">NTLM Hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.</span> <span class="nav-text">NTLM 认证流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Net-NTLM-Hash%EF%BC%88Response%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Net-NTLM Hash（Response）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A0%B4%E8%A7%A3-NTLM-hash%E3%80%81Net-NTLM-hash"><span class="nav-number">2.</span> <span class="nav-text">破解 NTLM hash、Net-NTLM hash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-The-Hash%EF%BC%88NTLM-hash%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Pass The Hash（NTLM hash）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NTLM-%E9%87%8D%E6%94%BE%EF%BC%88Net-NTLM-hash%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">NTLM 重放（Net-NTLM hash）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-%E9%87%8D%E6%94%BE%E5%9F%BA%E7%A1%80"><span class="nav-number">4.1.</span> <span class="nav-text">NTLM 重放基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9-NTLM-%E9%87%8D%E6%94%BE%E7%9A%84%E9%98%B2%E5%BE%A1%E6%8E%AA%E6%96%BD"><span class="nav-number">4.2.</span> <span class="nav-text">针对 NTLM 重放的防御措施</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A0%E5%AF%86%E4%B8%8E%E7%AD%BE%E5%90%8D"><span class="nav-number">4.2.1.</span> <span class="nav-text">加密与签名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E6%80%A7%E6%A0%A1%E9%AA%8C%EF%BC%88MIC%EF%BC%89"><span class="nav-number">4.2.2.</span> <span class="nav-text">完整性校验（MIC）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-%E9%87%8D%E6%94%BE%E5%88%B0%E6%9C%AC%E5%9C%B0%EF%BC%88%E5%9C%9F%E8%B1%86%E7%B3%BB%E5%88%97%EF%BC%89"><span class="nav-number">4.3.</span> <span class="nav-text">NTLM 重放到本地（土豆系列）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MS08-068"><span class="nav-number">4.3.1.</span> <span class="nav-text">MS08-068</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hot-Potato%EF%BC%88MS16-075%EF%BC%89"><span class="nav-number">4.3.2.</span> <span class="nav-text">Hot Potato（MS16-075）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ghost-Potato%EF%BC%88CVE-2019-1384%EF%BC%89"><span class="nav-number">4.3.3.</span> <span class="nav-text">Ghost Potato（CVE-2019-1384）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Rotten-Juicy-Potato"><span class="nav-number">4.3.4.</span> <span class="nav-text">Rotten&#x2F;Juicy Potato</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PrintSpoofer%EF%BC%88PipePotato%EF%BC%89"><span class="nav-number">4.3.5.</span> <span class="nav-text">PrintSpoofer（PipePotato）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%92%88%E5%AF%B9-juicy-rotten-Potato-%E7%9A%84%E9%98%B2%E5%BE%A1%E6%8E%AA%E6%96%BD%E5%8F%8A%E7%BB%95%E8%BF%87%E6%96%B9%E5%BC%8F"><span class="nav-number">4.3.6.</span> <span class="nav-text">针对 juicy&#x2F;rotten Potato 的防御措施及绕过方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SweetPotato%EF%BC%88RogueWinRM%EF%BC%89"><span class="nav-number">4.3.7.</span> <span class="nav-text">SweetPotato（RogueWinRM）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RoguePotato"><span class="nav-number">4.3.8.</span> <span class="nav-text">RoguePotato</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%9F%E8%B1%86%E7%B3%BB%E5%88%97%E6%80%BB%E7%BB%93"><span class="nav-number">4.3.9.</span> <span class="nav-text">土豆系列总结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-%E9%87%8D%E6%94%BE%E5%88%B0%E5%85%B6%E4%BB%96%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">4.4.</span> <span class="nav-text">NTLM 重放到其他服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NTLM-%E9%87%8D%E6%94%BE%E5%88%B0%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">4.4.1.</span> <span class="nav-text">NTLM 重放到不同类型的服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2015-0005"><span class="nav-number">4.4.2.</span> <span class="nav-text">CVE-2015-0005</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MS15-027"><span class="nav-number">4.4.3.</span> <span class="nav-text">MS15-027</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2018-8581%EF%BC%88SSRF-NTLM-Relay%EF%BC%89"><span class="nav-number">4.4.4.</span> <span class="nav-text">CVE-2018-8581（SSRF + NTLM Relay）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2019-1019"><span class="nav-number">4.4.5.</span> <span class="nav-text">CVE-2019-1019</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CVE-2019-1040"><span class="nav-number">4.4.6.</span> <span class="nav-text">CVE-2019-1040</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="T4nglong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">T4nglong</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">T4nglong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

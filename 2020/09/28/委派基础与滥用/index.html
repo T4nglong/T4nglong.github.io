@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本章主要介绍委派的基础与滥用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="委派基础与滥用（笔记）">
+<meta property="og:url" content="http://example.com/2020/09/28/%E5%A7%94%E6%B4%BE%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/index.html">
+<meta property="og:site_name" content="T4nglong&#39;s Blog">
+<meta property="og:description" content="本章主要介绍委派的基础与滥用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-28T11:11:10.365Z">
+<meta property="article:author" content="T4nglong">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/28/%E5%A7%94%E6%B4%BE%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>委派基础与滥用（笔记） | T4nglong's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">T4nglong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/28/%E5%A7%94%E6%B4%BE%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="T4nglong">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="T4nglong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          委派基础与滥用（笔记）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-28 00:00:00 / 修改时间：19:11:10" itemprop="dateCreated datePublished" datetime="2020-09-28T00:00:00+08:00">2020-09-28</time>
+            </span>
+
+          
+            <div class="post-description">本章主要介绍委派的基础与滥用</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="委派简介"><a href="#委派简介" class="headerlink" title="委派简介"></a>委派简介</h2><p>Kerberos 是一种身份验证协议，使得用户可以使用由域控制器发放的票据向服务证明其身份；</p>
+<p>而 Kerberos 委派用于多层应用程序/服务的情况，服务可代表用户访问另一个服务。</p>
+<p><strong>委派的作用：</strong>通过委派，资源服务可以知道是谁在访问它，以及是否有权限访问。</p>
+<h3 id="委派的案例"><a href="#委派的案例" class="headerlink" title="委派的案例"></a>委派的案例</h3><p>用户访问 Web 应用程序，Web 应用程序需要调用资源数据库中的数据，此处有三个角色：1）浏览网站的用户；2）Web 应用程序（运行在 Web 服务帐户上）；3）资源数据库。</p>
+<p><strong>委派的实际案例</strong></p>
+<p>1）用户访问 Web 应用程序，需要进行身份验证；</p>
+<p>2）由于 Web 应用程序需要调用数据库中的数据，所以，数据库需要为 Web 服务账户授予足够的访问权限；</p>
+<p>3）由于数据库需要知道客户端用户是否具有访问数据的权限，所以我们需要为 Web 服务帐户配置委派，让其可以代表客户端用户访问数据库，这样数据库便可以判断客户端用户是否具备访问权限。</p>
+<p>如果没有委派，数据库将无法知道哪个用户在访问其中数据，因为在之前数据库已经授予了 Web 服务账户具有足够的访问权限。</p>
+<p><strong>备注：</strong>票据中包含用户的 SID 信息。</p>
+<h3 id="用户-UserAccountControl-属性"><a href="#用户-UserAccountControl-属性" class="headerlink" title="用户 UserAccountControl 属性"></a>用户 UserAccountControl 属性</h3><p>所有的活动目录安全主体（对象）都具有 UserAccountControl 属性。这个属性是一个位集，这意味着每个二进制数字都有一个特定的含义。这些位值在 Windows SDK 的 lmaccess.h 中定义。关于委派的有以下几个：</p>
+<p><strong>Not_Delegation（敏感账户，不能被委派）</strong></p>
+<p>KDC 通过该标志判断用户是否允许被委派。</p>
+<p><strong>Trusted_For_Delegation（不受限委派）</strong></p>
+<p>KDC 通过该标志判断是否应用不受限委派（是否将用户的 TGT 副本放入返回的 TGS 中）。</p>
+<p><strong>Trusted_To_Auth_For_Delegation（T2A4D）（受限委派-启用协议转换）</strong></p>
+<p>在 S4U2Self 中，KDC 通过该标志判断是否应用受限委派并启用协议转换（是否返回可转发 TGS ）。</p>
+<p><strong>注意：</strong>用户账户的 UserAccountControl 属性与 Windows UAC 机制不同，它设置活动目录总账户的特定属性，如：账户是否被禁言、锁定，密码是否会过期等等。</p>
+<h3 id="用户属性"><a href="#用户属性" class="headerlink" title="用户属性"></a>用户属性</h3><p><strong>msDs-AllowedToDelegateTo（受限委派-仅允许委派到哪些服务）</strong></p>
+<p>在 S4U2Proxy 中，KDC 通过该属性判断是否应用受限委派，以及服务账户允许代表用户访问哪些服务。</p>
+<p><strong>msDs-AllowedToActOnBehalfOfOtherIdentity（基于资源的受限委派-哪些账户可以代表其他用户访问我）</strong></p>
+<p>在 S4U2Proxy 中，KDC 通过该属性判断是否应用基于资源的受限委派，以及哪些账户能访问目标服务。</p>
+<h2 id="不受限委派"><a href="#不受限委派" class="headerlink" title="不受限委派"></a>不受限委派</h2><p>Windows Server 2000 中引入不受限委派，是 Windows Server 2000 中委派的唯一选项，出于向后兼容原因，后续版本也保留了该功能</p>
+<p><strong>配置：</strong>域管理员可以在 用户/计算机 属性的委派选项卡选择 “信任此用户/计算机来委派任何服务” 进行配置。</p>
+<p><strong>作用：</strong>该类型委派允许服务账户可以代表用户访问任意服务。</p>
+<p><strong>Trusted_For_Delegation</strong></p>
+<ul>
+<li>当一个账户配置为 “信任此计算机/用户来委派任何服务” 时，该账户的 UserAccountControl 属性中将包含此字段</li>
+<li>KDC 通过该字段判断服务是否配置为 “不受限委派”，并决定是否在（TGS_REP）返回的 TGS 中包含用户的 TGT</li>
+<li>修改用户 UserAccountControl 属性中将包含此字段需要具备 SeEnableDelegationPrivilege 权限</li>
+</ul>
+<h3 id="不受限委派的流程"><a href="#不受限委派的流程" class="headerlink" title="不受限委派的流程"></a>不受限委派的流程</h3><p>1）TGS_REQ：用户向 KDC 发送 TGT 请求服务的 TGS；</p>
+<p>2）KDC 判断：服务账户 UAC 属性中是否含有 TrustedForDelegation 标志（如果是）</p>
+<p>3）TGS_REP：KDC 把包含用户 TGT 的 TGS 返回给用户</p>
+<p>4）AP_REQ：用户使用该 TGS 访问服务</p>
+<p>服务账户在接收到该 TGS 后，获取到其中的用户 TGT，将用户 TGT 放入 LSASS 中存储供后续使用；</p>
+<p>后续，服务账户可以使用用户的 TGT 代表该用户向 KDC 请求其他任意服务的 TGS。</p>
+<h2 id="受限委派"><a href="#受限委派" class="headerlink" title="受限委派"></a>受限委派</h2><p>为解决不受限委派所存在的安全问题，Windows Server 2003 中引入受限委派，该委派类型包括一组称为 S4U2Self 和 S4U2Proxy 的 Kerberos 协议扩展，这些扩展还支持 “协议转换” 功能。</p>
+<p><strong>配置：</strong>域管理员可以在 用户/计算机 属性的委派选项卡选择 “仅信任此用户/计算机来委派指定的服务” 进行配置，并通过添加服务主体名称（SPN）来指定允许访问的服务。</p>
+<p><strong>作用：</strong>该类型委派仅允许服务账户可以代表用户访问指定服务。</p>
+<p><strong>用户属性 msDs-AllowedToDelegateTo</strong></p>
+<ul>
+<li>这是服务账户（通常是计算机或用户账户）对象的属性</li>
+<li>它包含一个服务主体名称（SPN）列表，表示账户可以将用户 token 转发给哪些指定的 kerberos 服务</li>
+<li>修改该属性需要在域控中具有 SeEnableDelegationPrivilege 权限</li>
+</ul>
+<p>备注：如果域林中所有域控制器均为 Windows Server 2012 及以后版本，该类型的委派可以跨域。</p>
+<h2 id="基于资源的受限委派"><a href="#基于资源的受限委派" class="headerlink" title="基于资源的受限委派"></a>基于资源的受限委派</h2><p>Windows Server 2012 中引入基于资源的受限委派。该类型委派中，目标服务可以指定哪些账户可代表其他用户访问自身。</p>
+<p><strong>配置：</strong>账户可以根据需要，编辑可代表其他用户访问自身的账户列表，此列表用于基于资源的受限委派。</p>
+<p><strong>注意：</strong>它的配置方向与传统受限委派刚好相反，传统受限委派是允许服务账户代表用户访问那些目标服务，而基于资源的受限委派是目标服务允许哪些账户可以代表用户访问自身。</p>
+<p><strong>用户属性 msDs-AllowedToActOnBehalfOfOtherIdentity</strong></p>
+<ul>
+<li>这是服务账户（通常是计算机或用户账户）对象的属性</li>
+<li>该属性包含一个账户列表，以确定请求者是否能够代表其他用户身份访问自身账户所运行的服务</li>
+<li>通常在后端资源数据库的服务账户上进行配置，指定哪些中间层服务可以代表用户向 KDC 请求访问数据库服务的票据</li>
+</ul>
+<h2 id="S4U2Self（ServiceForUserToSelf）"><a href="#S4U2Self（ServiceForUserToSelf）" class="headerlink" title="S4U2Self（ServiceForUserToSelf）"></a>S4U2Self（ServiceForUserToSelf）</h2><p>该扩展是为了允许服务委派不支持 kerberos 认证的用户，也就是说，服务可以在不从客户端用户处获得 TGS 的情况下，代表（已通过其他方式经过认证的）用户向 KDC 请求一个用于访问自身的 TGS。</p>
+<p><strong>简单来说：</strong>用户通过其他方式（非 kerberos 的方式）对服务进行认证，服务仍然可以代表该用户向 KDC 请求访问自身的 TGS。</p>
+<h3 id="S4U2Self-流程"><a href="#S4U2Self-流程" class="headerlink" title="S4U2Self 流程"></a>S4U2Self 流程</h3><p>用户已通过非 Kerberos 方式对服务进行身份验证（例如：已通过 NTLM 进行认证 ）</p>
+<p>1）TGS_REQ：服务账户使用自身 TGT 代表用户向 KDC 请求一个访问自身的 TGS</p>
+<p>2）KDC 判断：1. 服务账户是否为服务的所有者（是）；2. 服务账户 UAC 属性是否含有 TrustedToAuthForDelegation 标志（是）</p>
+<p>3）TGS_REP：KDC 向服务返回一个可转发的 TGS（该 TGS 可以在 S4U2Proxy 中使用）</p>
+<p><strong>解释：</strong></p>
+<p>第一步中：一个用户可以为其他任意用户执行 S4U2Self 过程，需要提供用户的名称，不需要提供该用户的密码。</p>
+<p>第三步中：如果该账户没有服务，KDC 将不返回 TGS （所以只有设置了 SPN 的账户才能执行 S4U2Self）。请求的账户 userAccountControl 属性中如果包含 TrustedToAuthForDelegation 标志，KDC 将返回可转发 TGS，如果没有该标志，那么 KDC 将返回 不可转发 TGS。</p>
+<p>第四步中：如果用户不允许被委派（敏感账户或受保护用户组成员），KDC 将返回一个不可转发 TGS。</p>
+<p><strong>Trusted_To_Auth_For_Delegation（T2A4D）</strong></p>
+<p>当账户配置为 “仅信任此计算机来委派指定的服务 - 使用任何身份验证协议” 时，该账户的 UserAccountControl 属性中将包含该字段。</p>
+<p>当账户配置为 “仅信任此计算机来委派指定的服务 - 仅 kerberos ” 时，该账户的 UserAccountControl 属性中将不包含该字段。</p>
+<p><strong>作用：</strong>该字段表明为受限委派 “启用协议转换”，允许用户通过非 kerberos 方式对服务账户进行认证的情况下，服务账户能够执行 S4U2Self，代表用户向 KDC 请求一个访问自身的 TGS。</p>
+<p><strong>协议转换：</strong>用户使用非 kerberos 方式进行认证，执行 S4U2Self 后，服务可获得了用户身份的 票据。</p>
+<p><strong>备注：</strong>修改 Trusted_To_Auth_For_Delegation 字段需要具备 SeEnableDelegationPrivilege 特权。</p>
+<h2 id="S4U2Proxy（ServiceForUserToProxy）"><a href="#S4U2Proxy（ServiceForUserToProxy）" class="headerlink" title="S4U2Proxy（ServiceForUserToProxy）"></a>S4U2Proxy（ServiceForUserToProxy）</h2><p>该扩展允许服务账户使用（用户身份的） TGS 代表用户向 KDC 请求访问目标服务的 TGS。</p>
+<h3 id="S4U2Proxy-流程"><a href="#S4U2Proxy-流程" class="headerlink" title="S4U2Proxy 流程"></a>S4U2Proxy 流程</h3><p>用户将 TGS 发送给服务，或者服务通过 S4U2Self 获得用户身份的 TGS</p>
+<p>1）TGS_REQ：服务账户使用用户身份的 TGS 代表用户向 KDC 请求目标服务的 TGS</p>
+<p>2-1）KDC 判断：1. 服务账户 msDs-AllowedToDelegateTo 属性的 SPN 列表中是否有目标服务 SPN（是）。2. TGS 是否是可转发的（是，则应用受限委派）</p>
+<p>2-2）KDC 判断：1. 服务账户 msDs-AllowedToDelegateTo 属性的 SPN 列表中是否有目标服务 SPN（否，不应用受限委派）。2. 目标服务账户 msDS-AllowedToActOnBehalfOfOtherIdentity 属性的账户列表中是否有服务账户（是，则应用基于资源的受限委派）</p>
+<p>3）TGS_REP：KDC 向服务返回可转发 TGS （用户身份）</p>
+<p>4）AP_REQ：服务账户使用该 TGS 代表用户访问目标服务</p>
+<p><strong>解释：</strong></p>
+<p>第二步中：受限委派优先于基于资源的受限委派进行判断；因此如果在第一种情况中，如果 TGS 没有可转发标志，则失败；另外，第二种情况中，基于资源的受限委派不需要可转发标志；如果以上两种情况都为否，则失败。</p>
+<p>第三步中：S4U2Proxy 总是返回可转发 TGS。</p>
+<h2 id="基础回顾"><a href="#基础回顾" class="headerlink" title="基础回顾"></a>基础回顾</h2><p>服务账户配置为 ”信任此用户/计算机来委派任何服务“，服务账户 UAC 属性中含有 TrustedForDelegation 标志</p>
+<p>服务账户配置为 “仅信任此用户/计算机来委派指定的服务”，服务账户 msDS-AllowedToDelegateTo 属性包含能访问的 SPN 列表</p>
+<p>服务账户配置为 “仅信任此用户/计算机来委派指定的服务 - 仅 kerberos”，服务账户 UAC 属性中没有 T2A4D 标志</p>
+<p>服务账户配置为 “仅信任此用户/计算机来委派指定的服务 - 任何身份验证协议”，服务账户 UAC 属性含有 T2A4D 标志，启用 “协议转换”</p>
+<ul>
+<li>KDC 会检查是否有该标志，如果没有则返回不可转发 TGS，如果有则返回可转发 TGS</li>
+</ul>
+<p><strong>S4U2Proxy</strong></p>
+<p>服务账户 msDS-AllowedToDelegateTo 属性的 SPN 列表中是否具有 目标服务 的 SPN：</p>
+<ul>
+<li>如果收到的 TGS 设置了可转发标志，KDC 将返回一个可转发 TGS，并应用受限委派</li>
+<li>如果收到的 TGS 没设置可转发标志，则请求失败</li>
+</ul>
+<p>服务账户 msDs-AllowedToActOnBehalfOfOtherIdentity 属性的 账户列表中是否存在 请求方账户，判断是否应用 “基于资源的受限委派”</p>
+<ul>
+<li>无论收到的 TGS 是否设置可转发标志，都应用基于资源的受限委派，并返回一个可转发 TGS</li>
+</ul>
+<h2 id="不受限委派的滥用"><a href="#不受限委派的滥用" class="headerlink" title="不受限委派的滥用"></a>不受限委派的滥用</h2><p>滥用不受限委派的主要因素在于能获得认证用户的 TGT，并将其重用。</p>
+<h3 id="滥用-不受限委派-结合-打印机漏洞，实现-RCE"><a href="#滥用-不受限委派-结合-打印机漏洞，实现-RCE" class="headerlink" title="滥用 不受限委派 结合 打印机漏洞，实现 RCE"></a>滥用 不受限委派 结合 打印机漏洞，实现 RCE</h3><p><strong>打印机漏洞简介：</strong>通过 PRC 调用 RpcRemoteFindFirstPrinterChangeNotification（Opnum 62）来欺骗受害主机的打印机后台程序通过 SMB 连接我们指定的 IP/主机名</p>
+<p><strong>前提：</strong>我们已经控制配置了 “不受限委派” 的 计算机/用户</p>
+<p><strong>利用流程</strong></p>
+<p>0）我们可以先通过 powershell Get-ADComputer 查看该账户是否配置了 “不受限委派”</p>
+<p>1）使用 Rubeus 的 monitor 模块（该模块在滥用不受限委派中非常有用）监听本地新登录事件，并获取 TGT</p>
+<p>2）运行 SpoolSample 或 dementor.py 操作目标主机的打印机后台程序访问我们的已控机器</p>
+<p>3）我们使用的从监听处获得的 TGT 代表本地管理员执行 S4U 请求访问目标主机的 TGS</p>
+<p>4）通过 pass the ticket 的方式将获得的 TGS 注入到当前会话中，并访问目标主机</p>
+<h2 id="受限委派的滥用"><a href="#受限委派的滥用" class="headerlink" title="受限委派的滥用"></a>受限委派的滥用</h2><h3 id="滥用-受限委派"><a href="#滥用-受限委派" class="headerlink" title="滥用 受限委派"></a>滥用 受限委派</h3><p><strong>前提：</strong>我们已控制 配置了 “受限委派” 的计算机/用户账户，以及该账户的密码明文或 hash</p>
+<p><strong>利用流程</strong></p>
+<p>1）通过 powerview 查看该账户 msDs-AllowedToDelegateTo 属性的值</p>
+<p>2）使用该账户的凭证执行 asktgt，请求一个 TGT</p>
+<p>3）通过上一步获得的 TGT 执行 S4U，代表管理员请求一个访问目标服务的 TGS</p>
+<p>4）通过 pass the ticket 的方式将获得的 TGS 注入到当前会话中，便可访问目标</p>
+<h3 id="滥用-用户权限-SeEnableDelegationPrivilege"><a href="#滥用-用户权限-SeEnableDelegationPrivilege" class="headerlink" title="滥用 用户权限 SeEnableDelegationPrivilege"></a>滥用 用户权限 SeEnableDelegationPrivilege</h3><p><strong>SeEnableDelegationPrivilege 权限简介：</strong>默认情况下，只有域管理员（或类似级别）具备该权限。该权限可以修改其他账户 UAC 属性中 Trusted_For_Delegation 和 Trusted_For_Auth_To_Delegation 字段，以及其他账户 msDS-AllowedToDelegateTo 属性的值。</p>
+<p><strong>前提：</strong>我们已经控制具备该权限的账户，并且该账户对其他域用户具备 GenericAll / GenericWrite 等权限；以及另一个已控的域用户X</p>
+<p><strong>利用流程</strong></p>
+<p>1）通过域管账户修改 用户X 的 msDS-AllowedToDelegateTo 属性的值，再其中添加想要访问的任何目标服务</p>
+<p>2）使用 用户X 的凭证 执行 asktgt 请求一个 TGT</p>
+<p>3）使用上一步获得的 TGT 执行 S4U，代表管理员请求一个访问目标服务的 TGS</p>
+<p>4）通过 pass the ticket 的方式将获得的 TGS 注入到当前会话中，并访问目标</p>
+<p><strong>备注：</strong>如果添加的目标服务为 LDAP，我们可通过访问 LDAP 服务修改我们的 ACL，以具备 DCSync 的权限</p>
+<h2 id="基于资源的受限委派的滥用"><a href="#基于资源的受限委派的滥用" class="headerlink" title="基于资源的受限委派的滥用"></a>基于资源的受限委派的滥用</h2><p>由于修改目标对象的 msds-allowedtoactonbehalfofotheridentity 属性需要对目标对象具备 GenricAll、GenricWrite、WriteDACL 等权限，所以我们可以基于 ACL 修改目标对象的 msds-allowedtoactonbehalfofotheridentity 属性的值，在其中添加我们已控的账户，使我们对目标具有访问权限。</p>
+<p><strong>备注：</strong>如果我们已控的账户有 T2A4D 标志，那么执行 S4U2Self 获得的 TGS 是可转发；如果我们已控的账户没有 T2A4D（例如：通过滥用 MachineAccountQuota 创建的账户），那么执行 S4U2Self 获得的 TGS 是不可转发的，但是 基于资源的受限委派是可以接收不可转发的 TGS的；并且 S4U2Proxy 总是访问一个 可转发的 TGS。</p>
+<p><strong>基于 ACL 的滥用：</strong>对目标对象具有相应的DACL（如 GenericWrite 等）是发起基于 ACL 利用的最重要的条件；如果我们不具备，可尝试通过 NTLM 重放攻击，将 NTLM 认证信息重放到 LDAP 服务器上，以便让我们具有相应的 ACL ，对目标对象配置基于资源的受限委派。</p>
+<h3 id="基于-ACL，滥用-基于资源的受限委派，实现计算机对象的接管"><a href="#基于-ACL，滥用-基于资源的受限委派，实现计算机对象的接管" class="headerlink" title="基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管"></a>基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管</h3><p><strong>前提：</strong></p>
+<p>1）我们已经控制一个具备相关 DACL 的计算机/用户，它对目标计算机对象具备 GenricAll、GenricWrite、WriteDACL 等权限，允许我们修改/编辑 目标计算机对象的 msds-allowedtoactonbehalfofotheridentity 安全标识符；</p>
+<p>2）我们已经控制一个具有 T2A4D 标志的账户；</p>
+<p><strong>利用流程</strong></p>
+<p>0）在实施利用前，我们需要确认一下 已控账户对目标对象具备相应的 DACL（GenericWrite）等权限，以及具有 T2A4D 标志的账户。</p>
+<p>1）将具有 T2A4D 标志的账户添加到 目标对象 msds-allowedtoactonbehalfofotheridentity 属性的 列表中。</p>
+<p>2）我们使用具有 T2A4D 标志的账户 代表管理员 执行 S4U 请求目标对象的 TGS。</p>
+<p>3）通过 pass the ticket 的方式将票据注入到当前会话中，并访问目标。</p>
+<p>清理痕迹：完成利用之后，需要重置目标对象的 msds-allowedtoactonbehalfofotheridentity 安全描述符。</p>
+<h3 id="基于-ACL，滥用-基于资源的受限委派，实现计算机对象的接管（绕过-T2A4D-的限制）"><a href="#基于-ACL，滥用-基于资源的受限委派，实现计算机对象的接管（绕过-T2A4D-的限制）" class="headerlink" title="基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管（绕过 T2A4D 的限制）"></a>基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管（绕过 T2A4D 的限制）</h3><p><strong>前提：</strong></p>
+<p>1）与上一个利用方式一样，我们需要控制一个对目标对象具备相关 ACL 的账户；</p>
+<p>2）我们通过滥用 MachineAccountQuota 创建一个计算机账户，并设置默认 SPN；该账户没有 T2A4D 标志。</p>
+<p><strong>解释：</strong>这里我们不需要控制一个具备 T2A4D 标志的账户，而是自创建一个具备 SPN 的计算机账户来执行 S4U；虽然该账户没有 T2A4D 标志，S4U2Self 返回的 TGS 是不可转发的，但是基于资源的受限委派是可以接收的（之前多次提到过）。</p>
+<p><strong>利用流程</strong></p>
+<p>0）先使用 powerview Get-DomainObjectACL 确定我们已控账户对目标对象具备相关的 ACL；</p>
+<p>1）使用 powermad New-MachineAccount 创建一个计算机对象，并设置默认的 SPN；</p>
+<p>2）将创建的计算机对象添加到 目标对象 msds-allowedtoactonbehalfofotheridentity 属性的 账户列表中（最后确认下是否成功添加）</p>
+<p>3）通过创建的对象 代表管理员执行 S4U，获取访问目标对象的 TGS</p>
+<p>4）通过 pass the ticket 的方式将票据注入到当前会话中，并访问目标。</p>
+<p><strong>备注：</strong>域中的 MachineAccountQuota 默认设置为10，这意味着普通域用户可以最多创建10个新的计算机账户。</p>
+<h3 id="基于-ACL，滥用-基于资源的受限委派，实现计算机对象的接管（跳过-S4U2Self）"><a href="#基于-ACL，滥用-基于资源的受限委派，实现计算机对象的接管（跳过-S4U2Self）" class="headerlink" title="基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管（跳过 S4U2Self）"></a>基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管（跳过 S4U2Self）</h3><p><strong>前提：</strong></p>
+<p>1）与上两个利用方式一样，我们需要控制一个对目标对象具备相关 ACL 的账户；</p>
+<p>2）我们需要通过社工或水坑等攻击方式来获得用户的 TGS，从而跳过 S4U2Self 步骤，直接执行 S4U2Proxy。</p>
+<p><strong>利用流程</strong></p>
+<p>1）我们通过各种攻击方式，使受害者访问我们的已控主机（例如：cifs、http）</p>
+<p>2）使用 mimikatz 或 Rubeus 的票据导出模块，导出受害者的 TGS</p>
+<p>3）将已控账户添加到 目标对象 msds-allowedtoactonbehalfofotheridentity 属性的 账户列表中</p>
+<p>4）使用受害者的 TGS 执行 S4U2Proxy，请求访问目标对象的 TGS</p>
+<p>5）通过 pass the ticket 的方式将票据注入到当前会话中，并访问目标。</p>
+<h3 id="反射型-基于资源的受限委派（类似白银票据）"><a href="#反射型-基于资源的受限委派（类似白银票据）" class="headerlink" title="反射型 基于资源的受限委派（类似白银票据）"></a>反射型 基于资源的受限委派（类似白银票据）</h3><p><strong>白银票据简介</strong></p>
+<p>银票：在获得服务账户的密码 Hash 的情况下，伪造仅能访问该服务自身的高权限 TGS</p>
+<p>银票存在的问题：没有有效 KDC 签名的 PAC，所以在 KDC 校验 PAC 签名的情况下，银票失效</p>
+<p><strong>反射型 基于资源的受限委派</strong></p>
+<p>默认下，所有的服务都有一个访问控制条目（ACE），允许它们配置能访问自身的账户，也就是基于资源的受限委派；所以，如果我们获取了一个服务账户的凭证，可以配置基于资源的受限委派，允许服务账户访问自身服务</p>
+<p><strong>前提：</strong>我们已经获得一个服务账户的凭证（hash）或者 TGT</p>
+<p><strong>利用流程</strong></p>
+<p>1）使用 asktgt 通过获得的凭证 请求一个 TGT，并通过 pass the ticket 的方式将票据注入当前会话</p>
+<p>2）将自身账户添加到 自身 msds-allowedtoactonbehalfofotheridentity 属性的 账户列表中</p>
+<p>3）通过自身账户的凭证，代表管理员用户执行 S4U，请求自身服务的 TGS</p>
+<p>4）通过 pass the ticket 的方式将票据导入当前会话，访问自身服务</p>
+<p><strong>备注：</strong>如果该账户具有 T2A4D 标志，S4U2Self 返回的 TGS 是可转发的（除非管理员是敏感账户）；但是如果账户没有 T2A4D 标志，那么 S4U2Self 返回的 TGS 是不可转发的，该票据仅能应用于基于资源的受限委派；但是，由于传统受限委派优先判断，那么如果账户 msDS-AllowedToDelegateTo 非空，则 S4U2Proxy。</p>
+<h3 id="滥用-基于资源的受限委派，实现域维持访问（类似黄金票据）"><a href="#滥用-基于资源的受限委派，实现域维持访问（类似黄金票据）" class="headerlink" title="滥用 基于资源的受限委派，实现域维持访问（类似黄金票据）"></a>滥用 基于资源的受限委派，实现域维持访问（类似黄金票据）</h3><p>如果我们已经已经拿下域控，便可以在域控上配置基于资源的受限委派，允许指定的账户能够访问 krbtgt 服务。</p>
+<p><strong>前提：</strong>已经获得域管理员凭证</p>
+<p><strong>利用流程</strong></p>
+<p>1）将账户X 添加到 krbtgt 账户 msds-allowedtoactonbehalfofotheridentity 属性的 账户列表中</p>
+<p>2）使用账户X 的凭证，代表管理员执行 S4U，请求 krbtgt 服务的 TGS</p>
+<p>3）使用获得的 TGS 执行 asktgs，请求任意服务的 TGS</p>
+<p>4）通过 pass the ticket 的方式将票据导入当前会话，访问目标服务</p>
+<p><strong>备注：</strong>krbtgt 账户的 TGS 等效于 TGT，因为它可以为任意用户生成 TGT。</p>
+<h2 id="委派的组合滥用"><a href="#委派的组合滥用" class="headerlink" title="委派的组合滥用"></a>委派的组合滥用</h2><h3 id="滥用-基于资源的受限委派，访问另一个配置了-“传统受限委派”-服务所允许访问的服务"><a href="#滥用-基于资源的受限委派，访问另一个配置了-“传统受限委派”-服务所允许访问的服务" class="headerlink" title="滥用 基于资源的受限委派，访问另一个配置了 “传统受限委派” 服务所允许访问的服务"></a>滥用 基于资源的受限委派，访问另一个配置了 “传统受限委派” 服务所允许访问的服务</h3><p>在滥用基于资源的受限委派中，我们在执行 S4U2Proxy 后总是会收一个可转发 TGS，所以我们可以利用该 TGS，访问到另一个配置了 “传统受限委派” 服务；并且通过该 TGS 再次执行 S4U2Proxy，请求该服务 msDs-AllowedToDelegateTo 属性中的 SPN/服务 的 TGS。</p>
+<p><strong>前提：</strong></p>
+<p>1）我们需要能够修改 “受限委派” 服务账户的 msds-allowedtoactonbehalfofotheridentity 属性的值（具备 ACL）；</p>
+<p>2）我们已经获得 “受限委派” 服务账户的凭证或者 TGT</p>
+<p><strong>利用流程</strong></p>
+<p>1）使用 powermad New-MachineAccount 创建一个计算机对象，并设置默认的 SPN</p>
+<p>2）将创建的账户添加到 “受限委派”  服务账户 msds-allowedtoactonbehalfofotheridentity 属性的 账户列表中</p>
+<p>3）使用新建账户的凭证，代表管理员执行 S4U，请求 “受限委派” 服务的 TGS（可转发）</p>
+<p>4）使用 “受限委派”  服务账户的凭证，以及上一步获得的 TGS ，代表管理员执行 S4U2Proxy，请求 “受限委派”  服务账户 msDs-AllowedToDelegateTo 属性 列表中的任意服务 TGS</p>
+<p>5）通过 pass the ticket 的方式将票据导入当前会话，访问目标</p>
+<h3 id="NTLM-重放-基于资源的受限委派，实现-RCE-LPE"><a href="#NTLM-重放-基于资源的受限委派，实现-RCE-LPE" class="headerlink" title="NTLM 重放 + 基于资源的受限委派，实现 RCE/LPE"></a>NTLM 重放 + 基于资源的受限委派，实现 RCE/LPE</h3><p>这里其实就是在我们没有具备 ACL，不能修改目标对象 msds-allowedtoactonbehalfofotheridentity 属性的情况下，通过 NTLM 重放攻击，将 NTLM 认证信息重放到 LDAP 服务器上，以便对目标配置 “基于资源的受限委派”。</p>
+<p><strong>NTLM 重放简介</strong></p>
+<p>NTLM 重放就是将获取到的用户 NTLM 认证信息（Net-NTLM Hash）重放到发起主机自身或其他机器上进行认证。</p>
+<p><strong>获取 NTLM 认证信息</strong></p>
+<p>我们可以通过各种方式来触发计算机账户通过 HTTP 对我们已控机器发起身份验证，在土豆系列中有很多种方式来获取 NTLM 认证信息（详见 ”滥用 NTLM“ ）；另外，我们也可以选择那些可以通过 UNC 路径来触发 NTLM 认证的方式：</p>
+<p><strong>内网中的自动身份验证</strong></p>
+<p>在内网中，默认情况下，Web 客户端只会对内网中的主机进行自动身份验证，因此主机名中不能出现 ”.“，所以我们设置监听（执行重放）的主机需要在内网中拥有一个合法的 DNS 记录（而不能仅仅只有一个 IP）。</p>
+<p>我们可以通过 滥用 ADIDNS 来为我们设置的监听/重放服务器添加一个新的 DNS 记录</p>
+<p><strong>第一部分：NTLM 重放攻击部分</strong></p>
+<p>我们一般是通过漏洞或其他方式，使某个高权限的账户对我们设置的监听/重放服务器发起 NTLM 认证，我们在获得该账户的 NET-NTLM Hash 后，将其重放到域控制器的 LDAP 服务上，以便让我们具有相应的 ACL 来对目标配置 基于资源的受限委派。举例：</p>
+<p>1-1）我们登录 MSSQL 服务，通过调用 xp_dirtree 触发一个到我们恶意 WebDAV 中继服务器的连接，获得 NTLM 认证信息</p>
+<p><strong>备注：</strong>xp_dirtree ：xp_dirtree 是 MSSQL 中的一个存储过程，它可以使 SQL 服务对提供的文件路径进行目录遍历。</p>
+<p>1-2）通过内网中的各种 Web 漏洞或其他方式，触发一个到我们设置的 中继服务器 的连接，获得 NTLM 认证信息</p>
+<p>2）我们将获得的 NTLM 认证信息（Net-NTLM Hash）重放到 域控制器的 LDAP 服务上，并配置已控账户到目标的基于资源的受限委派</p>
+<p><strong>第二部分：基于资源的受限委派部分</strong></p>
+<p>3）我们使用已控账户的凭证来执行 S4U，代表管理员请求到自身服务的 TGS（不可转发），使用该票据请求到目标的 TGS</p>
+<p>4）通过 pass the ticket 的方式将票据导入当前会话，访问目标</p>
+<p><strong>备注：</strong>不同情况下需要具备不同的前提条件，例如，我们要调用 MSSQL 的 xp_dirtree，那么就需要获取该服务的凭证；通过各种 web 漏洞，肯定需要去发现漏洞；执行 S4U 的账户可以提前通过滥用 MachineAccountQuota 创建（或其他方式获取具有 SPN 的账户也行）。</p>
+<h2 id="其他绕过技巧"><a href="#其他绕过技巧" class="headerlink" title="其他绕过技巧"></a>其他绕过技巧</h2><h3 id="绕过-msDs-AllowedToDelegateTo-白名单限制"><a href="#绕过-msDs-AllowedToDelegateTo-白名单限制" class="headerlink" title="绕过 msDs-AllowedToDelegateTo 白名单限制"></a>绕过 msDs-AllowedToDelegateTo 白名单限制</h3><p>KRB_CRED 文件中的服务名称（sname）不受保护，只有服务器名称受保护，这意味着我们可以替换服务名称。因此，如果有两个服务（服务A、服务B）注册在同一个服务账户（账户X）下，而我们仅能访问某个在 msDs-AllowedToDelegateTo 属性中的服务A，却访问不了同样注册在 账户X 下的另一个 服务B，此时，我们可以先请求服务A 的 TGS，然后修改 TGS 中的 服务名称（sname），便可以访问到服务B 了。</p>
+<p><strong>结论：</strong>我们可以通过修改 TGS 的 sname，来访问注册在同一账户下的其他任意服务。</p>
+<p><strong>备注：</strong>服务主体名称（SPN）在票据的明文部分，是可以修改的。</p>
+<h3 id="绕过敏感账户限制"><a href="#绕过敏感账户限制" class="headerlink" title="绕过敏感账户限制"></a>绕过敏感账户限制</h3><p>如果代表的用户是敏感账户或受保护用户组成员，那么在 S4U2Self 处获得的 TGS 是不可转发的，并且没有有效的 SPN，所以使用该 TGS 执行 S4U2Proxy 是失败的；但是，我们可以使用 ASN.1 编辑器修改 S4U2Self 处获得的 TGS ，赋予有效的 SPN，于是该 TGS 可以在 S4U2Proxy 中使用（基于资源的受限委派）。</p>
+<p>我们可以先将票据的 Base64 blob 转换为文件，然后使用 ASN.1 编辑器修改</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="type">IO.File</span>]::WriteAllBytes(<span class="string">&quot;c:\Users\popo\Desktop\xxx.kirbi&quot;</span>,[<span class="type">Convert</span>]::FromBase64String(<span class="string">&quot;&lt;ticket base64&gt;&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://medium.com/@markmotig/how-to-capture-mssql-credentials-with-xp-dirtree-smbserver-py-5c29d852f478">https://medium.com/@markmotig/how-to-capture-mssql-credentials-with-xp-dirtree-smbserver-py-5c29d852f478</a></p>
+<p><a target="_blank" rel="noopener" href="https://beta.4hou.com/data/13802.html">https://beta.4hou.com/data/13802.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://blogs.uw.edu/kool/2016/10/26/kerberos-delegation-in-active-directory/">https://blogs.uw.edu/kool/2016/10/26/kerberos-delegation-in-active-directory/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.tarlogic.com/en/blog/kerberos-iii-how-does-delegation-work/">https://www.tarlogic.com/en/blog/kerberos-iii-how-does-delegation-work/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/s4u2pwnage/">https://www.harmj0y.net/blog/activedirectory/s4u2pwnage/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/the-most-dangerous-user-right-you-probably-have-never-heard-of/">https://www.harmj0y.net/blog/activedirectory/the-most-dangerous-user-right-you-probably-have-never-heard-of/</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.harmj0y.net/blog/redteaming/another-word-on-delegation/">http://www.harmj0y.net/blog/redteaming/another-word-on-delegation/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/a-case-study-in-wagging-the-dog-computer-takeover/">https://www.harmj0y.net/blog/activedirectory/a-case-study-in-wagging-the-dog-computer-takeover/</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=1667">https://adsecurity.org/?p=1667</a></p>
+<p><a target="_blank" rel="noopener" href="https://labs.f-secure.com/archive/trust-years-to-earn-seconds-to-break/">https://labs.f-secure.com/archive/trust-years-to-earn-seconds-to-break/</a></p>
+<p><a target="_blank" rel="noopener" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html">https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/28/NTLM%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/" rel="next" title="NTLM 基础与滥用（笔记）">
+      NTLM 基础与滥用（笔记） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A7%94%E6%B4%BE%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">委派简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A7%94%E6%B4%BE%E7%9A%84%E6%A1%88%E4%BE%8B"><span class="nav-number">1.1.</span> <span class="nav-text">委派的案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7-UserAccountControl-%E5%B1%9E%E6%80%A7"><span class="nav-number">1.2.</span> <span class="nav-text">用户 UserAccountControl 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.</span> <span class="nav-text">用户属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE"><span class="nav-number">2.</span> <span class="nav-text">不受限委派</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%E7%9A%84%E6%B5%81%E7%A8%8B"><span class="nav-number">2.1.</span> <span class="nav-text">不受限委派的流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE"><span class="nav-number">3.</span> <span class="nav-text">受限委派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE"><span class="nav-number">4.</span> <span class="nav-text">基于资源的受限委派</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S4U2Self%EF%BC%88ServiceForUserToSelf%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">S4U2Self（ServiceForUserToSelf）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#S4U2Self-%E6%B5%81%E7%A8%8B"><span class="nav-number">5.1.</span> <span class="nav-text">S4U2Self 流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#S4U2Proxy%EF%BC%88ServiceForUserToProxy%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">S4U2Proxy（ServiceForUserToProxy）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#S4U2Proxy-%E6%B5%81%E7%A8%8B"><span class="nav-number">6.1.</span> <span class="nav-text">S4U2Proxy 流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E5%9B%9E%E9%A1%BE"><span class="nav-number">7.</span> <span class="nav-text">基础回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%E7%9A%84%E6%BB%A5%E7%94%A8"><span class="nav-number">8.</span> <span class="nav-text">不受限委派的滥用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8-%E4%B8%8D%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE-%E7%BB%93%E5%90%88-%E6%89%93%E5%8D%B0%E6%9C%BA%E6%BC%8F%E6%B4%9E%EF%BC%8C%E5%AE%9E%E7%8E%B0-RCE"><span class="nav-number">8.1.</span> <span class="nav-text">滥用 不受限委派 结合 打印机漏洞，实现 RCE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%E7%9A%84%E6%BB%A5%E7%94%A8"><span class="nav-number">9.</span> <span class="nav-text">受限委派的滥用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8-%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE"><span class="nav-number">9.1.</span> <span class="nav-text">滥用 受限委派</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8-%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90-SeEnableDelegationPrivilege"><span class="nav-number">9.2.</span> <span class="nav-text">滥用 用户权限 SeEnableDelegationPrivilege</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%E7%9A%84%E6%BB%A5%E7%94%A8"><span class="nav-number">10.</span> <span class="nav-text">基于资源的受限委派的滥用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-ACL%EF%BC%8C%E6%BB%A5%E7%94%A8-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8E%A5%E7%AE%A1"><span class="nav-number">10.1.</span> <span class="nav-text">基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-ACL%EF%BC%8C%E6%BB%A5%E7%94%A8-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8E%A5%E7%AE%A1%EF%BC%88%E7%BB%95%E8%BF%87-T2A4D-%E7%9A%84%E9%99%90%E5%88%B6%EF%BC%89"><span class="nav-number">10.2.</span> <span class="nav-text">基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管（绕过 T2A4D 的限制）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-ACL%EF%BC%8C%E6%BB%A5%E7%94%A8-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%EF%BC%8C%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%8E%A5%E7%AE%A1%EF%BC%88%E8%B7%B3%E8%BF%87-S4U2Self%EF%BC%89"><span class="nav-number">10.3.</span> <span class="nav-text">基于 ACL，滥用 基于资源的受限委派，实现计算机对象的接管（跳过 S4U2Self）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%B0%84%E5%9E%8B-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%EF%BC%88%E7%B1%BB%E4%BC%BC%E7%99%BD%E9%93%B6%E7%A5%A8%E6%8D%AE%EF%BC%89"><span class="nav-number">10.4.</span> <span class="nav-text">反射型 基于资源的受限委派（类似白银票据）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%EF%BC%8C%E5%AE%9E%E7%8E%B0%E5%9F%9F%E7%BB%B4%E6%8C%81%E8%AE%BF%E9%97%AE%EF%BC%88%E7%B1%BB%E4%BC%BC%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE%EF%BC%89"><span class="nav-number">10.5.</span> <span class="nav-text">滥用 基于资源的受限委派，实现域维持访问（类似黄金票据）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A7%94%E6%B4%BE%E7%9A%84%E7%BB%84%E5%90%88%E6%BB%A5%E7%94%A8"><span class="nav-number">11.</span> <span class="nav-text">委派的组合滥用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%EF%BC%8C%E8%AE%BF%E9%97%AE%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%85%8D%E7%BD%AE%E4%BA%86-%E2%80%9C%E4%BC%A0%E7%BB%9F%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%E2%80%9D-%E6%9C%8D%E5%8A%A1%E6%89%80%E5%85%81%E8%AE%B8%E8%AE%BF%E9%97%AE%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">11.1.</span> <span class="nav-text">滥用 基于资源的受限委派，访问另一个配置了 “传统受限委派” 服务所允许访问的服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTLM-%E9%87%8D%E6%94%BE-%E5%9F%BA%E4%BA%8E%E8%B5%84%E6%BA%90%E7%9A%84%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE%EF%BC%8C%E5%AE%9E%E7%8E%B0-RCE-LPE"><span class="nav-number">11.2.</span> <span class="nav-text">NTLM 重放 + 基于资源的受限委派，实现 RCE&#x2F;LPE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E7%BB%95%E8%BF%87%E6%8A%80%E5%B7%A7"><span class="nav-number">12.</span> <span class="nav-text">其他绕过技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95%E8%BF%87-msDs-AllowedToDelegateTo-%E7%99%BD%E5%90%8D%E5%8D%95%E9%99%90%E5%88%B6"><span class="nav-number">12.1.</span> <span class="nav-text">绕过 msDs-AllowedToDelegateTo 白名单限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95%E8%BF%87%E6%95%8F%E6%84%9F%E8%B4%A6%E6%88%B7%E9%99%90%E5%88%B6"><span class="nav-number">12.2.</span> <span class="nav-text">绕过敏感账户限制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">13.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="T4nglong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">T4nglong</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">T4nglong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本章主要介绍 Kerberos 基础与滥用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kerberos 基础与滥用（笔记）">
+<meta property="og:url" content="http://example.com/2020/09/28/Kerberos%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/index.html">
+<meta property="og:site_name" content="T4nglong&#39;s Blog">
+<meta property="og:description" content="本章主要介绍 Kerberos 基础与滥用">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-28T11:09:42.890Z">
+<meta property="article:author" content="T4nglong">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/28/Kerberos%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Kerberos 基础与滥用（笔记） | T4nglong's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">T4nglong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/28/Kerberos%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="T4nglong">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="T4nglong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Kerberos 基础与滥用（笔记）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-28 00:00:00 / 修改时间：19:09:42" itemprop="dateCreated datePublished" datetime="2020-09-28T00:00:00+08:00">2020-09-28</time>
+            </span>
+
+          
+            <div class="post-description">本章主要介绍 Kerberos 基础与滥用</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="Kerberos-简介"><a href="#Kerberos-简介" class="headerlink" title="Kerberos 简介"></a>Kerberos 简介</h2><p>Kerberos 是一种在活动目录中使用的身份验证协议，它识别每一个用户的身份，并将该用户的权限信息传达给资源的服务端进行验证。</p>
+<p><strong>参与认证的主要角色</strong></p>
+<ul>
+<li>客户端/用户：想要访问服务的客户端/用户</li>
+<li>服务器：提供用户所需服务的 AP（应用服务器）如：HTTP服务，SQL服务等</li>
+<li>密钥分发中心（KDC）：负责验证客户端/用户身份，发放票据；由下面2个服务组成<ul>
+<li>身份认证服务（AS）：负责发放 TGT（Ticket Granting Ticket）</li>
+<li>票据授予服务（TGS）：负责发放 服务票据（Service Ticket）</li>
+</ul>
+</li>
+</ul>
+<p><strong>Kerberos 认证简述</strong></p>
+<p>1）KRB_AS_REQ：客户端向 KDC 申请 TGT。KRB_AS_REP：KDC 向客户端发放 TGT。</p>
+<p>2）KRB_TGS_REQ：客户端使用 TGT 向 KDC 申请 服务票据。KRB_TGS_REP：KDC 向客户端返回 服务票据。</p>
+<p>3）KRB_AP_REQ：客户端使用 服务票据 访问目标服务。KRB_AP_REP：服务器验证票据，并确定是否允许访问。</p>
+<h2 id="Kerberos-认证流程"><a href="#Kerberos-认证流程" class="headerlink" title="Kerberos 认证流程"></a>Kerberos 认证流程</h2><p><strong>KRB_AS_REQ</strong></p>
+<p>客户端用户将 用户名、被加密的时间戳（由客户端用户 hash 加密）、krbtgt SPN 发送给 KDC-AS，请求 TGT。</p>
+<p><strong>KRB_AS_REP</strong></p>
+<p><em>KDC-AS 接收后，通过客户端用户  hash 解密 被加密的时间戳，并进行验证；</em></p>
+<p>KDC-AS 将 <strong>TGT</strong>（由 krbtgt hash 加密 session key、用户名、TGT 有效时间、PAC 生成）、<strong>密文A</strong>（由客户端用户 hash 加密 session key、TGT 有效时间等生成）返回给客户端。</p>
+<p><strong>KRB_TGS_REQ</strong></p>
+<p><em>客户端接收后，通过客户端用户 hash 解密 密文 A，获得 session key 等信息；</em></p>
+<p>客户端 将 TGT、被加密的时间戳与用户名（由 session key 加密）、目标服务的 SPN 发送给 KDC-TGS，请求 服务票据。</p>
+<p><strong>KRB_TGS_REP</strong></p>
+<p><em>KDC-TGS 接收后，通过 krbtgt hash 解密 TGT，获得 session key、PAC 等信息，再通过该 key 解密出 时间戳与用户名，进行验证；</em></p>
+<p>KDC-TGS 将 <strong>服务票据</strong>（由目标服务账户 hash 加密 service session key、用户名、服务票据有效时间、PAC 生成）、<strong>密文B</strong>（由 session key 加密 service session key、服务票据有效时间等生成）返回给客户端。</p>
+<p>备注：这里其实是将解密 TGT 得出的 PAC 提取出来，再放入 服务票据 中加密；由客户端通过 AP_REQ 将 服务票据 发送给目标服务，目标服务解密 服务票据 得到其中的 PAC，于是，获得用户的权限信息。 </p>
+<p><strong>KRB_AP_REQ</strong></p>
+<p><em>客户端接收后，通过 session key 解密 密文 B，获得 service session key 等信息；</em></p>
+<p>客户端将 服务票据、被加密的时间戳与用户名（由 service session key 加密）发送给目标服务，请求访问。</p>
+<p><strong>KRB_AP_REP</strong></p>
+<p><em>目标服务接收后，通过服务账户 hash 解密 服务票据，获得 service session key、PAC 等信息，再通过该 key 解密出 时间戳与用户名；</em></p>
+<p>目标服务向 客户端 返回验证是/否通过。</p>
+<p><strong>备注：</strong></p>
+<p>在 <strong>AS_REP</strong> 中（作为 客户端 与 TGS 的第三方），AS 将分别通过 客户端用户 hash、krbtgt hash 加密 session key；</p>
+<p>在 <strong>TGS_REP</strong> 中（作为 客户端 与 AP 的第三方），TGS 将分别通过 session key 、目标服务账户 hash 加密 service session key；</p>
+<p>客户端 发送的三次认证信息，分别由 客户端用户 hash、session key、service session key 加密 时间戳 等信息。</p>
+<h2 id="PAC（特权属性证书）"><a href="#PAC（特权属性证书）" class="headerlink" title="PAC（特权属性证书）"></a>PAC（特权属性证书）</h2><p>由于 kerberos 协议并不验证客户端用户是否有权限访问具体的服务/资源（kerberos 仅验证用户身份），所以需要将用户的权限信息提供给目标服务，由目标服务进行验证。通过上面的认证流程可以知道，KDC 向客户端返回的 TGT 和 服务票据中包含 PAC，其中包含客户端用户的权限信息，其结构为：</p>
+<ul>
+<li>User SID &amp; Group SID</li>
+<li>Chksum of Server_key</li>
+<li>Chksum of Kdc_key</li>
+</ul>
+<p>为防止 PAC 篡改，PAC 尾部添加了 server 签名和 KDC 签名，分别由 server 密钥 和 KDC 密钥加密。</p>
+<p><strong>AS_REP</strong></p>
+<p>KDC 返回 TGT（包含 PAC）给客户端，这其中的 PAC 尾部会有一个 server 签名 和 KDC 签名；</p>
+<p>server 和 KDC 分别是 TGS 服务 和 AS 服务，而 TGS 服务 和 AS 服务的账户都是 krbtgt，所以两个签名都是由 krbtgt hash 加密。</p>
+<p><strong>TGS_REP</strong></p>
+<p>TGS 接收到 TGT 后，获得其中的 PAC，验证 PAC 尾部两个签名的合法性，如果 PAC 没有被篡改，则替换 PAC 尾部的两个签名；</p>
+<p>server 和 KDC 分别是 目标服务 和 TGS，所以，server 签名由 目标服务账户 hash 加密，KDC 签名本该由 krbtgt hash 加密，但由于 目标服务 没有 krbtgt hash，无法解密，所以是由 service session key 加密的。</p>
+<h2 id="MS14-068"><a href="#MS14-068" class="headerlink" title="MS14-068"></a>MS14-068</h2><p>简述：我们通过伪造高权限的 PAC 以及签名发送给 KDC 后，KDC 正常解析了并返回了一个带有合法签名的高权限 TGT。</p>
+<h3 id="漏洞利用原理"><a href="#漏洞利用原理" class="headerlink" title="漏洞利用原理"></a>漏洞利用原理</h3><p><strong>AS_REQ \ AS_REP</strong></p>
+<p>首先，构造 AS_REQ，在其中将 KERB-PA-PAC-REQUEST 字段 设置 为 False，发送给 KDC；然后，KDC 将返回不包含 PAC 的 TGT。</p>
+<p><strong>TGS_REQ</strong></p>
+<p>首先，我们接收 AS_REP 后，解密 密文 A，获得 session key 等信息；</p>
+<p>然后，构造 PAC：1）将 user ID 末尾的 RID 修改为 512、513 等（高权限的域用户组）。2）使用 MD5 加密算法生成 server 签名 和 KDC 签名（原本是由 server 密钥 和 KDC 密钥 加密）。3）指定接收方以 MD5 加密算法对 user ID 和 group ID 进行验证。</p>
+<p>接着，我们构造 TGS_REQ：1）生成一个随机数，使用该随机数加密 PAC。2）将 随机数 放入 原本由 session key 加密的部分中。</p>
+<p>最后，将加密后的 PAC（非 TGT 中）、TGT、与 由 session key 加密的部分  一起发送给 KDC，并将 include-PAC 标志设为 False。</p>
+<p><strong>TGS_REP</strong></p>
+<p>TGS 接收到 TGS_REQ 后：1）通过 krbtgt hash 解密 TGT，获得 session key 等信息。2）通过 session key 解密 由 session key 加密的部分。3）通过 随机数 解密（非 TGT 中）的 PAC。</p>
+<p>然后，TGS 会对 PAC 签名进行合法性校验：使用被指定的 MD5 加密算法对 user ID 和 group ID 进行运算，与同样使用 MD5 加密算法生成 Server 签名 与 KDC 签名 进行比较。</p>
+<p>最后，TGS 返回 TGS_REP：1）TGS 在 PAC 末尾处使用 server 密钥 和 KDC 密钥生成 新的 server 签名 和 KDC 签名，组合成新的 TGT。2）使用获得的 随机数 对 session key 等消息 进行加密，组合成新的 密文。3）将重新生成的 TGT 、密文 返回给我们。</p>
+<p><strong>TGS_REQ</strong></p>
+<p>我们接收到 TGS_REP 后，通过解密 密文，获得 session key 等信息；</p>
+<p>然后，制作缓存证书并将其导入当前会话中：1）将 TGT 和 session key 制作成 TGT 缓存证书。2）清除所有缓存证书。3）将 TGT 缓存证书注入到当前会话中（替换掉原有的 低权限 TGT），并在后续通过该 TGT 申请访问目标服务的 服务票据。</p>
+<p><strong>备注：</strong></p>
+<p>访问目标服务时，系统会先在缓存证书中查找是否存在 服务票据，如果没有 服务票据，则查找是否存在 TGT；所以需要先清理所有缓存证书，否则系统将直接使用旧的 低权限的 服务票据 来访问目标服务。</p>
+<h3 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h3><p>1）KDC 使用客户端指定的任意加密算法生成 Server 签名 与 KDC 签名，并进行校验；</p>
+<p>2）KDC 使用客户端提供的 随机字符 对非 TGT 内的 PAC 进行解析；</p>
+<p>3）KDC 使用自身 Server_key 与 Kdc_key 重新封装 PAC，并重新生成 TGT 发送给客户端。</p>
+<h2 id="基于-kerberos-的密码破解"><a href="#基于-kerberos-的密码破解" class="headerlink" title="基于 kerberos 的密码破解"></a>基于 kerberos 的密码破解</h2><h3 id="Kerberos-暴力破解（AS-REQ）"><a href="#Kerberos-暴力破解（AS-REQ）" class="headerlink" title="Kerberos 暴力破解（AS_REQ）"></a>Kerberos 暴力破解（AS_REQ）</h3><p><strong>原理：</strong>通过指定用户名与密码字典对 kerberos 预验证进行暴力破解</p>
+<p>1）只要能连接到域控制器即可，无需域用户身份；</p>
+<p>2）kerberos 预身份验证失败会记录在特定日志（4771），不记录在登录失败事件（4625）；</p>
+<p>3）即使密码错误，也会指示用户名是否正确；</p>
+<p>4）在无需预身份验证的情况，发现用户账户；</p>
+<p>5）暴力破解会锁定用户账户，因此谨慎使用。</p>
+<p>进行该攻击后，会将发现的凭证以及有效的 TGT 保存到指定的文件中。</p>
+<h3 id="ASREPRoast（AS-REP）"><a href="#ASREPRoast（AS-REP）" class="headerlink" title="ASREPRoast（AS-REP）"></a>ASREPRoast（AS-REP）</h3><p><strong>原理：</strong>代表无需预身份验证的域用户，向 KDC 发起 AS_REQ，并接收 AS_REP，通过破解 AS-REP hash，尝试获取用户的明文密码。</p>
+<p><strong>备注：</strong>通过之前的 kerberos 认证流程可知 AS_REP 不仅包含 TGT，还包含一段由 客户端用户 hash 加密的 密文 A。</p>
+<p>通过 LDAP 过滤器检索域中无需预身份验证的用户：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(&amp;(samAccountType&#x3D;805306368)(userAccountControl:1.2.840.113556.1.4.803:&#x3D;4194304))</span><br></pre></td></tr></table></figure>
+
+<p>samAccountType：仅请求用户账户，不包含计算机账户；</p>
+<p>userAccountControl 这里是指筛选出无需预身份验证的账户。</p>
+<h3 id="Kerberoasting（TGS-REP）"><a href="#Kerberoasting（TGS-REP）" class="headerlink" title="Kerberoasting（TGS-REP）"></a>Kerberoasting（TGS-REP）</h3><p><strong>原理：</strong>对以域用户账户运行服务的 SPN 发起 TGS_REQ，在接收到 TGS_REP 后，对获取的 服务票据 hash 进行离线破解，尝试获取 服务账户的明文密码。（备注：通过之前的 kerberos 认证流程可以知道，服务票据 是由 服务账户的 hash 加密生成的）</p>
+<h2 id="获取票据"><a href="#获取票据" class="headerlink" title="获取票据"></a>获取票据</h2><h3 id="提取票据（已提权）"><a href="#提取票据（已提权）" class="headerlink" title="提取票据（已提权）"></a>提取票据（已提权）</h3><p>同样是在 Windows 中提取 kerberos 票据，但是 mimikatz 和 Rubeus 的实现方式不同：</p>
+<p><strong>mimikatz</strong> 是直接从 LSASS 进程的内存中提取所有的票据。</p>
+<p><strong>题外话</strong>：mimikatz <code>sekurlsa::logonpasswords </code> 命令将打开一个读取 LSASS 的句柄，枚举系统上存在的所有登录会话，然后遍历每个登录会话的默认身份验证包，并提取存在的任何可逆的密码、凭证材料。</p>
+<p><strong>Rubeus</strong> 是通过调用  LsaCallAuthenticationPackage() API 提取 kerberos 票据。</p>
+<h3 id="提取票据（未提权）"><a href="#提取票据（未提权）" class="headerlink" title="提取票据（未提权）"></a>提取票据（未提权）</h3><p>通过滥用 kerberos GSS-API 来为当前用户检索可用的 TGT</p>
+<h3 id="搜集票据"><a href="#搜集票据" class="headerlink" title="搜集票据"></a>搜集票据</h3><p>通过监控 4624 登录事件，提取新登录 LoginID 的 TGT 票据</p>
+<h3 id="伪造票据"><a href="#伪造票据" class="headerlink" title="伪造票据"></a>伪造票据</h3><h4 id="白银票据（高权限服务票据）"><a href="#白银票据（高权限服务票据）" class="headerlink" title="白银票据（高权限服务票据）"></a>白银票据（高权限服务票据）</h4><p>通过之前的 kerberos 认证流程可以知道，服务票据是由 该服务账户 hash 加密生成，所以我们在获得 某个服务账户 hash 后，可以通过伪造高权限的 PAC（设置其中的 SID）制作高权限的 服务票据（仅能访问该服务）</p>
+<h4 id="黄金票据（高权限-TGT）"><a href="#黄金票据（高权限-TGT）" class="headerlink" title="黄金票据（高权限 TGT）"></a>黄金票据（高权限 TGT）</h4><p>通过之前的 kerberos 认证流程可以知道，TGT 是由 Kerberos 服务账户 krbtgt hash 加密生成，所以我们在获得 krbtgt 账户 hash 后，可以通过伪造高权限的 PAC（设置其中的 SID）制作高权限的 TGT（能够访问域内所有服务/计算机）</p>
+<p><strong>KRBTGT</strong></p>
+<p>krbtgt 账户是 kerberos 服务账户，用于签署和加密每个 TGT，而 TGT 可向 TGS 换取访问任意服务的 ST，所以使用通过 krbtgt 账户 hash 伪造的黄金票据（TGT）可访问域中的所有主机/服务。krbtgt 账户 hash 存储在 lsass 进程、域控制器的 NTDS.dit 文件中，所以一般是在获得域管理员权限的情况下，提取域控中的凭证后制作黄金票据。</p>
+<h4 id="信任票据（高权限跨域-TGT）"><a href="#信任票据（高权限跨域-TGT）" class="headerlink" title="信任票据（高权限跨域 TGT）"></a>信任票据（高权限跨域 TGT）</h4><p>由于域林中的每个域都至少有一个与其他域之间的信任密钥，所以我们在提取域控中所有凭证的情况下，将获得信任密钥，通过信任密钥可伪造高权限的 跨域TGT，然后使用该 跨域TGT 请求访问任意服务器的服务票据。</p>
+<p><strong>例如：</strong>获得域A 的域管权限后，转储域A 域控的所有凭证（其中包含与根域 之间信任密钥），通过该信任密钥伪造一个具有企业管理组成员身份（RID=519）的 跨域TGT，便可使用该 跨域 TGT 向根域的 TGS 申请访问根域域控的 服务票据，在从根域的域控中获得根域与其他子域的信任密钥，进而遍历整个域林。</p>
+<p><strong>简述 Kerberos 跨域信任</strong></p>
+<p>由于 服务票据 是由 该服务账户 hash 加密的，而域控中仅存储本域内安全主体的密码，所以，同一个域林的其中一个域是没有存储其他域内的服务账户密码的，也就无法向域用户发放访问另一个域内某个服务的 服务票据。</p>
+<p>为了解决这个 ”跨域信任“ 的问题，同一个域林的两个域之间共享一个信任密钥，并通过它进行跨域 kerberos 认证。一旦同一个域林中的两个域互相信任，则每个域的 TGS 服务将 作为提供跨域资源访问的服务，在另一个域中的 KDC 注册为安全主体（SPN），这就使得每个域中的 TGS 服务可以为另一个域的用户提供换取本域 的服务票据，以实现跨域资源访问。</p>
+<h2 id="滥用凭证"><a href="#滥用凭证" class="headerlink" title="滥用凭证"></a>滥用凭证</h2><h3 id="Over-Pass-The-Hash（NTLM-Hash-kerberos）"><a href="#Over-Pass-The-Hash（NTLM-Hash-kerberos）" class="headerlink" title="Over Pass The Hash（NTLM Hash - kerberos）"></a>Over Pass The Hash（NTLM Hash - kerberos）</h3><p>我们在获得用户的 NTLM hash（RC4、 AES128、AES256等）后，可以使用它来请求 TGT。</p>
+<p>使用 mimikatz <code>sekurlsa::pth</code> 命令和使用 Rubeus <code>asktgt</code> 来实现 “over-passing-the-hash” 的方式不同：</p>
+<p>1）使用 mimikatz：mimikatz 会先使用假的凭证创建一个新的登录会话（该会话不会与当前登录会话交互），然后打开 LSASS 进程，并将提供的 hash 覆盖刚刚创建的登录会话的相对应的部分，这将导致正常的 kerberos 认证流程启动，像正常用户登录一样，通过提供的 NTLM hash 请求 TGT。</p>
+<p>2）使用 Rubeus：Rubeus 直接使用指定的用户 NTLM hash 创建原始的 AS_REQ 向 KDC 请求 TGT。</p>
+<p>另外，由于 mimikatz 实现该过程需要操作 LSASS ，所以需要管理员权限；而 Rubeus 由于未涉及到 LSASS，因此不需要管理员权限。</p>
+<h3 id="Pass-The-Ticket（TGT-TGS-kerberos）"><a href="#Pass-The-Ticket（TGT-TGS-kerberos）" class="headerlink" title="Pass The Ticket（TGT/TGS - kerberos）"></a>Pass The Ticket（TGT/TGS - kerberos）</h3><p>我们在获得 kerberos 票据的情况下，可以使用 KERB_SUBMIT_TKT_REQUEST 调用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/ntsecapi/nf-ntsecapi-lsacallauthenticationpackage"> LsaCallAuthenticationPackage()</a> API，将 TGT 或 服务票据提交给当前登录会话，在访问其他 计算机/服务 时，便会使用该票据进行 kerberos 认证。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/devos/p/5448938.html">https://www.cnblogs.com/devos/p/5448938.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/56081.html">https://www.freebuf.com/vuls/56081.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.tarlogic.com/en/blog/how-kerberos-works/">https://www.tarlogic.com/en/blog/how-kerberos-works/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.tarlogic.com/en/blog/how-to-attack-kerberos/">https://www.tarlogic.com/en/blog/how-to-attack-kerberos/</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.harmj0y.net/blog/redteaming/kerberoasting-revisited/">http://www.harmj0y.net/blog/redteaming/kerberoasting-revisited/</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=2011">https://adsecurity.org/?p=2011</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=1588">https://adsecurity.org/?p=1588</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/subject/id/193604">https://www.anquanke.com/subject/id/193604</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/28/NTLM%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/" rel="prev" title="NTLM 基础与滥用（笔记）">
+      <i class="fa fa-chevron-left"></i> NTLM 基础与滥用（笔记）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kerberos-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">Kerberos 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kerberos-%E8%AE%A4%E8%AF%81%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">Kerberos 认证流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PAC%EF%BC%88%E7%89%B9%E6%9D%83%E5%B1%9E%E6%80%A7%E8%AF%81%E4%B9%A6%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">PAC（特权属性证书）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MS14-068"><span class="nav-number">4.</span> <span class="nav-text">MS14-068</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">漏洞利用原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%8F%E6%B4%9E%E6%88%90%E5%9B%A0"><span class="nav-number">4.2.</span> <span class="nav-text">漏洞成因</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-kerberos-%E7%9A%84%E5%AF%86%E7%A0%81%E7%A0%B4%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text">基于 kerberos 的密码破解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Kerberos-%E6%9A%B4%E5%8A%9B%E7%A0%B4%E8%A7%A3%EF%BC%88AS-REQ%EF%BC%89"><span class="nav-number">5.1.</span> <span class="nav-text">Kerberos 暴力破解（AS_REQ）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ASREPRoast%EF%BC%88AS-REP%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">ASREPRoast（AS-REP）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kerberoasting%EF%BC%88TGS-REP%EF%BC%89"><span class="nav-number">5.3.</span> <span class="nav-text">Kerberoasting（TGS-REP）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%A5%A8%E6%8D%AE"><span class="nav-number">6.</span> <span class="nav-text">获取票据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E7%A5%A8%E6%8D%AE%EF%BC%88%E5%B7%B2%E6%8F%90%E6%9D%83%EF%BC%89"><span class="nav-number">6.1.</span> <span class="nav-text">提取票据（已提权）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E7%A5%A8%E6%8D%AE%EF%BC%88%E6%9C%AA%E6%8F%90%E6%9D%83%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">提取票据（未提权）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E9%9B%86%E7%A5%A8%E6%8D%AE"><span class="nav-number">6.3.</span> <span class="nav-text">搜集票据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E9%80%A0%E7%A5%A8%E6%8D%AE"><span class="nav-number">6.4.</span> <span class="nav-text">伪造票据</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%99%BD%E9%93%B6%E7%A5%A8%E6%8D%AE%EF%BC%88%E9%AB%98%E6%9D%83%E9%99%90%E6%9C%8D%E5%8A%A1%E7%A5%A8%E6%8D%AE%EF%BC%89"><span class="nav-number">6.4.1.</span> <span class="nav-text">白银票据（高权限服务票据）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%BB%84%E9%87%91%E7%A5%A8%E6%8D%AE%EF%BC%88%E9%AB%98%E6%9D%83%E9%99%90-TGT%EF%BC%89"><span class="nav-number">6.4.2.</span> <span class="nav-text">黄金票据（高权限 TGT）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E4%BB%BB%E7%A5%A8%E6%8D%AE%EF%BC%88%E9%AB%98%E6%9D%83%E9%99%90%E8%B7%A8%E5%9F%9F-TGT%EF%BC%89"><span class="nav-number">6.4.3.</span> <span class="nav-text">信任票据（高权限跨域 TGT）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8%E5%87%AD%E8%AF%81"><span class="nav-number">7.</span> <span class="nav-text">滥用凭证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Over-Pass-The-Hash%EF%BC%88NTLM-Hash-kerberos%EF%BC%89"><span class="nav-number">7.1.</span> <span class="nav-text">Over Pass The Hash（NTLM Hash - kerberos）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pass-The-Ticket%EF%BC%88TGT-TGS-kerberos%EF%BC%89"><span class="nav-number">7.2.</span> <span class="nav-text">Pass The Ticket（TGT&#x2F;TGS - kerberos）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">8.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="T4nglong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">T4nglong</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">T4nglong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
