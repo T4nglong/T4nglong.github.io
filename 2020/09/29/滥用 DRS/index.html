@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="本章主要介绍目录数据同步服务及其利用方式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRS 基础及滥用（笔记）">
+<meta property="og:url" content="http://example.com/2020/09/29/%E6%BB%A5%E7%94%A8%20DRS/index.html">
+<meta property="og:site_name" content="T4nglong&#39;s Blog">
+<meta property="og:description" content="本章主要介绍目录数据同步服务及其利用方式">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-29T09:00:23.729Z">
+<meta property="article:author" content="T4nglong">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/29/%E6%BB%A5%E7%94%A8%20DRS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>DRS 基础及滥用（笔记） | T4nglong's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">T4nglong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/29/%E6%BB%A5%E7%94%A8%20DRS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="T4nglong">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="T4nglong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DRS 基础及滥用（笔记）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-29 00:00:00 / 修改时间：17:00:23" itemprop="dateCreated datePublished" datetime="2020-09-29T00:00:00+08:00">2020-09-29</time>
+            </span>
+
+          
+            <div class="post-description">本章主要介绍目录数据同步服务及其利用方式</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="滥用目录数据同步服务（DRS）"><a href="#滥用目录数据同步服务（DRS）" class="headerlink" title="滥用目录数据同步服务（DRS）"></a>滥用目录数据同步服务（DRS）</h1><p>我们可以通过对域控制器之间的目录数据同步机制进行利用，以实现获取数据，或注入恶意数据对象。</p>
+<br/>
+
+<h2 id="目录数据同步服务（Drectory-Replication-Service）"><a href="#目录数据同步服务（Drectory-Replication-Service）" class="headerlink" title="目录数据同步服务（Drectory Replication Service）"></a>目录数据同步服务（Drectory Replication Service）</h2><p>DRS 是指多个域控制器的活动目录数据同步，该过程通过 KCC 组件完成。</p>
+<p>在域环境中，默认每隔15分钟，每个域控制器上的 KCC 将生成用于域控制器之间进行目录数据同步的拓扑关系与链接，通过 RPC 调用其他域控制器上 DRSUAPI 接口的函数进行目录数据同步。</p>
+<br/>
+
+<p><strong>知识一致性检查（Knowledge Consistency Checker，简称 KCC）：</strong>KCC 主要用来获取每一个数据同步源，确保每一个域控制器都有参与。它支持的 RPC 调用包括：IDL_DRSUpdateRefs，IDL_DRSReplicaAdd，IDL_DRSReplicaDel，IDL_DRSReplicaModify，IDL_DRSExecuteKCC。</p>
+<br/>
+
+
+
+<h2 id="滥用-DRS-的两种方式"><a href="#滥用-DRS-的两种方式" class="headerlink" title="滥用 DRS 的两种方式"></a>滥用 DRS 的两种方式</h2><br/>
+
+<h3 id="DCSync"><a href="#DCSync" class="headerlink" title="DCSync"></a>DCSync</h3><p>我们模拟域控制器向真实域控制器请求目录数据同步，从而获取活动目录数据库中的账户密码。</p>
+<p><strong>前提条件：</strong>我们需要具备域管级别的权限，或者复制目录更改的权限（Replicating Directory Changes）</p>
+<p><strong>原理简述：</strong>我们通过 DRS 远程协议 调用域控上 DRSUAPI 接口的 IDL_DRSGetNCChanges 函数，从域控的 NC 副本复制数据；然后，域控会将需要同步的数据通过响应返回，我们便可获得指定账户的密码 。</p>
+<p><strong>备注：</strong>无法对只读域控制器（RODC）进行 DCSync 利用，因为只读域控制器不参与数据同步</p>
+<br/>
+
+
+
+<h3 id="DCShadow"><a href="#DCShadow" class="headerlink" title="DCShadow"></a>DCShadow</h3><p>我们将当前主机伪造成域控制器，并添加到 KCC 数据同步源中，然后触发与其他域控制器之间的目录数据同步，从而把恶意的数据对象注入到活动目录数据库中。</p>
+<br/>
+
+<h4 id="伪装成域控制器的条件"><a href="#伪装成域控制器的条件" class="headerlink" title="伪装成域控制器的条件"></a>伪装成域控制器的条件</h4><p><strong>添加 nTDSDSA 对象：</strong>在活动目录数据库的配置分区（configuration NC）中，主机对象类为 nTDSDSA，即表示该主机为域控制器，而 nTDSDSA 对象是 server 对象的子对象，server 对象存储在 serversContainer 对象（容器）中。</p>
+<p>我们需要在 serverContainer 容器中添加新的 server 对象，再添加 nTDSDSA 对象。</p>
+<p><strong>提供 SPN 以支持 kerberos 认证与访问：</strong>一台主机作为域控制器与其他域控制器进行目录数据同步，需要提供自身 DRS 服务的 SPN，以支持 kerberos 认证（其他域控制器对其进行访问），同时使用相关联的计算机账户（服务账户）的密码 hash 加密 kerberos 票据。</p>
+<p>我们需要为主机上的 DRS 服务注册的 SPN 有：DRS SPN，Global Catalog Server SPN</p>
+<br/>
+
+
+
+<h4 id="DCShadow-实现原理"><a href="#DCShadow-实现原理" class="headerlink" title="DCShadow 实现原理"></a>DCShadow 实现原理</h4><br/>
+
+<p>1）首先，我们需要将当前主机伪装成域控，需要满足如上所述的条件，具体实现步骤如下：</p>
+<ul>
+<li><p>我们先通过 LDAP 的 addRequest 在活动目录数据库（serverContatiner 容器）中添加了新 server 对象，并将 server 对象的 serverReference 属性指向当前的计算机对象；同时，通过 通过 LDAP 的 modifyRequest 在修改活动目录数据库中的数据对象，为当前的计算机对象的 SPN 属性添加一个新值：GC/hostName/doaminName；</p>
+</li>
+<li><p>调用真实域控 DRSUAPI 接口的 IDL_DRSAddEntry 函数为 server 对象添加 nTDSDSA 对象，并根据 nTDSDSA 对象的 objectGUID 属性构建 DRS SPN：E3514235–4B06–11D1-AB04–00C04FC2DCD2/DSA GUID/domainName；</p>
+</li>
+</ul>
+<p>2）然后，我们将伪装的域控添加到数据同步源，并触发数据同步</p>
+<ul>
+<li>我们需要调用真实域控 DRSUAPI 接口的 IDL_DRSReplicaAdd 函数，将伪域控添加进数据同步源中；</li>
+<li>真实域控接收 IDL_DRSReplicaAdd 函数的调用后，会调用伪域控的 IDL_DRSGetNCChanges 函数，从伪域控的 NC 副本复制更新（进行同步），伪域控便可以将恶意的数据对象注入到活动目录数据库中；</li>
+</ul>
+<p>3）最后，在完成恶意的数据对象注入后，注销伪装的域控（删除数据同步源、server 对象 - 包括 nTDSDSA 对象、以及 SPN）</p>
+<ul>
+<li>我们通过调用 RSUAPI 接口的 ReplicateDel 函数结束目录数据同步；然后通过 LDAP 的 delRequest 删除 server 对象、nTDSDSA对象，以及 modifyRequest 删除 SPN 属性。</li>
+</ul>
+<br/>
+
+
+
+<h4 id="相关-Windows-API"><a href="#相关-Windows-API" class="headerlink" title="相关 Windows API"></a>相关 Windows API</h4><p>域控制器之间通过 RPC 调用其他域控制器上 DRSUAPI 接口的相关函数来实现目录数据同步。</p>
+<br/>
+
+<p><strong>绑定 DRSUAPI 接口</strong></p>
+<p>在一个域控通过 RPC 调用其他域控制器上 DRSUAPI 接口的函数前，需要先通过指定 UUID 绑定到 DRSUAPI 接口，然后再通过指定 Opnum 调用该接口上的函数。</p>
+<br/>
+
+<p><strong>真实域控调用伪域控上 DRSUAPI 接口的函数</strong></p>
+<p>IDL_DRSBind、IDL_DRSUnbind、IDL_DRSGetNCChanges、IDL_DRSVerifyNames、IDL_DRSUpdateRefs</p>
+<p><strong>伪域控调用真实域控上 DRSUAPI 接口的函数</strong></p>
+<p>IDL_DRSBind、IDL_DRSUnbind、IDL_DRSReplicaAdd、IDL_DRSReplicaDel、IDL_DRSGetNCChanges、IDL_DRSCrackNames、IDL_DRSDomainControllerInfo、IDL_DRSAddEntry</p>
+<br/>
+
+<p><strong>DRSUAPI 接口的函数作用</strong></p>
+<p>IDL_DRSBind：绑定 DRSUAPI 接口，以调用该接口的函数</p>
+<p>IDL_DRSUnbind：解绑 DRSUAPI 接口</p>
+<p>IDL_DRSAddEntry：添加一个或多个对象</p>
+<p>IDL_DRSReplicaAdd：为指定的 NC 添加数据同步源</p>
+<p>IDL_DRSGetNCChanges：从服务器上的 NC 副本复制更新</p>
+<p>IDL_DRSReplicaDel：在指定的 NC 中删除数据同步源</p>
+<p>IDL_DRSCrackNames：查找目录中中的每一组对象，并通过请求的格式返回给函数调用者</p>
+<p>IDL_DRSDomainControllerInfo：在指定域中检索关于所有域控制器的信息</p>
+<p>IDL_DRSVerifyNames：解析一系列的对象身份</p>
+<p>IDL_DRSUpdateRefs：从指定的 NC 副本的 repsTo 属性中添加或删除一个值</p>
+<br/>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://blog.riskivy.com/dcshadow/">https://blog.riskivy.com/dcshadow/</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-drsr/f977faaa-673e-4f66-b9bf-48c640241d47">https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-drsr/f977faaa-673e-4f66-b9bf-48c640241d47</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/96704">https://www.anquanke.com/post/id/96704</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=1729">https://adsecurity.org/?p=1729</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/29/Rubeus-%E4%B8%AD%E6%96%87README/" rel="prev" title="Rubeus 中文 文档">
+      <i class="fa fa-chevron-left"></i> Rubeus 中文 文档
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8%E7%9B%AE%E5%BD%95%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1%EF%BC%88DRS%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">滥用目录数据同步服务（DRS）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E6%9C%8D%E5%8A%A1%EF%BC%88Drectory-Replication-Service%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">目录数据同步服务（Drectory Replication Service）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8-DRS-%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.</span> <span class="nav-text">滥用 DRS 的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DCSync"><span class="nav-number">1.2.1.</span> <span class="nav-text">DCSync</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DCShadow"><span class="nav-number">1.2.2.</span> <span class="nav-text">DCShadow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%AA%E8%A3%85%E6%88%90%E5%9F%9F%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">伪装成域控制器的条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DCShadow-%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">DCShadow 实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3-Windows-API"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">相关 Windows API</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">1.3.</span> <span class="nav-text">参考文章</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="T4nglong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">T4nglong</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/T4nglong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;T4nglong" rel="noopener" target="_blank"><i class="Github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:adamkk52000@gmail.com" title="E-Mail → mailto:adamkk52000@gmail.com" rel="noopener" target="_blank"><i class="Email fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">T4nglong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

