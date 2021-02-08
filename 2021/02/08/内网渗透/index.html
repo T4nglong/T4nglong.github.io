@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="学习内网渗透后总结的一点心得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透（心得）">
+<meta property="og:url" content="http://example.com/2021/02/08/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/index.html">
+<meta property="og:site_name" content="T4nglong">
+<meta property="og:description" content="学习内网渗透后总结的一点心得">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-02-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-02-08T09:31:08.000Z">
+<meta property="article:author" content="T4nglong">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/02/08/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>内网渗透（心得） | T4nglong</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">T4nglong</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">haha</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/08/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="T4nglong">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="T4nglong">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          内网渗透（心得）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-02-08 00:00:00 / 修改时间：17:31:08" itemprop="dateCreated datePublished" datetime="2021-02-08T00:00:00+08:00">2021-02-08</time>
+            </span>
+
+          
+            <div class="post-description">学习内网渗透后总结的一点心得</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="内网渗透"><a href="#内网渗透" class="headerlink" title="内网渗透"></a>内网渗透</h1><p>当你获得一个 shell 的时候，你后续还可以做些什么？</p>
+<h2 id="内网渗透框架"><a href="#内网渗透框架" class="headerlink" title="内网渗透框架"></a>内网渗透框架</h2><p>整个内网渗透大致分为以下几个模块：</p>
+<h3 id="1、构建通信隧道"><a href="#1、构建通信隧道" class="headerlink" title="1、构建通信隧道"></a>1、构建通信隧道</h3><p>构建通信隧道是指在攻击者（C2 服务器）与受害者之间构建连接，使我们能够远程控制目标机器，并在目标机器上执行命令，所以，在构建连接之间，通常我们需要了解目标机器的出网情况，也就是探测目标机器是具有公网 IP，还是处于内网（NAT）环境，以及目标所处的网络环境是否受到限制，比如仅允许特定的协议访问外网。</p>
+<p>1.1、三种主要的网络环境</p>
+<p>在了解到目标的出网情况之后，我们便可以根据目标机器的出网情况，来构建通信隧道，比如：如果目标具有公网 IP，我们可以通过正向连接；如果目标处于内网（NAT）环境，我们可以考虑通过反向连接；如果目标处于受限的网络环境，我们可以根据探测情况，考虑通过目标所允许的特定协议来连接。</p>
+<p>1.2、出网探测</p>
+<p>在实际情况中，我们可能通过 web 漏洞（如：文件上传、RCE 等）能够对目标执行命令，我们可以先通过 ping、nslookup、curl 等命令来判断目标机器的出网情况，然后根据探测结果来使用合适的 payload；我们也可能通过调研、社工等方式获得目标的 shell，一般可以考虑选择比较通用的 HTTPS 的 payload。</p>
+<p>1.3、shellcode 加载器</p>
+<p>由于目标可能存在各种反病毒软件（我们可提前通过 tasklist 命令查看目标的进程列表，发现是否存在反病毒软件），我们可以在 cobalt strike 或 msfvenom 中生成 shellcode，并将其进行加密（AES/XOR），然后使用 python、go 语言编写的 shellcode 加载器进行加载 shellcode 来达到免杀的效果。</p>
+<p>1.4、内网横向渗透及端口转发</p>
+<p>在后续的内网横向渗透的过程中，我们可能也需要获得内网其他机器的 shell，同样也可以通过上面的方式（出网探测、构建隧道）来 getshell。我们也可以通过端口转发技术（如 socks 等方式）来访问目标内网。如果目标内网有的机器是无法连通外网，但是可以连接内网的机器，我们可以先将脱网机的 shell 发送到我们已控制的内网机器上，然后通过端口转发的方式将 shell 转发我们的 C2 服务器上。</p>
+<h3 id="2、主机信息收集"><a href="#2、主机信息收集" class="headerlink" title="2、主机信息收集"></a>2、主机信息收集</h3><p>主机信息收集是指我们已经获得一台机器的 shell 或者能够对目标机器远程执行命令的情况下，去收集已控机器的信息。</p>
+<p>在这一部分内容中，我们需要通过 whoami 命令查看当前用户（权限、SID 等）；通过 net user 查看本地用户列表；通过 ipconfig 查看当前机器的 ip 配置信息，比如 ip 地址、网段、DNS、主 DNS 后缀（判断是否为域环境）等等；通过 systeminfo 查看当前计算机及操作系统的详细配置信息；通过 tasklist 命令查看进程列表；通过 wmic、powershell 查看安装软件以及系统版本…等等来收集机器的信息。</p>
+<p>这里主要有几类信息：用户、系统、端口、进程、安装软件、网络等。</p>
+<h3 id="3、内网信息收集"><a href="#3、内网信息收集" class="headerlink" title="3、内网信息收集"></a>3、内网信息收集</h3><p>内网信息收集是指我们通过当前已控机器来收集所处的内网信息。</p>
+<p>这这一部分内容中，我们需要了解自身所处的内网环境信息。</p>
+<p>3.1、内网所有机器名及对应 IP（包括域控）</p>
+<p>首先，我们需要获取目标内网所有的机器名以及机器名所对应的内网 IP，这里主要有两种方式，第一种是先获取内网的所有机器名，然后通过 for in 遍历，逐个 ping 每个机器名（机器名 -&gt; IP），第二种是我们扫描内网网段来获取对应的机器名（C 段 -&gt; 机器名）；</p>
+<p>然后，我们需要获取目标内网的域控制器，这里我们可以通过 <code>net group &quot;domain controllers&quot; /domain</code> 来获取域控制器列表，另外 DNS 服务器一般也是域控；</p>
+<p>3.2、内网所有域用户（包括域管）</p>
+<p>接着，我们需要获取域用户列表，以及域管理员列表；</p>
+<p>3.3、端口、服务、banner 信息</p>
+<p>最后，我们可能还需要了解内网中的哪些机器开放了哪些服务，这里我们可以通过 SPN 查询，或通过端口扫描来探测哪些机器开放了哪些服务，对应的服务端口，以及 banner 信息；</p>
+<p>3.4、外网服务对应的内网 IP</p>
+<p>另外，有时我们可能还需要获取目标外网服务所对应的内网 IP，这里我们可以将外网域名整理为列表，然后通过 for in 遍历，逐个 ping，并将解析到内网 IP 的提取出来。</p>
+<h3 id="4、各类凭证获取"><a href="#4、各类凭证获取" class="headerlink" title="4、各类凭证获取"></a>4、各类凭证获取</h3><p>凭证收集是指我们在已控机器上收集系统保存的用户凭证，或通过已控机器收集内网中的用户凭证，以及通过漏洞来获取用户凭证。</p>
+<p>这里的凭证主要分为以下几类：系统的明文账号密码、密码 hash（NTLM hash）、Net-NTLM hash、票据、各类服务及应用的账号密码、各类服务及应用中存储的账号密码。</p>
+<p>4.1、系统的明文账号密码</p>
+<p>系统的明文账号密码一般是通过提取 lsass.exe 进程中的数据来完成，主要使用的工具有 SharpDump、Procdump、mimikatz 等。</p>
+<p>4.2、普通机器的密码 hash（NTLM hash）</p>
+<p>用户的密码 hash（NTLM hash）一般是将 SAM 文件复制到本地，再通过 mimikatz 或 secretsdump.py 来解密；另外也可以通过 secretsdump.py 来远程获取。</p>
+<p>4.3、域控中的密码 hash（NTLM hash）</p>
+<p>我们可以通过 dcsync（滥用目录数据同步）来获取域控中的所有用户凭证，或者通过 ntdsutil、vssadmin、diskshadow 提取 ntds.dit 文件，然后使用 secretsdump.py 解密。</p>
+<p>4.4、Net-NTLM hash</p>
+<p>我们可以通过 LLMNR/NBNS 欺骗结合 WPAD 劫持；使用 mitm6 进行 DNS 欺骗（DHCPv6）；或通过打印机漏洞，以及其他各种可传入 UNC 路径的漏洞</p>
+<p>4.5、票据</p>
+<p>我们可以提取 lsass 进程中的票据（TGS、TGT），或者通过调用 windows API 来提取票据；可以通过滥用不受限委派来获取计算机中存储的已经过认证的用户的 TGT；通过滥用 S4U 来获取冒充用户的 TGS（包括传统受限委派和基于资源的受限委派，其中 S4U2Slef 是获取访问服务自身的 TGS，S4U2Proxy 是获取访问目标服务的 TGS，票据的权限是通过冒充的高权限用户获取）；可以通过对 NTLM hash 的再利用，来伪造票据（黄金票据、白银票据、信任票据）；也可以通过用户的 NTLM hash 进行 kerberos 认证，来请求 TGT（asktgt）</p>
+<p>4.6、各类服务及应用的账号密码</p>
+<p>例如，通过 web 配置文件来获取数据库的账号密码，获取 Xmanager 中保存的 ssh 连接账号密码，获取 RDP 连接账号密码…等等</p>
+<p>4.7、各类服务及应用存储的账号密码</p>
+<p>例如，获取 chrome、firefox、IE 等浏览器中保存的账号密码…等等</p>
+<p>4.8、通过已控机器获取内网的用户凭证</p>
+<p>比如，查找 SYSVOL 和 GPP 中可能存在的明文账号密码，通过 kerberoasting 来破解 TGS hash，尝试获取服务账户的明文账号密码，通过 AS-REP-Roast 来破解 AS-REP hash，尝试获取用户的明文密码…等等。</p>
+<p>另外还使用通过在可写共享中放入 SCF、URL 文件来获取 Net-NTLM hash。</p>
+<p>4.9、总结</p>
+<p>在获取某些类型的凭证的情况下，可以对凭证进行再利用，获取另一个类型的凭证；在获取某些类型的凭证的情况下，可以进行循环密码收集；我们要清晰的知道在收集到某种凭证的情况下，后续可以进行哪些操作。</p>
+<h3 id="5、滥用各类凭证（横向移动）"><a href="#5、滥用各类凭证（横向移动）" class="headerlink" title="5、滥用各类凭证（横向移动）"></a>5、滥用各类凭证（横向移动）</h3><p>滥用各类凭证是指我们在获得用户凭证的情况下，使用获得的用户凭证进行横向移动，从而能够访问另一个机器。</p>
+<p>5.1、认证协议（PTH/PTK/PTT）</p>
+<p>在内网中，主要有两个认证协议，一个是 NTLM ，一个是 kerberos，我们使用用户凭证时，主要是通过这两种认证协议进行认证；其中利用 NTLM 认证进行的横向移动是 pass the hash（哈希传递），通过 kerberos 协议进行的横向移动方式有 over pass the hash（pass the key）、pass the ticket（票据传递）。其中，PTH 主要是使用用户的密码 hash（NTLM hash）进行 NTLM 认证；PTK 是使用用户的密码 hash（NTLM hash）进行 Kerberos 认证（请求 TGT）；PTT 是调用 LsaCallAuthenticationPackage() API，将 .kirbi 文件的 base64 编码，或磁盘上的 .kirbi 文件导入到当前登录会话中。</p>
+<p>5.2、IPC（进程间通信）</p>
+<p>我们可以通过提供用户名和凭证，在 IP 之间建立通道并通过此通道进行加密数据的交换，从而实现对远程计算机的访问。</p>
+<p>5.3、计划任务</p>
+<p>我们可以通过 at（Windows xp、2003 以下的版本）、schtasks（Windows 7 及以后）来远程创建并执行计划任务（在指定的时间执行指定的任务）</p>
+<p>通常我们需要先通过 IPC 连接将可执行文件复制到远程机器上</p>
+<p>5.4、PsExec</p>
+<p>我们可以通过使用 PsExec 工具来进行横向移动。PsExec 的大致原理是：我们提供用户的凭证，PsExec 会通过 SMB 先远程机器发起身份验证，在验证成功，建立 IPC 连接后，会将 PSEXESVC.exe 上传到 ADMIN$ 共享文件夹内（/admin$/system32/PSEXESVC.EXE），然后 SCM（服务控制管理器）以 PSEXESVC.exe 作为服务的二进制文件，远程创建 PSEXESVC 服务，并启动该服务，最后，我们执行命令，服务回启动相应的程序并执行，然后将结果数据回显。</p>
+<p>5.5、WMI（windows 管理规程）</p>
+<p>Windows 管理规范是一项 Windows 管理技术，用于管理本地和远程 Windows 系统。通常我们会使用 windows 自带的 wmic，以及 impacket 套件中的 wmiexec 来操作远程计算机的进程、服务、注册表等资源；另外也还有一些其他的 powershell 脚本，以及 wmiexec.vbs 等第三方工具、脚本。</p>
+<p>其中 ，wmiexec 的大致原理是：我们提供用户的凭证，wmiexec 会与远程机器建立一个 IPC 连接，并创建一个共享文件夹（用于读取命令执行结果），当我们输入命令时，wmi 会创建进程并执行该命令，并将结果保存到共享文件夹的一个文件中，wmiexec 会通过 FSO 组件访问远程共享文件夹的文件，并读取其中的输出结果，在读取完后，wmiexec 会删除输出结果文件，并在 wmiexec 退出时，删除共享文件夹。</p>
+<p>5.6、Windows 远程管理（WinRM）</p>
+<p>Windows 远程管理（WinRM）服务执行 WS-Management 协议来实现远程管理。我们可以通过 WinRM 来在远程机器上执行系统命令</p>
+<p>5.7、DCOM（分布式组件对象模型）</p>
+<p>通过 DCOM 进行横向移动，其实就是通过调用程序接口，向网络中的另一台计算机的服务器程序发起请求。通常会调用以下 3 个接口：MMC20.Application、ShellWindows、ShellBrowserWindow。</p>
+<p>5.8、RDP（远程桌面协议）</p>
+<p>我们可以通过 socks 代理将本地的 mstsc.exe 带入目标内网，并登录内网机器的桌面环境，或者结合端口转发，将内网指定机器的 3389 端口转发到本地并登录。</p>
+<p>5.9、NTLM 重放</p>
+<p>我们可以使用 impacket 套件中的 ntlmrelayx.py 脚本来进行 NTLM 重放</p>
+<p>5.10、其他类型的凭证</p>
+<p>如果我们获得其他类型的凭证，比如某个服务、应用的账号密码，具体可根据该服务、应用的连接及使用方式来横向移动。</p>
+<h3 id="6、本地-域权限提升"><a href="#6、本地-域权限提升" class="headerlink" title="6、本地/域权限提升"></a>6、本地/域权限提升</h3><p>6.1、本地权限提升</p>
+<p>在 windows 中，主要是通过利用 windows 错误配置（如：非引用路径），漏洞（EXP），NTLM 重放的土豆系列，以及 bypassUAC 等方式。</p>
+<p>6.2、域权限提升</p>
+<p>可以通过 MS14-068、CVE-2020-1472 等漏洞来提升权限。</p>
+<h3 id="7、本机-域持续控制"><a href="#7、本机-域持续控制" class="headerlink" title="7、本机/域持续控制"></a>7、本机/域持续控制</h3><p>7.1、本机持续控制</p>
+<p>通常可以创建自启动项，或计划任务等方式来维持访问。</p>
+<p>7.2、域持续控制</p>
+<p>域持续控制主要有黄金票据、SSP、DSRM 后门等。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/29/%E6%BB%A5%E7%94%A8%20DRS/" rel="prev" title="DRS 基础及滥用（笔记）">
+      <i class="fa fa-chevron-left"></i> DRS 基础及滥用（笔记）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F"><span class="nav-number">1.</span> <span class="nav-text">内网渗透</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E6%A1%86%E6%9E%B6"><span class="nav-number">1.1.</span> <span class="nav-text">内网渗透框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E6%9E%84%E5%BB%BA%E9%80%9A%E4%BF%A1%E9%9A%A7%E9%81%93"><span class="nav-number">1.1.1.</span> <span class="nav-text">1、构建通信隧道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E4%B8%BB%E6%9C%BA%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">1.1.2.</span> <span class="nav-text">2、主机信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="nav-number">1.1.3.</span> <span class="nav-text">3、内网信息收集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4%E3%80%81%E5%90%84%E7%B1%BB%E5%87%AD%E8%AF%81%E8%8E%B7%E5%8F%96"><span class="nav-number">1.1.4.</span> <span class="nav-text">4、各类凭证获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E6%BB%A5%E7%94%A8%E5%90%84%E7%B1%BB%E5%87%AD%E8%AF%81%EF%BC%88%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%EF%BC%89"><span class="nav-number">1.1.5.</span> <span class="nav-text">5、滥用各类凭证（横向移动）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81%E6%9C%AC%E5%9C%B0-%E5%9F%9F%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87"><span class="nav-number">1.1.6.</span> <span class="nav-text">6、本地&#x2F;域权限提升</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7%E3%80%81%E6%9C%AC%E6%9C%BA-%E5%9F%9F%E6%8C%81%E7%BB%AD%E6%8E%A7%E5%88%B6"><span class="nav-number">1.1.7.</span> <span class="nav-text">7、本机&#x2F;域持续控制</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="T4nglong"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">T4nglong</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/T4nglong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;T4nglong" rel="noopener" target="_blank"><i class="Github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:adamkk52000@gmail.com" title="E-Mail → mailto:adamkk52000@gmail.com" rel="noopener" target="_blank"><i class="Email fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">T4nglong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
